@@ -1,0 +1,4 @@
+https://github.com/gregburek/heroku-buildpack-pgbouncer.git#no-stunnel
+https://github.com/nickcatal/nginx-buildpack-firewall.git
+https://github.com/heroku/heroku-buildpack-nodejs.git
+https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/python.tgz

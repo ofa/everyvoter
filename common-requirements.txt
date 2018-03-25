@@ -1,0 +1,52 @@
+# Basic Packages
+Django==1.11.7
+psycopg2==2.7.1
+six==1.10.0
+pytz==2017.3
+django-localflavor==1.4.1
+
+
+# Task packages
+celery==4.1.0
+django-celery-results==1.0.1
+
+
+# Useful packages
+phonenumberslite==8.8.9
+pygeocodio==0.6.0
+django-html5==1.0.0
+django_sekizai==0.10.0
+
+# Environ for management
+django-environ==0.4.1
+
+
+# NewRelic for monitoring
+newrelic==2.96.0.80
+
+
+# API-Related Packages
+djangorestframework==3.6.2
+django-filter==1.0.2
+django-cors-headers==2.0.2
+
+
+# S3/Storage Packages
+boto==2.48.0
+boto3==1.4.7
+django-storages==1.6.5
+django-s3-collectstatic==1.0
+django-s3-folder-storage==0.5
+
+
+# Testing-Related Packages
+mock==2.0.0
+model-mommy==1.3.2
+nose==1.3.7
+django-nose==1.4.4
+
+
+# Debugging and general utilities
+django-clear-cache==0.3
+django_debug_toolbar==1.7
+ipython==5.5.0

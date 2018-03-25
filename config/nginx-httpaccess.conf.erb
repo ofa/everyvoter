@@ -1,0 +1,47 @@
+<% if ENV.fetch('USE_FIREWALL', 'false') != "false" %>
+# Allow for internal Heroku router - 10.x.x.x
+set_real_ip_from  10.0.0.0/8;
+real_ip_header  X-Forwarded-For;
+
+# https://www.cloudflare.com/ips
+allow 103.21.244.0/22;
+allow 103.22.200.0/22;
+allow 103.31.4.0/22;
+allow 104.16.0.0/12;
+allow 108.162.192.0/18;
+allow 141.101.64.0/18;
+allow 162.158.0.0/15;
+allow 172.64.0.0/13;
+allow 173.245.48.0/20;
+allow 188.114.96.0/20;
+allow 190.93.240.0/20;
+allow 197.234.240.0/22;
+allow 198.41.128.0/17;
+allow 199.27.128.0/21;
+
+# https://api.fastly.com/public-ip-list
+allow 23.235.32.0/20;
+allow 43.249.72.0/22;
+allow 103.244.50.0/24;
+allow 103.245.222.0/23;
+allow 103.245.224.0/24;
+allow 104.156.80.0/20;
+allow 151.101.0.0/16;
+allow 157.52.64.0/18;
+allow 172.111.64.0/18;
+allow 185.31.16.0/22;
+allow 199.27.72.0/21;
+allow 202.21.128.0/24;
+allow 203.57.145.0/24;
+
+deny all;
+
+# Cloudflare will send across the header CF-Connecting-IP, because our
+# IP address is going 
+proxy_set_header X-Forwarded-For $http_cf_connecting_ip;
+
+<% else %>
+
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+<% end %>
