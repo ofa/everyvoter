@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static sekizai_tags %}
+
+{% block nav_main %}
+    {% include "inc/nav-min.html" %}
+{% endblock nav_main %}
+
+{% block page_content %}
+{% add_data "body-class" "home" %}
+{% add_data "body-class" "intro-flow" %}
+    <div class="col-md-6 col-md-offset-3 intro-flow-wrap">
+        <div class="row">
+            <div class="col-md-12">
+            <h2>{{ request.organization.platform_name }}</h2>
+            <p class="subheading">Create a new account on {{ request.organization.platform_name }}.</p>
+
+            <p style="color: red">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}</p>
+            </div>
+            <div class="col-md-10 col-md-offset-1">
+                <form role="form" method="POST" action="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.first_name.errors }}
+                            {{ form.first_name }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.last_name.errors }}
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.email.errors }}
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.address.errors }}
+                            {{ form.address }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-block">Create User</button>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                </form>
+        </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('id_address')));
+    }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSnF27lCEIkyjUukR4uD7hYQ4w7ICMfYw&libraries=places&callback=initAutocomplete"
+    async defer></script>
+{% endblock page_content %}

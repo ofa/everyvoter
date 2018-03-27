@@ -90,7 +90,7 @@ KEY_PREFIX = env('KEY_PREFIX')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -103,12 +103,17 @@ INSTALLED_APPS = [
 
     'django_celery_results',
 
+    # `django.contrib.auth` has to be after `accounts` because we override
+    # `django.contrib.auth` management commands.
+    'accounts',
+    'django.contrib.auth',
+
     'api',
     'location',
     'branding',
     'election',
 
-    'accounts',
+
     'import',
 
     'django_s3_collectstatic',
