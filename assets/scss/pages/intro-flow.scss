@@ -1,0 +1,43 @@
+.intro-flow {
+    background-color: "#000";
+    background-image: url(../img/img/vote_background.png);
+    @include cover-settings;
+    background-attachment: fixed;
+
+    @media (max-width: $screen-sm-max){
+        background-image: none;
+    }
+
+    header {
+        background: none;
+    }
+
+    .logo{
+        background-image: url(../img/logos/logo-flush-white.svg);
+    }
+
+    .intro-flow-wrap {
+        background-color: #fff;
+        margin-top: 150px;
+        margin-bottom: 150px;
+        text-align: center;
+        padding: 50px;
+
+        @media (max-width: $screen-sm-max){
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+    }
+
+    .subheading {
+        margin-bottom: 2.1em;
+    }
+
+    form {
+        input {
+            width: 100%;
+            margin-bottom: 1.5em;
+        }
+    }
+}

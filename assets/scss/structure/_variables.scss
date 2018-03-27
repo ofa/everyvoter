@@ -1,0 +1,54 @@
+/* Colors */
+$black: #272931;
+$blue: #0abed9;
+$gray: #f7f7f7;
+$medium-gray: #b2b2b5;
+$white: #ffffff;
+
+/* Typography settings */
+$base-font-size: 18px;
+$font-size-h1: 65px;
+$font-size-h2: 45px;
+$font-size-h3: 25px;
+$font-size-h4: 20px;
+$font-size-h5: 20px;
+$font-size-h6: 14px;
+
+$worksans: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, Sans-Serif;
+
+$headings-font-family: $worksans;
+$headings-font-weight: 700;
+$headings-line-height: 1.05;
+$body-font-family: 'Source Serif Pro', serif;
+$body-line-height: 1.44;
+
+/* Link style variables */
+$link-color: $blue;
+$link-hover-color: darken($blue, 20%);
+$link-hover-decoration: none;
+
+/* Change Bootstrap grid gutter width */
+$grid-gutter-width: 30px;
+
+/* Variables for buttons */
+$btn-font-family: $worksans;
+$btn-font-weight: 400;
+$btn-font-size: 30px;
+$btn-padding-vertical: 18px;
+$btn-padding-horizontal: 20px;
+
+/* Shadow variables */
+$box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
+
+/* Form variables */
+$input-border: #999;
+$input-padding: 20px;
+
+/* Bootstrap overrides */
+$panel-border-radius: 0;
+$panel-heading-padding: 0;
+$panel-body-padding: 20px 0;
+$panel-default-border: transparent;
+$panel-inner-border: transparent;
+$panel-default-heading-bg: transparent;
+$nav-link-hover-bg: transparent;

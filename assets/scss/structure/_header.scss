@@ -1,0 +1,137 @@
+header{
+    box-shadow: $box-shadow;
+    background: $white;
+    .logo{
+        background-image: url(../img/logos/logo-flush-blue.svg);
+        background-repeat: no-repeat;
+        background-size: 90px 34px;
+        display: block;
+        height: 34px;
+        margin: 20px 0 20px 20px;
+        width: 90px;
+        a{
+            display: block;
+            height: 100%;
+        }
+    }
+    nav{
+        text-align: center;
+        a{
+            text-decoration: none !important;
+        }
+        ul{
+            margin: 0;
+        }
+        .nav-item{
+            display: inline-block;
+            font-family: $worksans;
+            font-size: 18px;
+            position: static;
+            a{
+                color: $black;
+                display: block;
+                padding: 27px 20px 19px;
+                @media (max-width: $screen-md-max) and (min-width: $screen-md-min){
+                    padding: 27px 15px 19px;
+                }
+            }
+        }
+        .nav-main-item{
+            > a{
+                border-bottom: 8px solid transparent;
+                transition: all .25s;
+                @media (min-width: $screen-md-min){
+                    &:hover,
+                    &:focus{
+                        border-bottom: 8px solid $blue;
+                    }
+                }
+            }
+        }
+    }
+    /* Custom mobile menu */
+    .header-menu{
+        @media (max-width: $screen-sm-max){
+            display: none;
+            &.open{
+                background: $white;
+                border-top: 1px solid #ccc;
+                box-shadow: $box-shadow;
+                display: block !important;
+                position: absolute;
+                top: 100%;
+                width: 100%;
+                z-index:1000;
+                li{
+                    width: 100%;
+                    a{
+                        padding: 20px 0 15px;
+                        &:hover,
+                        &:focus{
+                            background: transparent;
+                        }
+                    }
+                }
+                .nav{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .mobile-menu{
+        text-align: right;
+        a{
+            color: $black;
+            &:hover,
+            &:focus{
+                color: $black;
+            }
+        }
+    }
+    .navbar-center{
+        text-align: center;
+        .navbar-nav {
+            display: inline-block;
+            float: none;
+            vertical-align: top;
+        }
+    }
+    .donate{
+        text-align: right;
+        .btn{
+            border-radius: 0;
+            height: 74px;
+            padding-top: 24px;
+            @media (max-width: $screen-sm-max){
+                background: $black;
+                font-size: 19px;
+                height: auto;
+                padding: 10px 0 8px;
+                text-align: center;
+                width: 100%;
+            }
+        }
+    }
+}
+.header-full{
+    [class*="col-md-"]{
+        padding: 0;
+    }
+    a.icon-menu{
+        display: inline-block;
+        height: 74px;
+        padding: 9px 0;
+    }
+}
+.header-min{
+    box-shadow: none;
+    .logo{
+        @media (min-width: $screen-md-min){
+            margin: 50px 35px;
+            position: fixed;
+        }
+        @media (max-width: $screen-sm-max){
+            margin: 30px auto 5px;
+        }
+    }
+}

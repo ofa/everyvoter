@@ -1,0 +1,38 @@
+/*
+   Kennedy
+   Copyright 2017 Organizing for Action. All rights reserved.
+*/
+
+/* Import Bootstrap variables */
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss";
+
+/* Import Kennedy specific variables */
+@import "structure/_variables.scss";
+
+/* Import base Bootstrap pieces */
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_normalize.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_grid.scss";
+
+/* Import specific Bootstrap components */
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_forms.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navs.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_dropdowns.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_component-animations.scss";
+
+/* Components */
+@import "structure/_mixins.scss";
+@import "structure/_buttons.scss";
+@import "structure/_typography.scss";
+@import "structure/_helpers.scss";
+@import "structure/_forms.scss";
+@import "structure/_sticky-footer.scss";
+@import "structure/_footer.scss";
+@import "structure/_header.scss";
+
+/* Pages */
+@import "pages/intro-flow.scss";

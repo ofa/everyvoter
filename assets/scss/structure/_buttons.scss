@@ -1,0 +1,45 @@
+/* Gilroy typeface does not sit properly so padding offsets added for buttons */
+.btn{
+    background: $blue;
+    border-radius: 4px;
+    color: $white;
+    display: inline-block;
+    font-family: $btn-font-family;
+    font-weight: $btn-font-weight;
+    font-size: $btn-font-size;
+    line-height: $btn-font-size;
+    padding: ($btn-padding-vertical + 3px) $btn-padding-horizontal ($btn-padding-vertical - 3px);
+    text-decoration: none;
+    transition: all .25s;
+    vertical-align: middle;
+    &:active,
+    &:hover,
+    &:focus{
+        background: darken($blue, 15%);
+        color: white;
+        text-decoration: none;
+    }
+}
+.btn-sm{
+    font-size: $btn-font-size * 2/3;
+    line-height: $btn-font-size * 2/3;
+    padding: ($btn-padding-vertical * 2 / 3 + 2px) ($btn-padding-horizontal * 2 / 3) ($btn-padding-vertical * 2 / 3 - 2px);
+}
+.btn-block{
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+/* Styles for buttons over non-white backgrounds */
+.area-invert{
+    .btn,
+    [type="submit"]{
+        background: $white;
+        color: $blue;
+        &:focus,
+        &:hover{
+            opacity: .8;
+        }
+    }
+}

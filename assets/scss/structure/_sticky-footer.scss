@@ -1,0 +1,17 @@
+html, body {
+    padding-top: 0;
+    min-height: 100%;
+    @media (min-width: $screen-md-min){
+        height: 100%;
+    }
+}
+.wrap {
+    padding-top: 0;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    @media (min-width: $screen-sm-min){
+        padding-bottom: 60px;
+        margin: 0 auto -60px auto;
+    }
+}

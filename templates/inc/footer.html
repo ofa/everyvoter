@@ -1,0 +1,20 @@
+<footer class="footer footer-min">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 disclaimers" style="text-align: center;">
+                <span>Paid for by {{ request.organization.name }}</span>
+                <span>&copy; {% now "Y" %} {{ request.organization.name }}. All Rights Reserved.</span>
+                {% if request.organization.terms_url %}
+                    <span>
+                        <a class="" href="{{ request.organization.terms_url }}">Terms</a>
+                    </span>
+                {% endif %}
+                {% if request.organization.privacy_url %}
+                    <span>
+                        <a class="" href="{{ request.organization.privacy_url }}">Privacy</a>
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,104 @@
+input,
+select,
+textarea,
+button{
+    &:focus{
+        outline: none;
+    }
+}
+input,
+textarea{
+    background: transparent;
+    border: 2px solid $input-border;
+    color: $input-border;
+    font-size: $base-font-size;
+    font-family: $body-font-family;
+    line-height: 22px;
+    padding: $input-padding;
+    &:focus{
+        border: 2px solid $black !important;
+    }
+}
+select{
+    background: transparent !important;
+    border: none;
+    color: $input-border;
+    height: 100%;
+    width: 100%;
+}
+.select-styled{
+    border: 2px solid $input-border;
+    height: 66px;
+    padding: 0 10px;
+    width: 100%;
+    &.focus{
+        border-color: $black;
+    }
+    select {
+        appearance: none;
+        -moz-user-focus: none;
+        outline-color: transparent;
+        &.focus {
+            appearance: none;
+            outline: 0;
+        }
+    }
+}
+textarea{
+    min-height: 200px;
+}
+[type="submit"]{
+    border: none;
+    border-radius: 5px;
+}
+input[type="checkbox"]{
+    display: inline-block;
+    margin: 0 6px 4px 0;
+    width: auto;
+}
+.checkbox-label{
+    color: $input-border;
+    font-size: 18px;
+    height: auto;
+    margin: -1px;
+    padding: 0;
+    position: initial;
+    width: auto;
+}
+.checkbox-group{
+    margin: 0 0 20px;
+}
+.checkbox-group .show-label{
+    margin-bottom: 10px;
+}
+.area-invert{
+    input,
+    textarea{
+        background: transparent;
+        border-color: $white;
+        color: $white;
+        transition: all .25s;
+        &:focus{
+            border-color: $black;
+        }
+    }
+    .select-styled{
+        border-color: $white;
+        &.focus{
+            border-color: $black;
+        }
+        select{
+          color: $white;
+        }
+    }
+    ::-moz-placeholder {
+        color: $white;
+        opacity: 1;
+    }
+    :-ms-input-placeholder {
+        color: $white;
+    }
+    ::-webkit-input-placeholder {
+        color: $white;
+    }
+}
