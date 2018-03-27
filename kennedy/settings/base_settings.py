@@ -237,15 +237,6 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
 
 ####
-# Twilio Settings
-TWILIO_ENABLED = (env('TWILIO_ENABLED')
-                  and env('TWILIO_ACCOUNT_SID') != ''
-                  and env('TWILIO_AUTH_TOKEN') != '')
-TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
-TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
-
-
-####
 # Geocod.io Key
 GEOCODIO_KEY = env('GEOCODIO_KEY')
 
