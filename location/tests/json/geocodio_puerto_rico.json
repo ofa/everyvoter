@@ -1,0 +1,102 @@
+{
+    "input": {
+        "address_components": {
+            "number": "605",
+            "street": "Cll Cuevillas",
+            "formatted_street": "Cll Cuevillas",
+            "city": "San Juan",
+            "state": "PR",
+            "zip": "00907",
+            "country": "US"
+        },
+        "formatted_address": "605 Cll Cuevillas, San Juan, PR 00907"
+    },
+    "results": [
+        {
+            "address_components": {
+                "number": "605",
+                "street": "Cll Cuevillas",
+                "formatted_street": "Cll Cuevillas",
+                "city": "San Juan",
+                "county": "San Juan Municipio",
+                "state": "PR",
+                "zip": "00907",
+                "country": "US"
+            },
+            "formatted_address": "605 Cll Cuevillas, San Juan, PR 00907",
+            "location": {
+                "lat": 18.455801,
+                "lng": -66.082842
+            },
+            "accuracy": 1,
+            "accuracy_type": "range_interpolation",
+            "source": "TIGER\/Line® dataset from the US Census Bureau",
+            "fields": {
+                "congressional_districts": [
+                    {
+                        "name": "Resident Commissioner District (at Large)",
+                        "district_number": 98,
+                        "congress_number": "115th",
+                        "congress_years": "2017-2019",
+                        "proportion": 1,
+                        "current_legislators": [
+                            {
+                                "type": "representative",
+                                "bio": {
+                                    "last_name": "González-Colón",
+                                    "first_name": "Jenniffer",
+                                    "birthday": "1976-08-05",
+                                    "gender": "F",
+                                    "party": "Republican"
+                                },
+                                "contact": {
+                                    "url": "https:\/\/gonzalez-colon.house.gov",
+                                    "address": "1529 Longworth HOB; Washington DC 20515-5401",
+                                    "phone": "202-225-2615",
+                                    "contact_form": null
+                                },
+                                "social": {
+                                    "rss_url": null,
+                                    "twitter": "repjenniffer",
+                                    "facebook": "RepJennifferGonzalezColon",
+                                    "youtube": null,
+                                    "youtube_id": "UCZj99h3-GNKjGGeyp7AJeXw"
+                                },
+                                "references": {
+                                    "bioguide_id": "G000582",
+                                    "thomas_id": null,
+                                    "opensecrets_id": "N00037615",
+                                    "lis_id": null,
+                                    "cspan_id": "67353",
+                                    "govtrack_id": "412723",
+                                    "votesmart_id": null,
+                                    "ballotpedia_id": null,
+                                    "washington_post_id": null,
+                                    "icpsr_id": null,
+                                    "wikipedia_id": "Jenniffer González"
+                                },
+                                "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                            }
+                        ]
+                    }
+                ],
+                "state_legislative_districts": {
+                    "senate": {
+                        "name": "State Senate Districts not defined",
+                        "district_number": "ZZZ"
+                    },
+                    "house": {
+                        "name": "State House Districts not defined",
+                        "district_number": "ZZZ"
+                    }
+                },
+                "timezone": {
+                    "name": "AST",
+                    "utc_offset": -4,
+                    "observes_dst": false,
+                    "source": "© OpenStreetMap contributors"
+                }
+            }
+        }
+    ]
+}

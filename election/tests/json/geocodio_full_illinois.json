@@ -1,0 +1,163 @@
+{
+    "address_components": {
+        "number": "1060",
+        "predirectional": "W",
+        "street": "Addison",
+        "suffix": "St",
+        "formatted_street": "W Addison St",
+        "city": "Chicago",
+        "county": "Cook County",
+        "state": "IL",
+        "zip": "60613",
+        "country": "US"
+    },
+    "formatted_address": "1060 W Addison St, Chicago, IL 60613",
+    "location": {
+        "lat": 41.94763,
+        "lng": -87.656376
+    },
+    "accuracy": 1,
+    "accuracy_type": "rooftop",
+    "source": "Cook",
+    "fields": {
+        "congressional_districts": [
+            {
+                "name": "Congressional District 5",
+                "district_number": 5,
+                "congress_number": "115th",
+                "congress_years": "2017-2019",
+                "proportion": 1,
+                "current_legislators": [
+                    {
+                        "type": "representative",
+                        "bio": {
+                            "last_name": "Quigley",
+                            "first_name": "Mike",
+                            "birthday": "1958-10-17",
+                            "gender": "M",
+                            "party": "Democrat"
+                        },
+                        "contact": {
+                            "url": "https:\/\/quigley.house.gov",
+                            "address": "2458 Rayburn HOB; Washington DC 20515-1305",
+                            "phone": "202-225-4061",
+                            "contact_form": null
+                        },
+                        "social": {
+                            "rss_url": "http:\/\/quigley.house.gov\/index.php?format=feed&amp;type=rss",
+                            "twitter": "RepMikeQuigley",
+                            "facebook": "repmikequigley",
+                            "youtube": "RepMikeQuigley",
+                            "youtube_id": "UCDP13XegdoZ4bxYHxM34yAA"
+                        },
+                        "references": {
+                            "bioguide_id": "Q000023",
+                            "thomas_id": "01967",
+                            "opensecrets_id": "N00030581",
+                            "lis_id": null,
+                            "cspan_id": "9263344",
+                            "govtrack_id": "412331",
+                            "votesmart_id": "83310",
+                            "ballotpedia_id": "Michael Quigley",
+                            "washington_post_id": null,
+                            "icpsr_id": "20954",
+                            "wikipedia_id": "Mike Quigley (politician)"
+                        },
+                        "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                    },
+                    {
+                        "type": "senator",
+                        "bio": {
+                            "last_name": "Durbin",
+                            "first_name": "Richard",
+                            "birthday": "1944-11-21",
+                            "gender": "M",
+                            "party": "Democrat"
+                        },
+                        "contact": {
+                            "url": "https:\/\/www.durbin.senate.gov",
+                            "address": "711 Hart Senate Office Building Washington DC 20510",
+                            "phone": "202-224-2152",
+                            "contact_form": "https:\/\/www.durbin.senate.gov\/contact\/"
+                        },
+                        "social": {
+                            "rss_url": "http:\/\/durbin.senate.gov\/public\/index.cfm\/rss\/feed",
+                            "twitter": "SenatorDurbin",
+                            "facebook": "SenatorDurbin",
+                            "youtube": "SenatorDurbin",
+                            "youtube_id": "UCkbixlNCxcKAffEhe3X5-lw"
+                        },
+                        "references": {
+                            "bioguide_id": "D000563",
+                            "thomas_id": "00326",
+                            "opensecrets_id": "N00004981",
+                            "lis_id": "S253",
+                            "cspan_id": "6741",
+                            "govtrack_id": "300038",
+                            "votesmart_id": "26847",
+                            "ballotpedia_id": "Dick Durbin",
+                            "washington_post_id": null,
+                            "icpsr_id": "15021",
+                            "wikipedia_id": "Dick Durbin"
+                        },
+                        "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                    },
+                    {
+                        "type": "senator",
+                        "bio": {
+                            "last_name": "Duckworth",
+                            "first_name": "Tammy",
+                            "birthday": "1968-03-12",
+                            "gender": "F",
+                            "party": "Democrat"
+                        },
+                        "contact": {
+                            "url": "https:\/\/www.duckworth.senate.gov",
+                            "address": "524 Hart Senate Office Building Washington DC 20510",
+                            "phone": "202-224-2854",
+                            "contact_form": "https:\/\/www.duckworth.senate.gov\/content\/contact-senator"
+                        },
+                        "social": {
+                            "rss_url": null,
+                            "twitter": "SenDuckworth",
+                            "facebook": "SenDuckworth",
+                            "youtube": "repduckworth",
+                            "youtube_id": "UCYRWRvUxtjaHnFMCbdd94tg"
+                        },
+                        "references": {
+                            "bioguide_id": "D000622",
+                            "thomas_id": "02123",
+                            "opensecrets_id": "N00027860",
+                            "lis_id": "S386",
+                            "cspan_id": "94484",
+                            "govtrack_id": "412533",
+                            "votesmart_id": "57442",
+                            "ballotpedia_id": "Tammy Duckworth",
+                            "washington_post_id": null,
+                            "icpsr_id": "21325",
+                            "wikipedia_id": "Tammy Duckworth"
+                        },
+                        "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                    }
+                ]
+            }
+        ],
+        "state_legislative_districts": {
+            "senate": {
+                "name": "State Senate District 6",
+                "district_number": "6"
+            },
+            "house": {
+                "name": "State House District 12",
+                "district_number": "12"
+            }
+        },
+        "timezone": {
+            "name": "America\/Chicago",
+            "utc_offset": -6,
+            "observes_dst": true,
+            "abbreviation": "CST",
+            "source": "© OpenStreetMap contributors"
+        }
+    }
+}

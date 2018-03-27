@@ -1,0 +1,104 @@
+{
+    "input": {
+        "address_components": {
+            "number": "100",
+            "street": "Queen",
+            "suffix": "St",
+            "postdirectional": "W",
+            "formatted_street": "Queen St W",
+            "city": "Toronto",
+            "state": "ON",
+            "country": "CA"
+        },
+        "formatted_address": "100 Queen St W, Toronto, ON"
+    },
+    "results": [
+        {
+            "address_components": {
+                "number": "100",
+                "street": "Queen",
+                "suffix": "St",
+                "postdirectional": "W",
+                "formatted_street": "Queen St W",
+                "city": "Toronto",
+                "state": "ON",
+                "country": "CA"
+            },
+            "formatted_address": "100 Queen St W, Toronto, ON",
+            "location": {
+                "lat": 43.652822,
+                "lng": -79.383625
+            },
+            "accuracy": 1,
+            "accuracy_type": "rooftop",
+            "source": "City of Toronto Open Data",
+            "fields": {
+                "timezone": {
+                    "name": "America\/Toronto",
+                    "utc_offset": -5,
+                    "observes_dst": true,
+                    "abbreviation": "EST",
+                    "source": "© OpenStreetMap contributors"
+                }
+            }
+        },
+        {
+            "address_components": {
+                "number": "100",
+                "street": "Queen",
+                "suffix": "St",
+                "postdirectional": "E",
+                "formatted_street": "Queen St E",
+                "city": "Toronto",
+                "state": "ON",
+                "country": "CA"
+            },
+            "formatted_address": "100 Queen St E, Toronto, ON",
+            "location": {
+                "lat": 43.653801,
+                "lng": -79.373956
+            },
+            "accuracy": 0.6,
+            "accuracy_type": "rooftop",
+            "source": "City of Toronto Open Data",
+            "fields": {
+                "timezone": {
+                    "name": "America\/Toronto",
+                    "utc_offset": -5,
+                    "observes_dst": true,
+                    "abbreviation": "EST",
+                    "source": "© OpenStreetMap contributors"
+                }
+            }
+        },
+        {
+            "address_components": {
+                "number": "100",
+                "predirectional": "N",
+                "street": "Queen",
+                "suffix": "St",
+                "formatted_street": "N Queen St",
+                "city": "Toronto",
+                "state": "ON",
+                "country": "CA"
+            },
+            "formatted_address": "100 N Queen St, Toronto, ON",
+            "location": {
+                "lat": 43.621775,
+                "lng": -79.546568
+            },
+            "accuracy": 0.2,
+            "accuracy_type": "rooftop",
+            "source": "City of Toronto Open Data",
+            "fields": {
+                "timezone": {
+                    "name": "America\/Toronto",
+                    "utc_offset": -5,
+                    "observes_dst": true,
+                    "abbreviation": "EST",
+                    "source": "© OpenStreetMap contributors"
+                }
+            }
+        }
+    ]
+}

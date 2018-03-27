@@ -1,0 +1,162 @@
+{
+    "address_components": {
+        "number": "1",
+        "street": "Patriot",
+        "suffix": "Pl",
+        "formatted_street": "Patriot Pl",
+        "city": "Foxboro",
+        "county": "Norfolk County",
+        "state": "MA",
+        "zip": "02035",
+        "country": "US"
+    },
+    "formatted_address": "1 Patriot Pl, Foxboro, MA 02035",
+    "location": {
+        "lat": 42.089777,
+        "lng": -71.263868
+    },
+    "accuracy": 1,
+    "accuracy_type": "rooftop",
+    "source": "Office of Geographic Information (MassGIS), Commonwealth of Massachusetts, MassIT",
+    "fields": {
+        "congressional_districts": [
+            {
+                "name": "Congressional District 4",
+                "district_number": 4,
+                "congress_number": "115th",
+                "congress_years": "2017-2019",
+                "proportion": 1,
+                "current_legislators": [
+                    {
+                        "type": "representative",
+                        "bio": {
+                            "last_name": "Kennedy",
+                            "first_name": "Joseph",
+                            "birthday": "1980-10-04",
+                            "gender": "M",
+                            "party": "Democrat"
+                        },
+                        "contact": {
+                            "url": "https:\/\/kennedy.house.gov",
+                            "address": "434 Cannon HOB; Washington DC 20515-2104",
+                            "phone": "202-225-5931",
+                            "contact_form": null
+                        },
+                        "social": {
+                            "rss_url": "http:\/\/kennedy.house.gov\/rss.xml",
+                            "twitter": "RepJoeKennedy",
+                            "facebook": "301936109927957",
+                            "youtube": null,
+                            "youtube_id": "UCgfHlaGqxD8p-2V_YlNIqrA"
+                        },
+                        "references": {
+                            "bioguide_id": "K000379",
+                            "thomas_id": "02172",
+                            "opensecrets_id": "N00034044",
+                            "lis_id": null,
+                            "cspan_id": "79948",
+                            "govtrack_id": "412543",
+                            "votesmart_id": "141275",
+                            "ballotpedia_id": "Joseph Kennedy III",
+                            "washington_post_id": null,
+                            "icpsr_id": "21335",
+                            "wikipedia_id": "Joe Kennedy III"
+                        },
+                        "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                    },
+                    {
+                        "type": "senator",
+                        "bio": {
+                            "last_name": "Markey",
+                            "first_name": "Edward",
+                            "birthday": "1946-07-11",
+                            "gender": "M",
+                            "party": "Democrat"
+                        },
+                        "contact": {
+                            "url": "https:\/\/www.markey.senate.gov",
+                            "address": "255 Dirksen Senate Office Building Washington DC 20510",
+                            "phone": "202-224-2742",
+                            "contact_form": "https:\/\/www.markey.senate.gov\/contact"
+                        },
+                        "social": {
+                            "rss_url": null,
+                            "twitter": "SenMarkey",
+                            "facebook": "EdJMarkey",
+                            "youtube": "RepMarkey",
+                            "youtube_id": "UCT1ujew5yQy2uMhGrjiKHoA"
+                        },
+                        "references": {
+                            "bioguide_id": "M000133",
+                            "thomas_id": "00735",
+                            "opensecrets_id": "N00000270",
+                            "lis_id": "S369",
+                            "cspan_id": "260",
+                            "govtrack_id": "400253",
+                            "votesmart_id": "26900",
+                            "ballotpedia_id": "Ed Markey",
+                            "washington_post_id": null,
+                            "icpsr_id": "14435",
+                            "wikipedia_id": "Ed Markey"
+                        },
+                        "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                    },
+                    {
+                        "type": "senator",
+                        "bio": {
+                            "last_name": "Warren",
+                            "first_name": "Elizabeth",
+                            "birthday": "1949-06-22",
+                            "gender": "F",
+                            "party": "Democrat"
+                        },
+                        "contact": {
+                            "url": "https:\/\/www.warren.senate.gov",
+                            "address": "317 Hart Senate Office Building Washington DC 20510",
+                            "phone": "202-224-4543",
+                            "contact_form": "https:\/\/www.warren.senate.gov\/?p=email_senator"
+                        },
+                        "social": {
+                            "rss_url": "http:\/\/www.warren.senate.gov\/rss\/?p=hot_topic",
+                            "twitter": "SenWarren",
+                            "facebook": "senatorelizabethwarren",
+                            "youtube": "senelizabethwarren",
+                            "youtube_id": "UCTH9zV8Imw09J5bOoTR18_A"
+                        },
+                        "references": {
+                            "bioguide_id": "W000817",
+                            "thomas_id": "02182",
+                            "opensecrets_id": "N00033492",
+                            "lis_id": "S366",
+                            "cspan_id": "1023023",
+                            "govtrack_id": "412542",
+                            "votesmart_id": "141272",
+                            "ballotpedia_id": "Elizabeth Warren",
+                            "washington_post_id": null,
+                            "icpsr_id": "41301",
+                            "wikipedia_id": "Elizabeth Warren"
+                        },
+                        "source": "Legislator data is originally collected and aggregated by https:\/\/github.com\/unitedstates\/"
+                    }
+                ]
+            }
+        ],
+        "state_legislative_districts": {
+            "senate": {
+                "name": "Bristol & Norfolk District",
+                "district_number": "31"
+            },
+            "house": {
+                "name": "1st Bristol District",
+                "district_number": "69"
+            }
+        },
+        "timezone": {
+            "name": "America\/New_York",
+            "utc_offset": -5,
+            "observes_dst": true,
+            "abbreviation": "EST",
+            "source": "© OpenStreetMap contributors"
+        }
+    }
+}
