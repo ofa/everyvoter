@@ -1,0 +1,51 @@
+{% extends "management/manage_base.html" %}
+{% load static sekizai_tags %}
+
+{% block title %}{{ user.first_name }}'s Control Panel | {{ block.super }}{% endblock title %}
+
+{% block page_content %}
+    <div class="col-md-12">
+        <h2>{{ user.first_name }}'s Control Panel.</h2>
+
+        <a href="#">
+            <div class="feature-button row email-bg">
+                <div class="col-xs-11">
+                    <h2>Email</h2>
+                </div>
+            </div>
+        </a>
+
+        <a href="#">
+            <div class="feature-button row people-bg">
+                <div class="col-xs-11">
+                    <h2>People</h2>
+                </div>
+            </div>
+        </a>
+
+        <a href="#">
+            <div class="feature-button row election-bg">
+                <div class="col-xs-11">
+                    <h2>Elections</h2>
+                </div>
+            </div>
+        </a>
+
+        <a href="#">
+            <div class="feature-button row organization-bg">
+                <div class="col-xs-11">
+                    <h2>{{ organization.name }}</h2>
+                </div>
+            </div>
+        </a>
+
+        <a href="#">
+            <div class="feature-button row account-bg">
+                <div class="col-xs-11">
+                    <h2>{{ user }}</h2>
+                </div>
+            </div>
+        </a>
+
+    </div>
+{% endblock page_content %}

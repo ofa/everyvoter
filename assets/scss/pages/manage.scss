@@ -1,0 +1,41 @@
+.manage {
+    .container {
+        margin-top: 30px;
+    }
+}
+
+.feature-button{
+    color: $white;
+    margin-bottom: 1.5em;
+    padding: 50px;
+    h2{
+        margin: 0;
+        padding: 0;
+        &:after{
+            content: "\2192";
+            left: 100%;
+            position: absolute;
+            transition: transform .25s;
+        }
+    }
+    &:hover{
+        h2{
+            &:after{
+                transform: translateX(20px);
+            }
+        }
+    }
+    @media (max-width: $screen-xs-max){
+        background: none;
+        padding: 5px 30px;
+        h2:after{
+            position: static;
+            padding-left: 15px;
+        }
+        @each $name, $color in $manageColors {
+            &.#{$name}-bg {
+                color: $color;
+            }
+        }
+    }
+}

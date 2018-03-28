@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static sekizai_tags %}
+
+{% block nav_main %}
+    {% include "inc/nav-min.html" %}
+{% endblock nav_main %}
+
+{% block page_content %}
+{% add_data "body-class" "public-page" %}
+    <div class="col-md-6 col-md-offset-3 public-page-wrap">
+        <div class="row">
+            <div class="col-md-12">
+            <h2>{{ request.organization.platform_name }}</h2>
+            <p class="subheading">You've been logged out.</p>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

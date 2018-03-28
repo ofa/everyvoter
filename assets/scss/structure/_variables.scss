@@ -44,11 +44,20 @@ $box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
 $input-border: #999;
 $input-padding: 20px;
 
+$manageColors: (
+  email: #7538ee,
+  people: #ff5715,
+  election: #1f8cf2,
+  organization: #00b9a1,
+  account: #4e2f8b
+);
+
+
 /* Bootstrap overrides */
-$panel-border-radius: 0;
-$panel-heading-padding: 0;
-$panel-body-padding: 20px 0;
-$panel-default-border: transparent;
-$panel-inner-border: transparent;
-$panel-default-heading-bg: transparent;
+//$panel-border-radius: 0;
+//$panel-heading-padding: 0;
+//$panel-body-padding: 20px 0;
+//$panel-default-border: transparent;
+//$panel-inner-border: transparent;
+//$panel-default-heading-bg: transparent;
 $nav-link-hover-bg: transparent;

@@ -1,0 +1,113 @@
+<header class="container-fluid header-full">
+    <div class="row position-relative">
+        <div class="col-md-2 col-xs-6">
+            <div class="logo">
+                <a href="{{ organization.homepage }}">
+                    <span class="sr-only">{{ organization.name }}</span>
+                </a>
+            </div>
+        </div>
+        <div class="hidden-lg hidden-md col-xs-6 mobile-menu">
+            <a href="#" class="icon icon-menu"><span class="sr-only">Menu</span></a>
+        </div>
+        <div class="col-md-8 position-static header-menu">
+            <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+                <nav class="navbar-center">
+                    <ul class="nav navbar-nav">
+
+
+<li class="nav-main-item nav-item kennedy-dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'manage:manage' %}">Email</a>
+    <ul class="dropdown-menu" role="menu">
+        <div class="dropdown-inner">
+            <div class="row">
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Mailings</a>
+                </li>
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Templates</a>
+                </li>
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Stats</a>
+                </li>
+            </div>
+        </div>
+    </ul>
+</li>
+
+<li class="nav-main-item nav-item kennedy-dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">People</a>
+    <ul class="dropdown-menu" role="menu">
+        <div class="dropdown-inner">
+            <div class="row">
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Find People</a>
+                </li>
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Import</a>
+                </li>
+            </div>
+        </div>
+    </ul>
+</li>
+
+<li class="nav-main-item nav-item kennedy-dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Elections</a>
+    <ul class="dropdown-menu" role="menu">
+        <div class="dropdown-inner">
+            <div class="row">
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Elections</a>
+                </li>
+                <li class="col-md-4 nav-item nav-sub-item"> 
+                    <a href="#">Messaging</a>
+                </li>
+            </div>
+        </div>
+    </ul>
+</li>
+
+<li class="nav-main-item nav-item kennedy-dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ organization.name }}</a>
+        <ul class="dropdown-menu" role="menu">
+            <div class="dropdown-inner">
+                <div class="row">
+                    <li class="col-md-4 nav-item nav-sub-item"> 
+                        <a href="#">Theme</a>
+                    </li>
+                    <li class="col-md-4 nav-item nav-sub-item"> 
+                        <a href="#">Settings</a>
+                    </li>
+                    <li class="col-md-4 nav-item nav-sub-item"> 
+                        <a href="#">Manage Staff</a>
+                    </li>
+                </div>
+            </div>
+        </ul>
+</li>
+
+<li class="nav-main-item nav-item kennedy-dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.first_name }}</a>
+        <ul class="dropdown-menu" role="menu">
+            <div class="dropdown-inner">
+                <div class="row">
+                    <li class="col-md-4 nav-item nav-sub-item"> 
+                        <a href="{% url 'manage:manage_logout' %}">Logout</a>
+                    </li>
+                    <li class="col-md-4 nav-item nav-sub-item"> 
+                        <a href="#">Change Password</a>
+                    </li>
+                    <li class="col-md-4 nav-item nav-sub-item"> 
+                        <a href="#">Get Support</a>
+                    </li>
+                </div>
+            </div>
+        </ul>
+</li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

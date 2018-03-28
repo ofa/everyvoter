@@ -64,7 +64,10 @@ class User(
 
     def __unicode__(self):
         """Unicode representation of the user"""
-        return self.email
+        if self.first_name and self.last_name:
+            return self.first_name + u' ' + self.last_name
+        else:
+            return self.email
 
     def get_short_name(self):
         """Short name representation of user"""

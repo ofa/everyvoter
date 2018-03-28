@@ -108,11 +108,12 @@ INSTALLED_APPS = [
     'accounts',
     'django.contrib.auth',
 
+    'manage',
+
     'api',
     'location',
     'branding',
     'election',
-
 
     'import',
 
@@ -157,7 +158,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'sekizai.context_processors.sekizai'
+                'sekizai.context_processors.sekizai',
+                'branding.context_processors.organization.organization'
             ]
         },
 
@@ -170,6 +172,11 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
     'branding.auth_backends.BrandedBackend',)
+
+
+####
+# Authentication
+LOGIN_URL = '/manage/login/'
 
 
 ####

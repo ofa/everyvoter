@@ -42,3 +42,16 @@
 img{
     max-width: 100%;
 }
+@each $name, $color in $manageColors {
+  .#{$name}-bg {
+    background: $color;
+  }
+}
+@each $name, $color in $manageColors {
+  .#{$name} {
+    h5{
+        color: $color;
+    }
+  }
+}
+

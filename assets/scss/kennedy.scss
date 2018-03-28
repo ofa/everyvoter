@@ -22,7 +22,9 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_dropdowns.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tables.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_component-animations.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss";
 
 /* Components */
 @import "structure/_mixins.scss";
@@ -35,4 +37,5 @@
 @import "structure/_header.scss";
 
 /* Pages */
-@import "pages/intro-flow.scss";
+@import "pages/public-page.scss";
+@import "pages/manage.scss";

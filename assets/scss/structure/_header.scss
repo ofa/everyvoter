@@ -26,6 +26,7 @@ header{
             display: inline-block;
             font-family: $worksans;
             font-size: 18px;
+            font-weight: 700;
             position: static;
             a{
                 color: $black;
@@ -48,6 +49,40 @@ header{
                 }
             }
         }
+        @media (min-width: $screen-md-min){
+            .dropdown-menu{
+                border: none;
+                border-radius: 0;
+                border-top: 1px solid $gray;
+                padding: 0;
+                top: auto;
+                width: 100%;
+            }
+            .dropdown-inner{
+                margin: 0 auto;
+                max-width: 1000px;
+                .col-md-4{
+                    padding: 0;
+                }
+            }
+            .nav-sub-item{
+                font-size: 25px;
+                a{
+                    &:hover,
+                    &:focus{
+                        background: $blue;
+                        color: $white;
+                    }
+                }
+            }
+            .kennedy-dropdown:hover .dropdown-menu,
+            .kennedy-dropdown:focus .dropdown-menu{
+                display: block;
+                @media (max-width: $screen-md-max) and (min-width: $screen-md-min){
+                    padding: 0 50px;
+                }
+            }
+            }
     }
     /* Custom mobile menu */
     .header-menu{

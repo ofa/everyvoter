@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static sekizai_tags %}
+
+{% block nav_main %}
+    {% include "management/inc/nav-manage.html" %}
+{% endblock nav_main %}
+
+{% block body %}
+{% add_data "body-class" "manage" %}
+
+{{ block.super }}
+
+{% endblock body %}

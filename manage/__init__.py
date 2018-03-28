@@ -1,0 +1,1 @@
+"""Admin app for Kennedy"""

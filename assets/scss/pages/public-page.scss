@@ -1,4 +1,4 @@
-.intro-flow {
+.public-page {
     background-color: "#000";
     background-image: url(../img/img/vote_background.png);
     @include cover-settings;
@@ -16,7 +16,7 @@
         background-image: url(../img/logos/logo-flush-white.svg);
     }
 
-    .intro-flow-wrap {
+    .public-page-wrap {
         background-color: #fff;
         margin-top: 150px;
         margin-bottom: 150px;
