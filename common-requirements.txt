@@ -1,8 +1,8 @@
 # Basic Packages
-Django==1.11.7
+Django==1.11.11
 psycopg2==2.7.1
 six==1.10.0
-pytz==2017.3
+pytz==2018.3
 django-localflavor==1.4.1
 
 
