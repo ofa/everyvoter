@@ -13,9 +13,10 @@ django-celery-results==1.0.1
 
 # Useful packages
 phonenumberslite==8.8.9
-pygeocodio==0.6.0
+-e git+https://github.com/ofa/pygeocodio.git@f5d06184724da7dcfebc8ca255fd297aa570b186#egg=pygeocodio
 django-html5==1.0.0
 django_sekizai==0.10.0
+django-crispy-forms==1.7.2
 
 # Environ for management
 django-environ==0.4.1

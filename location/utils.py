@@ -37,7 +37,7 @@ def geocode_address(address):
         # validation error like we do with all other validation exceptions
         try:
             geocode_response = geocodio_client.geocode(
-                address, fields=['cd', 'stateleg', 'timezone'])
+                address, fields=['cd116', 'stateleg', 'timezone'])
         except GeocodioDataError as error:
             raise ValidationError(unicode(error))
 

@@ -67,7 +67,7 @@ class GeocodeAddressTest(TestCase):
 
         mock_geocoder.geocode.assert_called_once_with(
             test_address,
-            fields=['cd', 'stateleg', 'timezone'])
+            fields=['cd116', 'stateleg', 'timezone'])
 
         self.assertTrue(created)
 
@@ -115,7 +115,7 @@ class GeocodeAddressTest(TestCase):
 
         mock_geocoder.geocode.assert_called_once_with(
             test_address,
-            fields=['cd', 'stateleg', 'timezone'])
+            fields=['cd116', 'stateleg', 'timezone'])
 
         self.assertTrue(GeoLookup.objects.filter(
             lookup=test_address, response=self.no_results).exists())
@@ -137,7 +137,7 @@ class GeocodeAddressTest(TestCase):
 
         mock_geocoder.geocode.assert_called_once_with(
             test_address,
-            fields=['cd', 'stateleg', 'timezone'])
+            fields=['cd116', 'stateleg', 'timezone'])
 
         self.assertTrue(GeoLookup.objects.filter(
             lookup=test_address, response=self.canada).exists())
@@ -160,7 +160,7 @@ class GeocodeAddressTest(TestCase):
 
         mock_geocoder.geocode.assert_called_once_with(
             test_address,
-            fields=['cd', 'stateleg', 'timezone'])
+            fields=['cd116', 'stateleg', 'timezone'])
 
         self.assertTrue(GeoLookup.objects.filter(
             lookup=test_address, response=self.puerto_rico).exists())
