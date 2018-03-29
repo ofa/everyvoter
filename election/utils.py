@@ -7,12 +7,12 @@ from election.geocodio_ocdids import (
 
 def state_ocd_id(state):
     """Get the OCD ID of the state
-    
+
     Returns the state OCD ID, which can be used both alone and as a prefix
-    
+
     Args:
         state: state CD (uppercase)
-    
+
     Returns:
         OCD ID of the state
         string
@@ -50,12 +50,12 @@ def cd_ocd_id(state, district_number):
 
 def state_leg_ocd_id(level, state, district_number):
     """Return the OCD ID for a state legislative result
-    
+
     Args:
         level: state leg level (i.e. 'house' or 'state')
         state: state cd
         district_number: number of the distrct
-    
+
     Returns:
         One or more OCD ID in a list
         list
@@ -77,12 +77,12 @@ def state_leg_ocd_id(level, state, district_number):
 
 def geocodio_ocd_ids(result):
     """Get the Open Civic Data IDs for a Geocod.io Response
-    
+
     This will return the OCD IDs for a given Geocod.io response.
-    
+
     Args:
         result: selected result from geocod.io
-    
+
     Returns:
         OCD IDs associated with the Geocod.io response
         list

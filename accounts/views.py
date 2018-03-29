@@ -33,5 +33,3 @@ class CreateUserView(FormView):
 class UserCreatedView(TemplateView):
     """Page to show after user is successfully created"""
     template_name = "accounts/user_created.html"
-
-

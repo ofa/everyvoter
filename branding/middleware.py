@@ -1,7 +1,6 @@
 """Branding-Related Middleware"""
 from django.core.cache import cache
 from django.conf import settings
-from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.http.request import split_domain_port
 

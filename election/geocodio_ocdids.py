@@ -1,6 +1,6 @@
 """OCD ID(s) that map to individual Geocod.io Responses"""
 
-
+# pylint: disable=line-too-long
 GEOCODIO_OCDIDS_SENATE = {
     'AK': {
         'A': ['ocd-division/country:us/state:ak/sldu:a'],
@@ -447,7 +447,7 @@ GEOCODIO_OCDIDS_HOUSE = {
         '102': ['ocd-division/country:us/state:nh/sldl:carroll_2',
                 'ocd-division/country:us/state:nh/sldl:carroll_7'],
         '103': ['ocd-division/country:us/state:nh/sldl:carroll_3',
-                 'ocd-division/country:us/state:nh/sldl:carroll_7'],
+                'ocd-division/country:us/state:nh/sldl:carroll_7'],
         '104': ['ocd-division/country:us/state:nh/sldl:carroll_4',
                 'ocd-division/country:us/state:nh/sldl:carroll_8'],
         '105': ['ocd-division/country:us/state:nh/sldl:carroll_5',

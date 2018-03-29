@@ -29,7 +29,8 @@ class UserImport(TimestampModel, OrganizationMixin):
         """Unicode representation of the import"""
         if self.file:
             return u"{created} {filename}".format(
-                created=self.created_at, filename=os.path.basename(self.file.name))
+                created=self.created_at,
+                filename=os.path.basename(self.file.name))
         elif self.default:
             return "API Import"
         else:
@@ -39,6 +40,7 @@ class UserImport(TimestampModel, OrganizationMixin):
 
 class ImportRecord(models.Model):
     """Raw data from an import file"""
+    # pylint: disable=invalid-name
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_import = models.ForeignKey(UserImport)
     first_name = models.TextField(null=True)

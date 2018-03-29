@@ -40,6 +40,3 @@ class TimestampModel(CacheMixinModel, models.Model):
     class Meta(object):
         """Meta info for TimeStamp abstract model"""
         abstract = True
-
-
-
