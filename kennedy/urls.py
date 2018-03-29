@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic import TemplateView, RedirectView
 from django.urls import reverse_lazy
 
@@ -15,6 +16,14 @@ admin.site.logout = RedirectView.as_view(
 
 # pylint: disable=invalid-name
 urlpatterns = [
+    url(
+        r'^favicon.ico$',
+        RedirectView.as_view(
+            url=staticfiles_storage.url('img/favicons/favicon.ico'),
+            permanent=False),
+        name="favicon"
+    ),
+
     # By default disable bots
     url(r'^robots\.txt$', TemplateView.as_view(
         template_name="robots.txt", content_type='text/plain')),
