@@ -69,6 +69,7 @@ class Election(TimestampModel):
 class OrganizationElection(TimestampModel, OrganizationMixin):
     """Many to many join table of elections an org is participating in"""
     election = models.ForeignKey(Election)
+    email_wrapper = models.ForeignKey('mailer.EmailWrapper')
 
     class Meta(object):
         """Meta options for OrganizationElection"""

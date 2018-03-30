@@ -114,6 +114,7 @@ INSTALLED_APPS = [
     'location',
     'branding',
     'election',
+    'mailer',
 
     'import',
 
