@@ -73,6 +73,24 @@ header{
                         background: $blue;
                         color: $white;
                     }
+
+                }
+            }
+            @each $name, $color in $manageColors {
+                .#{$name}-nav {
+                    a.dropdown-toggle {
+                        &:hover,
+                        &:focus {
+                            border-bottom: 8px solid $color;
+                        }
+                    }
+                    .nav-sub-item a {
+                        &:hover,
+                        &:focus {
+                            background: $color !important;
+                        }
+                    }
+
                 }
             }
             .kennedy-dropdown:hover .dropdown-menu,
