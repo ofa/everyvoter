@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('election', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='election.Election')),
-                ('organization', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
+                ('organization', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='branding.Organization', editable=False)),
             ],
             bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
         ),
