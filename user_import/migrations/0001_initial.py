@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('status', models.CharField(choices=[(b'success', b'Succeeded'), (b'failed', b'Failed')], max_length=50)),
                 ('note', models.TextField(null=True)),
-                ('import_record', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='import.ImportRecord')),
+                ('import_record', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='user_import.ImportRecord')),
             ],
             options={
                 'verbose_name': 'Import Record Status',

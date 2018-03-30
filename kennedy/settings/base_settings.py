@@ -116,7 +116,7 @@ INSTALLED_APPS = [
     'election',
     'mailer',
 
-    'import',
+    'user_import',
 
     'django_s3_collectstatic',
 
