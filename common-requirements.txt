@@ -17,6 +17,7 @@ phonenumberslite==8.8.9
 django-html5==1.0.0
 django_sekizai==0.10.0
 django-crispy-forms==1.7.2
+django-smalluuid==1.1.1
 
 # Environ for management
 django-environ==0.4.1

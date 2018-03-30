@@ -13,8 +13,8 @@ def create_default_org(apps, schema_editor):
     Organization = apps.get_model('branding', 'Organization')
 
     org = Organization.objects.create(name='Default', homepage='http://localhost', platform_name='Voting System')
-    Domain.objects.create(hostname='localhost', organization=org)
     Domain.objects.create(hostname='testserver', organization=org)
+    Domain.objects.create(hostname='localhost', organization=org)
 
 
 class Migration(migrations.Migration):

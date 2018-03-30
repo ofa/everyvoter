@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth import models as auth_models
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
+from django_smalluuid.models import SmallUUIDField, uuid_default
 
 from branding.mixins import OrganizationMixin, OrganizationManagerMixin
 from kennedy_common.utils.models import TimestampModel
@@ -37,9 +38,8 @@ class User(
         TimestampModel, OrganizationMixin, auth_models.AbstractBaseUser,
         auth_models.PermissionsMixin):
     """Kenedy application user"""
-    username = models.CharField(
-        'Username', max_length=150, unique=True, default=uuid.uuid4,
-        editable=False)
+    username = SmallUUIDField('Username', max_length=150, unique=True,
+                              default=uuid_default(), editable=False)
 
     is_staff = models.BooleanField(_('Staff Status'), default=False)
     is_active = models.BooleanField(_('Active'), default=True, db_index=True)
@@ -51,6 +51,8 @@ class User(
     locations = models.ManyToManyField(
         'location.Location', through='location.UserLocation')
 
+    unsubscribed = models.BooleanField(default=False)
+
     # The actual username field will be email, but we can't add a unique
     # constraint on email, while we can on username
     USERNAME_FIELD = 'username'
@@ -61,6 +63,10 @@ class User(
     class Meta(object):
         """Meta options for the model"""
         unique_together = ('email', 'organization')
+        indexes = [
+            models.Index(fields=['organization', 'is_active', 'unsubscribed'],
+                         name="org_active_unsub_idx")
+        ]
 
     def __unicode__(self):
         """Unicode representation of the user"""

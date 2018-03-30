@@ -25,9 +25,8 @@ class BrandingMiddleware(object):
         organization = cache.get(cache_key)
 
         if not organization:
-            domain_queryset = Domain.objects.select_related('organization')
-
-            print domain_queryset
+            domain_queryset = Domain.objects.select_related(
+                'organization', 'organization__primary_domain')
 
             try:
                 domain = domain_queryset.get(hostname=domain)

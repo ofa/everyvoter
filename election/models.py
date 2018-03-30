@@ -1,7 +1,8 @@
 """Election-related Models"""
 from django.db import models
 
-from kennedy_common.utils.models import CacheMixinModel, TimestampModel
+from branding.mixins import OrganizationMixin
+from kennedy_common.utils.models import TimestampModel
 from election.choices import DISTRICT_TYPES, ELECTION_TYPES, STATES
 
 
@@ -28,6 +29,7 @@ class State(TimestampModel):
     notes = models.TextField(blank=True)
 
     class Meta(object):
+        """Meta options for State"""
         verbose_name = "State"
         verbose_name_plural = "States"
 
@@ -62,3 +64,12 @@ class Election(TimestampModel):
         """String representation of Election"""
         return "{state} {election_type} Election".format(
             state=self.state, election_type=self.election_type)
+
+
+class OrganizationElection(TimestampModel, OrganizationMixin):
+    """Many to many join table of elections an org is participating in"""
+    election = models.ForeignKey(Election)
+
+    class Meta(object):
+        """Meta options for OrganizationElection"""
+        unique_together = ['organization', 'election']
