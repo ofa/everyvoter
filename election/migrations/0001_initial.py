@@ -72,6 +72,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'State',
                 'verbose_name_plural': 'States',
+                'ordering': ['name']
             },
             bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
         ),

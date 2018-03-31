@@ -14,7 +14,8 @@ class Organization(TimestampModel):
     platform_name = models.CharField('Platform Name', max_length=50)
     primary_domain = models.ForeignKey(
         'Domain', verbose_name='Primary Domain',
-        help_text='Domain to attach all links to', related_name='primary_domain')
+        help_text='Domain to attach all links to',
+        related_name='primary_domain')
     elections = models.ManyToManyField(
         'election.Election', through='election.OrganizationElection')
 
@@ -34,8 +35,9 @@ class Organization(TimestampModel):
         return super(Organization, self).save(self, *args, **kwargs)
 
 
-class Domain(TimestampModel, OrganizationMixin):
+class Domain(TimestampModel):
     """Domain that app is hosted at"""
+    organization = models.ForeignKey(Organization, db_index=True)
     hostname = models.CharField('Hostname', max_length=100, unique=True)
 
     class Meta(object):

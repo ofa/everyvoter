@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='domain',
             name='organization',
-            field=models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='branding.Organization'),
         ),
         migrations.RunPython(create_default_org, lambda x,y: None)
     ]

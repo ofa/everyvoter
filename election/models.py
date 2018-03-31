@@ -32,6 +32,7 @@ class State(TimestampModel):
         """Meta options for State"""
         verbose_name = "State"
         verbose_name_plural = "States"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
