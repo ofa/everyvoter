@@ -6,6 +6,7 @@ from django.db import models
 
 from branding.mixins import OrganizationMixin
 from kennedy_common.utils.models import TimestampModel
+from kennedy_common.utils.storages import AttachmentStorage
 
 
 RECORD_STATUSES = (
@@ -16,7 +17,12 @@ RECORD_STATUSES = (
 
 class UserImport(TimestampModel, OrganizationMixin):
     """Import of Users"""
-    file = models.FileField(null=True)
+    name = models.CharField('Name', max_length=50)
+    count = models.IntegerField('Total Records', editable=False, default=0)
+    file = models.FileField(
+        upload_to='user_imports/',
+        storage=AttachmentStorage(),
+        null=True)
     default = models.BooleanField(
         verbose_name='Default API Import', default=False, editable=False)
 
@@ -27,15 +33,7 @@ class UserImport(TimestampModel, OrganizationMixin):
 
     def __unicode__(self):
         """Unicode representation of the import"""
-        if self.file:
-            return u"{created} {filename}".format(
-                created=self.created_at,
-                filename=os.path.basename(self.file.name))
-        elif self.default:
-            return "API Import"
-        else:
-            return "{created} {uuid}".format(
-                created=self.created_at, uuid=self.id)
+        return self.name
 
 
 class ImportRecord(models.Model):
