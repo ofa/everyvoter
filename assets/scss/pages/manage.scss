@@ -2,6 +2,22 @@
     #main {
         margin-top: 30px;
     }
+    @each $name, $color in $manageColors {
+        &.#{$name} {
+            h2 {
+                color: $color;
+            }
+            .btn {
+                padding: 10px 20px 10px;
+                font-size: 20px;
+                background: $color;
+                &:active, &:hover, &:focus {
+                    background: darken($color, 15%);
+                }
+            }
+        }
+    }
+    font-family: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .feature-button{

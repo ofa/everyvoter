@@ -20,3 +20,11 @@ class OrganizationManagerMixin(object):
             return self.get_queryset()
         else:
             return self.get_queryset().filter(organization=user.organization)
+
+
+class OrganizationViewMixin(object):
+    """View for filtering by organization"""
+    def get_queryset(self):
+        """Get the queryset filtered by organization"""
+        queryset = super(OrganizationViewMixin, self).get_queryset()
+        return queryset.filter(organization=self.request.organization)

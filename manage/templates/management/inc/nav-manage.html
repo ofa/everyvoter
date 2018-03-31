@@ -41,10 +41,10 @@
         <div class="dropdown-inner">
             <div class="row">
                 <li class="col-md-4 nav-item nav-sub-item"> 
-                    <a href="#">Find People</a>
+                    <a href="{% url 'manage:accounts:list_users' %}">Find People</a>
                 </li>
                 <li class="col-md-4 nav-item nav-sub-item"> 
-                    <a href="#">Import</a>
+                    <a href="{% url 'manage:user_import:list_imports' %}">Import</a>
                 </li>
             </div>
         </div>

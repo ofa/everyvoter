@@ -1,0 +1,14 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags %}
+
+{% block title %}{{ organization.platform_name }} Users{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "people" %}
+    <div class="col-md-12">
+        <h2>{{ organization.platform_name }} Users</h2>
+        {% for account in object_list %}
+            <p><a href="{% url 'manage:accounts:view_user' account.username %}">{{ account }}</a> {{ account.email }}</p>
+        {% endfor %}
+    </div>
+{% endblock page_content %}

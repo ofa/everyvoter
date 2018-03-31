@@ -1,0 +1,20 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags %}
+
+{% block title %}{{ organization.platform_name }} User Imports{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "people" %}
+    <div class="col-md-12">
+        <h2>{{ organization.platform_name }} User Imports</h2>
+        {% for import in object_list %}
+            <p>
+                {% if import.file %}
+                    <a href="{{ import.file }}">{{ import.name }}</a>
+                {% else %}
+                    {{ import.name }}
+                {% endif %}
+                <br>Count: {{ import.count }}<br>{{ import.created_at }}</p>
+        {% endfor %}
+    </div>
+{% endblock page_content %}

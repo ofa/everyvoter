@@ -1,10 +1,13 @@
 """Account-related Views"""
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, TemplateView, ListView, DetailView
 
 from accounts.forms import UserForm
 from accounts.utils_user import create_user
+from accounts.models import User
+from branding.mixins import OrganizationViewMixin
+from manage.mixins import ManageViewMixin
 
 
 class CreateUserView(FormView):
@@ -33,3 +36,18 @@ class CreateUserView(FormView):
 class UserCreatedView(TemplateView):
     """Page to show after user is successfully created"""
     template_name = "accounts/user_created.html"
+
+
+class UserManageListView(OrganizationViewMixin, ManageViewMixin, ListView):
+    """List all users"""
+    model = User
+    template_name = "accounts/manage/list_users.html"
+    paginate_by = 10
+
+
+class UserManageDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
+    """View a single user"""
+    model = User
+    template_name = "accounts/manage/view_user.html"
+    context_object_name = 'account'
+    slug_field = 'username'

@@ -1,0 +1,17 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags %}
+
+{% block title %}{{ account }}{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "people" %}
+    <div class="col-md-12">
+        <h2>{{ account }}</h2>
+        <p>{{ account.email }}</p>
+        <p>{{ account.location }}</p>
+        <h3>Districts</h3>
+        {% for district in account.location.districts.all %}
+            <p>{{ district.name }}</p>
+        {% endfor %}
+    </div>
+{% endblock page_content %}

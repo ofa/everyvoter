@@ -6,6 +6,10 @@ from manage import views
 
 # pylint: disable=invalid-name
 urlpatterns = [
+    url(r'^user_import/',
+        include('user_import.manage_urls', namespace='user_import')),
+    url(r'^users/',
+        include('accounts.manage_urls', namespace='accounts')),
     url(r'^login/$',
         views.LoginView.as_view(), name='manage_login'),
     url(r'^logout/$',
