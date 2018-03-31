@@ -42,6 +42,7 @@ if env('USE_S3'):
 
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
     DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+    ATTACHMENT_STORAGE_ENGINE = DEFAULT_FILE_STORAGE
 
     # Paths on S3 for various content
     DEFAULT_S3_PATH = env('DEFAULT_S3_PATH')
@@ -64,3 +65,4 @@ else:
 
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    ATTACHMENT_STORAGE_ENGINE = DEFAULT_FILE_STORAGE
