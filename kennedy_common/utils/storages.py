@@ -5,7 +5,7 @@ Swiped directly from Connect, because this should only ever be written once.
 # pylint: disable=no-init
 
 from datetime import datetime
-from uuid import uuid4
+from smalluuid.smalluuid import SmallUUID
 
 from django.conf import settings
 from django.core.files.storage import get_storage_class
@@ -25,9 +25,8 @@ AttachmentStorageEngine = get_storage_class(
 
 def uniqify_filename(filename):
     """Generate a unique filename that maintains the extension"""
-    filelist = filename.rsplit('.', 1)
-    filelist[0] = uuid4().hex
-    return '.'.join(filelist)
+    return '{unique}.{existing_filename}'.format(
+        unique=unicode(SmallUUID())[:5], existing_filename=filename)
 
 
 def setting(name, default=None):
@@ -60,7 +59,7 @@ class HighValueStorage(AttachmentStorageEngine):
 class AttachmentStorage(HighValueStorage):
     """AttachmentStorage is a secure django storage for all file attachments"""
 
-    def get_available_name(self, name):
+    def get_available_name(self, name, max_length=None):
         """
         In order to prevent file overwriting one another this will generate
         a new filename with the format `YYMMDD.uniquehash.filename.extension`
