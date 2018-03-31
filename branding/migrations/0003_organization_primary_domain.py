@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organization',
             name='primary_domain',
-            field=models.ForeignKey(default=False, help_text=b'Domain to attach all links to', on_delete=django.db.models.deletion.CASCADE, related_name='primary_domain', to='branding.Domain', verbose_name=b'Primary Domain', null=True),
+            field=models.ForeignKey(default=False, help_text=b'Domain to attach all links to', on_delete=django.db.models.deletion.SET_NULL, related_name='primary_domain', to='branding.Domain', verbose_name=b'Primary Domain', null=True),
             preserve_default=False,
         ),
         migrations.RunPython(assign_primary_domain, lambda x, y: None)

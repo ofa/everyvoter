@@ -14,6 +14,10 @@ class OrganizationAdmin(admin.ModelAdmin):
         """Organizations can not be added via the django admin"""
         return False
 
+    def has_delete_permission(self, request, obj=None):
+        """Organizations can not be deleted via the django admin"""
+        return False
+
 
 @admin.register(models.Domain)
 class DomainAdmin(admin.ModelAdmin):

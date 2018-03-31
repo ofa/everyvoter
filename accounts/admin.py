@@ -25,3 +25,7 @@ class UserAdmin(BaseUserAdmin):
     def has_add_permission(self, request):
         """No-one should be able to add users using the django admin"""
         return False
+
+    def has_delete_permission(self, request, obj=None):
+        """Users can not be deleted via the django admin"""
+        return False
