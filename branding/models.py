@@ -1,6 +1,8 @@
 """Models related to different organizations"""
 from django.core.cache import cache
+from django.conf import settings
 from django.db import models
+from django.utils.functional import cached_property
 
 from branding.mixins import OrganizationMixin
 from branding.utils import org_domain_cache_key
@@ -15,7 +17,7 @@ class Organization(TimestampModel):
     primary_domain = models.ForeignKey(
         'Domain', verbose_name='Primary Domain',
         help_text='Domain to attach all links to',
-        related_name='primary_domain')
+        related_name='primary_domain', null=True, default=False)
     elections = models.ManyToManyField(
         'election.Election', through='election.OrganizationElection')
 
@@ -34,10 +36,24 @@ class Organization(TimestampModel):
             cache.delete(org_domain_cache_key(domain.hostname))
         return super(Organization, self).save(self, *args, **kwargs)
 
+    @cached_property
+    def url(self):
+        """Formatted URL of the domain"""
+        if self.primary_domain:
+            host = self.primary_domain.hostname
+        else:
+            host = Domain.objects.filter(organization=self).first()
+
+        if settings.DEBUG:
+            return 'http://{host}'.format(host=host)
+
+        return 'https://{host}'.format(host=host)
+
 
 class Domain(TimestampModel):
     """Domain that app is hosted at"""
-    organization = models.ForeignKey(Organization, db_index=True)
+    organization = models.ForeignKey(
+        Organization, db_index=True)
     hostname = models.CharField('Hostname', max_length=100, unique=True)
 
     class Meta(object):
@@ -49,17 +65,3 @@ class Domain(TimestampModel):
         """String representation of the domain"""
         return self.hostname
 
-    def save(self, *args, **kwargs):
-        """Save the domain"""
-        # Only one domain can be "default" per organization
-        if self.is_primary:
-            # select all other default items
-            queryset = Domain.objects.filter(
-                organization=self.organization, is_primary=True)
-            # except self (if self already exists)
-            if self.pk:
-                queryset = queryset.exclude(pk=self.pk)
-            # and deactive them
-            queryset.update(is_primary=False)
-
-        return super(Domain, self).save(*args, **kwargs)

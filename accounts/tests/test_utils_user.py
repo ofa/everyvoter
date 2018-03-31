@@ -14,7 +14,7 @@ class TestCreateUser(KennedyTestMixin, TestCase):
     """Test the create_user method"""
     def setUp(self):
         """Setup the test"""
-        self.organization = mommy.make('branding.Organization')
+        self.organization = self.create_organization()
 
     def test_invalid_email(self):
         """Test sending in an invalid email"""

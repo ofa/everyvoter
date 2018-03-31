@@ -3,8 +3,10 @@ import os
 import json
 import uuid
 
+from model_mommy import mommy
+
 from accounts.utils_user import create_user
-from branding.models import Organization
+from branding.models import Organization, Domain
 from location.utils import get_location
 
 # pylint: disable=invalid-name
@@ -17,6 +19,10 @@ with open(illinois_file) as json_file:
 
 class KennedyTestMixin(object):
     """Mixin for Kennedy tests"""
+    def create_organization(self):
+        """Create an organization with the test domain"""
+        domain = Domain.objects.get(hostname='testserver')
+        return mommy.make('Organization', primary_domain=domain)
 
     def create_location(self, state_id='IL', address=None):
         """Create a new Location"""
