@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
-                ('file', models.FileField(null=True, storage=kennedy_common.utils.storages.AttachmentStorage(), upload_to=b'user_imports/')),
+                ('file', models.FileField(null=True, storage=kennedy_common.utils.storages.HighValueStorage(), upload_to=b'user_imports/')),
                 ('default', models.BooleanField(default=False, editable=False, verbose_name=b'Default API Import')),
             ],
             options={

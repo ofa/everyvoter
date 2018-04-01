@@ -6,7 +6,7 @@ from django.db import models
 
 from branding.mixins import OrganizationMixin
 from kennedy_common.utils.models import TimestampModel
-from kennedy_common.utils.storages import AttachmentStorage
+from kennedy_common.utils.storages import HighValueStorage
 
 
 RECORD_STATUSES = (
@@ -21,7 +21,7 @@ class UserImport(TimestampModel, OrganizationMixin):
     count = models.IntegerField('Total Records', editable=False, default=0)
     file = models.FileField(
         upload_to='user_imports/',
-        storage=AttachmentStorage(),
+        storage=HighValueStorage(),
         null=True)
     default = models.BooleanField(
         verbose_name='Default API Import', default=False, editable=False)

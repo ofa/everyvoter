@@ -9,7 +9,8 @@ env = environ.Env(
     DEBUG=(bool, False),
     USE_S3=(bool, False),
     DEFAULT_S3_PATH=(str, 'kennedy/uploads'),
-    STATIC_S3_PATH=(str, 'kennedy/static')
+    STATIC_S3_PATH=(str, 'kennedy/static'),
+    AWS_PRIVATE_STORAGE_EXPIRATION=(int, 60 * 60 * 24)
 )
 
 
@@ -29,11 +30,18 @@ AWS_PRELOAD_METADATA = True
 if env('USE_S3'):
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 
+    # We need to use a separate bucket from our main one for high value files
+    # like those with PII, because we don't want to use a bucket that may have
+    # read-by-default ACL, and will want to be able to use query string auth
+    AWS_PRIVATE_STORAGE_BUCKET_NAME = env('AWS_PRIVATE_STORAGE_BUCKET_NAME')
+
+    # How long links should be valid for high value content.
+    AWS_PRIVATE_STORAGE_EXPIRATION = env('AWS_PRIVATE_STORAGE_EXPIRATION')
+
     # If you're using a custom domain other than `bucketname.s3.amazonaws.com`
     # assign it to `AWS_S3_CUSTOM_DOMAIN`
-    # This will be used for static assets only, as our storage engine does
-    # not support secure URLs not hosted on S3.
-    # THIS DOMAIN MUST HAVE A VALID SSL CERTIFICATE
+    # High-value assets (i.e. files with PII) will still serve from a
+    # `bucketname.s3.amazonaws.com` URL to ensure that query-string auth works.
     AWS_S3_CUSTOM_DOMAIN = env(
         'AWS_S3_CUSTOM_DOMAIN',
         default='%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME)
@@ -41,8 +49,8 @@ if env('USE_S3'):
     AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    ATTACHMENT_STORAGE_ENGINE = DEFAULT_FILE_STORAGE
+    DEFAULT_FILE_STORAGE = 'kennedy_common.utils.storages.AttachmentStorage'
+    ATTACHMENT_STORAGE_ENGINE = 's3_folder_storage.s3.DefaultStorage'
 
     # Paths on S3 for various content
     DEFAULT_S3_PATH = env('DEFAULT_S3_PATH')

@@ -1,6 +1,6 @@
 """Secure storage backends for Kennedy
 
-Swiped directly from Connect, because this should only ever be written once.
+Swiped from Connect, because this should only ever be written once.
 """
 # pylint: disable=no-init
 
@@ -37,26 +37,8 @@ def setting(name, default=None):
     return getattr(settings, name, default)
 
 
-class HighValueStorage(AttachmentStorageEngine):
-    """
-    A custom storage that, when attached to boto, will use object access
-    controll to make uploaded assets protected
-    """
 
-    default_acl = 'private'
-    secure_urls = True
-
-    # We have to override any `custom_domain` set in the settings file
-    # because our storage engine will take that setting as a signal that all
-    # files have a 'public' ACL
-    custom_domain = None
-
-    # All URLs should expire after 1 day
-    querystring_expire = 60 * 60 * 24
-    querystring_auth = True
-
-
-class AttachmentStorage(HighValueStorage):
+class AttachmentStorage(AttachmentStorageEngine):
     """AttachmentStorage is a secure django storage for all file attachments"""
 
     def get_available_name(self, name, max_length=None):
@@ -87,3 +69,22 @@ class AttachmentStorage(HighValueStorage):
             filename=uniqify_filename(splitname[1])
         )
         return final_name
+
+
+class HighValueStorage(AttachmentStorage):
+    """
+    A custom storage that, when attached to boto, will use object access
+    control to make uploaded assets protected
+    """
+
+    default_acl = 'private'
+    secure_urls = True
+    bucket_name = settings.AWS_PRIVATE_STORAGE_BUCKET_NAME
+
+    # We have to override any `custom_domain` set in the settings file
+    # because our storage engine will take that setting as a signal that all
+    # files have a 'public' ACL
+    custom_domain = None
+
+    querystring_expire = settings.AWS_PRIVATE_STORAGE_EXPIRATION
+    querystring_auth = True
