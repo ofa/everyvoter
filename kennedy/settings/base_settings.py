@@ -7,7 +7,7 @@ import environ
 env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
-    CONNECT_APP=(str, False),
+    APP_NAME=(str, 'kennedy-default'),
     TIME_ZONE=(str, 'US/Eastern'),
     LANGUAGE_CODE=(str, 'en-us'),
     KEY_PREFIX=(str, ''),
@@ -25,6 +25,7 @@ env = environ.Env(
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
     CORS_ORIGIN_WHITELIST=(list, ['localhost:8000', '127.0.0.1:8000']),
+    SES_CONFIGURATIONSET_NAME=(str, 'everyvoter')
 )
 
 
@@ -45,6 +46,12 @@ DEBUG = env('DEBUG')
 ROOT_URLCONF = 'kennedy.urls'
 WSGI_APPLICATION = 'kennedy.wsgi.application'
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+
+
+#####
+# Application name (i.e. `kennedy-prod`, `kennedy-staging`, etc)
+
+APP_NAME = env('APP_NAME')
 
 
 ####
@@ -242,6 +249,11 @@ CORS_ORIGIN_WHITELIST = env('CORS_ORIGIN_WHITELIST')
 # since your code may rely on non-S3 parts of AWS it might be useful here.
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
+
+####
+# Email Server Settings
+SES_CONFIGURATIONSET_NAME = env('SES_CONFIGURATIONSET_NAME')
 
 
 ####
