@@ -21,6 +21,7 @@ env = environ.Env(
     SESSION_COOKIE_AGE=(int, 31536000),
     AWS_ACCESS_KEY_ID=(str, ''),
     AWS_SECRET_ACCESS_KEY=(str, ''),
+    AWS_DEFAULT_REGION=(str, 'us-east-1'),
     DEBUG_TOOLBAR_IPS=(list, ['127.0.0.1']),
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
@@ -249,7 +250,7 @@ CORS_ORIGIN_WHITELIST = env('CORS_ORIGIN_WHITELIST')
 # since your code may rely on non-S3 parts of AWS it might be useful here.
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-
+AWS_DEFAULT_REGION = env('AWS_DEFAULT_REGION')
 
 ####
 # Email Server Settings

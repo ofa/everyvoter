@@ -9,6 +9,7 @@ from mailer.mailserver import deliver
 class TestDeliver(KennedyTestMixin, TestCase):
     """Test the create_user method"""
 
+    @override_settings(SES_CONFIGURATIONSET_NAME='kennedy-set')
     @override_settings(APP_NAME='cool-app')
     @patch('mailer.mailserver.client')
     def test_success(self, mock):
@@ -30,6 +31,8 @@ class TestDeliver(KennedyTestMixin, TestCase):
                          'from@example.local')
         self.assertEqual(send_email_call_kwargs['Destination']['ToAddresses'],
                          ['to@example.local'])
+        self.assertEqual(send_email_call_kwargs['ConfigurationSetName'],
+                         'kennedy-set')
 
         # Because Tags is a dictionary with one extra field turned into a list
         # of dictionaries there is essentially no clean way of testing the tags

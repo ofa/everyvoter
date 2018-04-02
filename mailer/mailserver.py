@@ -7,7 +7,8 @@ import boto3
 client = boto3.client(
     'ses',
     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    region_name=settings.AWS_DEFAULT_REGION)
 
 
 def deliver(to_address, from_address, subject, html, tags=None):
@@ -63,6 +64,6 @@ def deliver(to_address, from_address, subject, html, tags=None):
             }
         },
         Tags=final_tags,
-        ConfigurationSetName='everyvoter'
+        ConfigurationSetName=settings.SES_CONFIGURATIONSET_NAME
     )
     return response['MessageId']
