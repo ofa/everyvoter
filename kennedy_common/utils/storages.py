@@ -37,6 +37,9 @@ def setting(name, default=None):
     return getattr(settings, name, default)
 
 
+private_bucket_name = getattr(settings, 'AWS_PRIVATE_STORAGE_BUCKET_NAME', '')
+querystring_expire = getattr(settings, 'AWS_PRIVATE_STORAGE_EXPIRATION', 60)
+
 
 class AttachmentStorage(AttachmentStorageEngine):
     """AttachmentStorage is a secure django storage for all file attachments"""
@@ -79,12 +82,12 @@ class HighValueStorage(AttachmentStorage):
 
     default_acl = 'private'
     secure_urls = True
-    bucket_name = settings.AWS_PRIVATE_STORAGE_BUCKET_NAME
+    bucket_name = private_bucket_name
 
     # We have to override any `custom_domain` set in the settings file
     # because our storage engine will take that setting as a signal that all
     # files have a 'public' ACL
     custom_domain = None
 
-    querystring_expire = settings.AWS_PRIVATE_STORAGE_EXPIRATION
+    querystring_expire = querystring_expire
     querystring_auth = True
