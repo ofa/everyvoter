@@ -2,7 +2,7 @@
     <div class="row position-relative">
         <div class="col-md-2 col-xs-6">
             <div class="logo">
-                <a href="{{ organization.homepage }}">
+                <a href="{% url 'manage:manage' %}">
                     <span class="sr-only">{{ organization.name }}</span>
                 </a>
             </div>
@@ -76,7 +76,7 @@
                         <a href="#">Theme</a>
                     </li>
                     <li class="col-md-4 nav-item nav-sub-item"> 
-                        <a href="#">Settings</a>
+                        <a href="{% url 'manage:branding:update_organization' %}">Settings</a>
                     </li>
                     <li class="col-md-4 nav-item nav-sub-item"> 
                         <a href="#">Manage Staff</a>

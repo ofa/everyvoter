@@ -21,6 +21,8 @@ class Organization(TimestampModel):
         on_delete=models.SET_NULL)
     elections = models.ManyToManyField(
         'election.Election', through='election.OrganizationElection')
+    privacy_url = models.URLField('Privacy Policy URL')
+    terms_url = models.URLField('Terms of Service URL')
 
     class Meta(object):
         """Meta options for Organization"""
@@ -35,7 +37,7 @@ class Organization(TimestampModel):
         """Save the organization"""
         for domain in self.domain_set.all():
             cache.delete(org_domain_cache_key(domain.hostname))
-        return super(Organization, self).save(self, *args, **kwargs)
+        return super(Organization, self).save(*args, **kwargs)
 
     @cached_property
     def url(self):
