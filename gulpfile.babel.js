@@ -33,7 +33,8 @@ const vendorConcatPaths = {
     src: [
             'node_modules/js-cookie/src/js.cookie.js',
             'node_modules/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
-            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/transition.js'
+            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
+            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js'
         ],
     dest: `${dirs.dest}/js-min`
 }

@@ -7,11 +7,8 @@ from user_import import models
 @admin.register(models.UserImport)
 class UserImportAdmin(admin.ModelAdmin):
     """Admin View for User Import"""
-    list_display = ('name', 'count', 'default', 'created_at', 'organization')
+    list_display = ('name', 'default', 'created_at', 'organization')
     search_fields = ('name',)
-    readonly_fields = [
-        'count'#, 'file'
-    ]
     list_filter = ('organization__name',)
 
     def has_add_permission(self, request):

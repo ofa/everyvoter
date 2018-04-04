@@ -1,0 +1,16 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags static %}
+
+{% block title %}{{ organization.platform_name }} User Imports{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "people" %}
+    <div class="col-md-12">
+        <h2>New Import</h2>
+        <p>Base your import off this <a href="{% static "user_import/example_import.csv" %}">example template</a>.</p>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" class="btn" value="Save" />
+</form>
+    </div>
+{% endblock page_content %}

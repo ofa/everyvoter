@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userimport',
             name='name',
-            field=models.CharField(default='', max_length=50, verbose_name=b'Name'),
+            field=models.CharField(default='', max_length=50, verbose_name=b'Import Name'),
             preserve_default=False,
         ),
         migrations.RunPython(add_default_records, lambda x, y: None)
