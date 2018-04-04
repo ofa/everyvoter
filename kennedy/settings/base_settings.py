@@ -109,6 +109,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
 
+    'crispy_forms',
+
     'django_celery_results',
 
     # `django.contrib.auth` has to be after `accounts` because we override
@@ -272,6 +274,11 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+
+###
+# Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 ####

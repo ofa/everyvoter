@@ -7,7 +7,13 @@
 
 {% block body %}
 {% add_data "body-class" "manage" %}
-
 {{ block.super }}
-
 {% endblock body %}
+
+{% block subnav %}
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:"info" }}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endblock subnav %}

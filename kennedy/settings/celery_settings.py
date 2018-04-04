@@ -19,7 +19,7 @@ env = environ.Env(
     CELERY_ALWAYS_EAGER=(bool, True),
     CELERY_TIMEZONE=(str, 'UTC'),
     CELERY_SEND_EVENTS=(bool, False),
-    CELERY_RESULT_BACKEND=(str, 'django-db')
+    CELERY_RESULT_BACKEND=(str, 'django-db'),
 )
 
 
@@ -39,9 +39,11 @@ CELERY_SEND_EVENTS = env('CELERY_SEND_EVENTS')
 CELERY_EVENT_QUEUE_EXPIRES = env('CELERY_EVENT_QUEUE_EXPIRES')
 
 if os.environ.get('CELERY_ALWAYS_EAGER', False):
-    CELERY_ALWAYS_EAGER = env('CELERY_ALWAYS_EAGER')
+    CELERY_TASK_ALWAYS_EAGER = env('CELERY_ALWAYS_EAGER')
 else:
-    CELERY_ALWAYS_EAGER = env('DEBUG')
+    CELERY_TASK_ALWAYS_EAGER = env('DEBUG')
+
+CELERY_TASK_EAGER_PROPAGATES = True
 
 # By default Kennedy does not consume results
 CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
