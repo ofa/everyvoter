@@ -23,6 +23,7 @@ env = environ.Env(
     AWS_SECRET_ACCESS_KEY=(str, ''),
     AWS_DEFAULT_REGION=(str, 'us-east-1'),
     DEFAULT_FROM_EMAIL=(str, 'Everyvoter <app@everyvoter.us>'),
+    EMAIL_ACTIVE=(bool, False),
     DEBUG_TOOLBAR_IPS=(list, ['127.0.0.1']),
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
@@ -262,10 +263,12 @@ AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_DEFAULT_REGION = env('AWS_DEFAULT_REGION')
 
+
 ####
 # Email Server Settings
 SES_CONFIGURATIONSET_NAME = env('SES_CONFIGURATIONSET_NAME')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+EMAIL_ACTIVE = env('EMAIL_ACTIVE')
 
 ####
 # Geocod.io Key

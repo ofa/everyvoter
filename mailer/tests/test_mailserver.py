@@ -9,6 +9,7 @@ from mailer.mailserver import deliver
 class TestDeliver(KennedyTestMixin, TestCase):
     """Test the create_user method"""
 
+    @override_settings(EMAIL_ACTIVE=True)
     @override_settings(SES_CONFIGURATIONSET_NAME='kennedy-set')
     @override_settings(APP_NAME='cool-app')
     @patch('mailer.mailserver.client')
@@ -41,3 +42,12 @@ class TestDeliver(KennedyTestMixin, TestCase):
         for tag in send_email_call_kwargs['Tags']:
             self.assertIn(tag['Name'], ['Example', 'app'])
             self.assertIn(tag['Value'], ['One', 'cool-app'])
+
+    @override_settings(EMAIL_ACTIVE=False)
+    @patch('mailer.mailserver.client')
+    def test_disabled(self, mock):
+        """Test that an email is not sent with EMAIL_ACTIVE is false"""
+        response = deliver(
+            'to@example.com', 'from@example.local', 'Subject', 'Body', {})
+        self.assertEqual(response, '')
+        self.assertFalse(mock.send_email.called)

@@ -29,6 +29,11 @@ def deliver(to_address, from_address, subject, html, tags=None):
         string
     """
 
+    # If `EMAIL_ACTIVE` isn't true, bail out because we're not sending emails
+    if not settings.EMAIL_ACTIVE:
+        return ''
+
+
     if not tags:
         tags = {}
     else:
