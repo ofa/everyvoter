@@ -43,6 +43,7 @@ class UserManageListView(OrganizationViewMixin, ManageViewMixin, ListView):
     model = User
     template_name = "accounts/manage/list_users.html"
     paginate_by = 10
+    context_object_name = 'accounts'
 
 
 class UserManageDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
