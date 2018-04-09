@@ -1,18 +1,23 @@
 {% load static sekizai_tags %}
 <!doctype html>
-<html>
-    <head>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>{% block title %}{{ request.organization.platform_name }}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'css/kennedy.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/everyvoter.css' %}" />
     {% block head %}{% endblock %}
 </head>
 {% with_data "body-class" as body_classes %}
 <body {% block extrabody %}{% endblock %} class="{% for body_class in body_classes %}{{ body_class }} {% endfor %}">
 {% end_with_data %}
+
         {% block body %}
+
             <div id="wrap" class="wrap">
                 {% block nav_main %}
-                    {% include "inc/nav-main.html" %}
                 {% endblock nav_main %}
 
                 {% block content %}
@@ -26,11 +31,12 @@
                 {% endblock content%}
             </div>
         {% endblock %}
+
         {% block foot %}
             {% include "inc/footer.html" %}
         {% endblock %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js-min/vendor.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/kennedy.js' %}"></script>
-</body>
+    <script type="text/javascript" src="{% static 'js/everyvoter.js' %}"></script>
+  </body>
 </html>

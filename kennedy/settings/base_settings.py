@@ -289,7 +289,7 @@ USE_TZ = True
 
 ###
 # Crispy Forms
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 ####

@@ -13,8 +13,6 @@ import rename from 'gulp-rename';
 import sass from 'gulp-sass';
 import uglify from 'gulp-uglify';
 import gutil from 'gulp-util';
-import iconfont from 'gulp-iconfont';
-import iconfontCss from 'gulp-iconfont-css';
 
 /* Set variables for the different paths */
 const dirs = {
@@ -32,10 +30,8 @@ const scssPaths = {
 const vendorConcatPaths = {
     src: [
             'node_modules/js-cookie/src/js.cookie.js',
-            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
-            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
-            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-            'node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js'
+            'node_modules/popper.js/dist/umd/popper.js',
+            'node_modules/bootstrap/dist/js/bootstrap.js',
         ],
     dest: `${dirs.dest}/js-min`
 }
@@ -63,13 +59,6 @@ const imgPaths = {
 const fontsPaths = {
     src: `${dirs.src}/fonts/**`,
     dest: `${dirs.dest}/fonts/`
-}
-
-const iconPaths = {
-    src: `${dirs.src}/img/icons/*.svg`,
-    fontDest: `${dirs.dest}/fonts/`,
-    scssDest: `../../assets/scss/structure/_icons.scss`,
-    fontPath: `../fonts/`
 }
 
 /* Function to process errors and present them in a nice visual manner */
@@ -133,7 +122,7 @@ gulp.task('js', () => {
 */
 gulp.task('js', () => {
     gulp.src(jsPaths.src)
-        .pipe(concat('kennedy.js'))
+        .pipe(concat('everyvoter.js'))
         .pipe(babel().on('error', error))
         .pipe(gulp.dest(jsPaths.dest))
         .pipe(uglify())
@@ -154,19 +143,6 @@ gulp.task('fonts', () =>{
         .pipe(gulp.dest(fontsPaths.dest));
 });
 
-/* Task to convert svgs to an icon font and build SCSS file */
-gulp.task('icons', function(){
-  gulp.src(iconPaths.src)
-    .pipe(iconfontCss({
-      fontName: 'ofa',
-      targetPath: iconPaths.scssDest,
-      fontPath: iconPaths.fontPath
-    }))
-    .pipe(iconfont({
-      fontName: 'ofa'
-     }))
-    .pipe(gulp.dest(iconPaths.fontDest));
-});
 
 /* Watch function with live reload */
 gulp.task('watch', () => {
@@ -178,10 +154,10 @@ gulp.task('watch', () => {
 });
 
 /* Default task to process all and start watch */
-gulp.task('default', ['scss','vendorConcat','vendorOther','js','img','fonts','icons','watch']);
+gulp.task('default', ['scss','vendorConcat','vendorOther','js','img','fonts','watch']);
 
 /* Build task to run during build processes */
-gulp.task('build', ['scss','vendorConcat','vendorOther','js','img','fonts', 'icons']);
+gulp.task('build', ['scss','vendorConcat','vendorOther','js','img','fonts']);
 
 /* Develop */
 gulp.task('develop', ['build','watch']);

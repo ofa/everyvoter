@@ -9,7 +9,7 @@
         <h2>{{ organization }} Settings</h2>
         <form action="" method="post">{% csrf_token %}
             {{ form|crispy }}
-            <input type="submit" class="btn" value="Update" />
+            <input type="submit" class="btn btn-primary" value="Update" />
         </form>
     </div>
 {% endblock page_content %}

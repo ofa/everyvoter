@@ -4,40 +4,17 @@
     @include cover-settings;
     background-attachment: fixed;
 
-    @media (max-width: $screen-sm-max){
-        background-image: none;
-    }
-
-    header {
-        background: none;
-    }
-
-    .logo{
-        background-image: url(../img/logos/logo-flush-white.svg);
-    }
-
     .public-page-wrap {
         background-color: #fff;
-        margin-top: 150px;
-        margin-bottom: 150px;
-        text-align: center;
+        margin-top: 75px;
+        margin-bottom: 75px;
         padding: 50px;
 
-        @media (max-width: $screen-sm-max){
+        @include media-breakpoint-down(sm){
             margin-top: 30px;
             margin-bottom: 30px;
             padding: 30px;
         }
     }
 
-    .subheading {
-        margin-bottom: 2.1em;
-    }
-
-    form {
-        input {
-            width: 100%;
-            margin-bottom: 1.5em;
-        }
-    }
 }

@@ -1,13 +1,9 @@
 {% extends "base.html" %}
-{% load static sekizai_tags %}
-
-{% block nav_main %}
-    {% include "inc/nav-min.html" %}
-{% endblock nav_main %}
+{% load static sekizai_tags crispy_forms_tags %}
 
 {% block page_content %}
 {% add_data "body-class" "public-page" %}
-    <div class="col-md-6 col-md-offset-3 public-page-wrap">
+    <div class="col-md-6 offset-md-3 public-page-wrap">
         <div class="row">
             <div class="col-md-12">
             <h2>{{ request.organization.platform_name }}</h2>
@@ -20,23 +16,8 @@
             </div>
             <div class="col-md-10 col-md-offset-1">
                 <form role="form" method="POST" action="">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ form.username.errors }}
-                            {{ form.username }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{ form.password.errors }}
-                            {{ form.password }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-block">Login</button>
-                        </div>
-                    </div>
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-block btn-primary">Login</button>
                     {% csrf_token %}
                 </form>
         </div>
