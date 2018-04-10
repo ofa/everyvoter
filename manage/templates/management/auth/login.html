@@ -8,18 +8,10 @@
             <div class="col-md-12">
             <h2>{{ request.organization.platform_name }}</h2>
             <p class="subheading">Login to {{ request.organization.platform_name }}.</p>
-
-            <p style="color: red">
-                {% for error in form.non_field_errors %}
-                    {{ error }}
-                {% endfor %}</p>
-            </div>
-            <div class="col-md-10 col-md-offset-1">
                 <form role="form" method="POST" action="">
-                    {{ form|crispy }}
-                    <button type="submit" class="btn btn-block btn-primary">Login</button>
-                    {% csrf_token %}
-                </form>
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-block btn-primary">Login</button>
+                {% csrf_token %}
         </div>
         </div>
     </div>
