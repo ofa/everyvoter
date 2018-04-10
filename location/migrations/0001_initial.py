@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('response', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('lookup', models.CharField(max_length=255, verbose_name=b'Address'))
+                ('lookup', models.CharField(help_text=b'Address provided by user', max_length=255, verbose_name=b'Lookup'))
             ],
             options={
                 'verbose_name': 'Geocoding Lookup',
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('formatted_address', models.CharField(max_length=255, verbose_name=b'Lookup')),
+                ('formatted_address', models.CharField(max_length=255, verbose_name=b'Address')),
             ],
             options={
                 'verbose_name': 'Location',

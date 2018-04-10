@@ -15,7 +15,6 @@ class UserLocation(TimestampModel):
         """Meta options for the UserLocation Model"""
         verbose_name = "User Location"
         verbose_name_plural = "User Locations"
-        unique_together = ('user', 'is_active')
 
 
 class Location(TimestampModel):
