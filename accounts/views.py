@@ -49,7 +49,7 @@ class SelfUpdateUserView(OrganizationViewMixin, UpdateView):
         if form.cleaned_data['address']:
             try:
                 update_user_location(
-                    self.request.user,
+                    self.object,
                     form.cleaned_data['address'])
             except ValidationError as error:
                 form.add_error(None, error)
