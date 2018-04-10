@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static sekizai_tags %}
+
+{% block page_content %}
+{% add_data "body-class" "public-page" %}
+    <div class="col-md-6 offset-md-3 public-page-wrap">
+        <div class="row">
+            <div class="col-md-12">
+            <h2>{{ organization.platform_name }}</h2>
+            <p class="subheading">User successfully updated. <a href="{{ organization.homepage }}">Visit our homepage.</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

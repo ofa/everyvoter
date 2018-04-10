@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static sekizai_tags crispy_forms_tags %}
+
+{% block title %}Unsubscribe{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "public-page" %}
+    <div class="col-sm-6 offset-sm-3 public-page-wrap">
+        <div class="row">
+            <div class="col-md-12">
+            <h2>{{ organization.platform_name }} Unsubscribe</h2>
+            <p>If you wish to discontinue receiving updates and reminders from {{ organization.name }} about upcoming elections in your area, you can unsubscribe from all future notifications.</p>
+            <form role="form" method="POST" action="">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-danger">Unsubscribe</button>
+            <a href="{{ organization.homepage }}" class="btn btn-block btn-success">No Nevermind</a>
+
+            {% csrf_token %}
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock page_content %}

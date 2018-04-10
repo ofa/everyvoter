@@ -49,3 +49,24 @@ def create_user(organization, email, address, first_name, last_name):
     UserLocation(user=user, location=location, is_active=True).save()
 
     return user
+
+
+def update_user_location(user, address):
+    """Update the location of a user
+
+    Update the details of an existing user
+
+    Args:
+        user: User object
+        address: Address to change to
+    """
+    location = get_location(address)
+
+    UserLocation.objects.filter(user=user).update(is_active=False)
+
+    if location not in user.locations.all():
+        UserLocation.objects.create(
+            user=user, location=location, is_active=True)
+    else:
+        UserLocation.objects.filter(
+            location=location, user=user).update(is_active=True)

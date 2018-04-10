@@ -1,10 +1,12 @@
 """Account-related Views"""
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView, ListView, DetailView
+from django.views.generic import (
+    FormView, TemplateView, ListView, DetailView, UpdateView
+)
 
-from accounts.forms import UserForm
-from accounts.utils_user import create_user
+from accounts.forms import UserForm, UserEditForm
+from accounts.utils_user import create_user, update_user_location
 from accounts.models import User
 from branding.mixins import OrganizationViewMixin
 from manage.mixins import ManageViewMixin
@@ -31,6 +33,35 @@ class CreateUserView(FormView):
             form.data['address'] = ''
             return super(CreateUserView, self).form_invalid(form)
         return super(CreateUserView, self).form_valid(form)
+
+
+class SelfUpdateUserView(OrganizationViewMixin, UpdateView):
+    """Allow a user to update their record"""
+    model = User
+    form_class = UserEditForm
+    template_name = "accounts/update_user.html"
+    slug_field = 'username'
+    success_url = reverse_lazy('accounts:update_user_success')
+    context_object_name = 'account'
+
+    def form_valid(self, form):
+        """Process a valid form"""
+        if form.cleaned_data['address']:
+            try:
+                update_user_location(
+                    self.request.user,
+                    form.cleaned_data['address'])
+            except ValidationError as error:
+                form.add_error(None, error)
+                form.data = form.data.copy()
+                form.data['address'] = ''
+                return super(SelfUpdateUserView, self).form_invalid(form)
+        return super(SelfUpdateUserView, self).form_valid(form)
+
+
+class UserUpdatedView(TemplateView):
+    """Page to show after user is successfully created"""
+    template_name = "accounts/user_updated.html"
 
 
 class UserCreatedView(TemplateView):

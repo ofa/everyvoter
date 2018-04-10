@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ account }}'s Profile{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "public-page" %}
+    <div class="col-sm-6 offset-sm-3 public-page-wrap">
+        <div class="row">
+            <div class="col-md-12">
+            <h2>{{ organization.platform_name }}</h2>
+
+            <p>In order to give you the best information about upcoming elections in your area, we need the most up-to-date contact information. Please use the form below to update your information.</p>
+
+            <form role="form" method="POST" action="">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Update User</button>
+            {% csrf_token %}
+            </form>
+
+            <hr>
+            <h4>Unsubscribe</h4>
+
+            <p>If you wish to discontinue receiving updates and reminders from {{ organization.name }} about upcoming elections in your area, you can unsubscribe from all future notifications.</p>
+            <form role="form" method="POST" action="{% url 'unsubscribe:unsubscribe' %}">
+            <button type="submit" class="btn btn-block btn-danger">Unsubscribe</button>
+
+            <a href="{{ organization.homepage }}" class="btn btn-block btn-success">No Nevermind</a>
+            <input type="hidden" name="email" value="{{ account.email }}">
+            <input type="hidden" name="mailing_uuid" value="{{ request.GET.mailing_id }}">
+            <input type="hidden" name="user_uuid" value="{{ account.username }}">
+            {% csrf_token %}
+            </form>
+        </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    function initAutocomplete() {
+        var input = document.getElementById('id_address');
+        var options = {
+          types: ['address'],
+          components: ['country:us']
+        };
+        autocomplete = new google.maps.places.Autocomplete(input, options);
+    }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSnF27lCEIkyjUukR4uD7hYQ4w7ICMfYw&libraries=places&callback=initAutocomplete"
+    async defer></script>
+{% endblock page_content %}

@@ -1,12 +1,17 @@
 """URLs for Accounts app"""
 from django.conf.urls import url
 
-from accounts.views import CreateUserView, UserCreatedView
+from accounts import views
 
 # pylint: disable=invalid-name
 urlpatterns = [
     url(r'^create/$',
-        CreateUserView.as_view(), name='create_user'),
+        views.CreateUserView.as_view(), name='create_user'),
     url(r'^create/success/$',
-        UserCreatedView.as_view(), name='create_user_success'),
+        views.UserCreatedView.as_view(), name='create_user_success'),
+    url(r'^(?P<slug>[-\w]+)/$',
+        views.SelfUpdateUserView.as_view(),
+        name='self_update_user'),
+    url(r'^update/success/$',
+        views.UserUpdatedView.as_view(), name='update_user_success'),
 ]

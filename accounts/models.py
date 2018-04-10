@@ -82,8 +82,8 @@ class User(
     @cached_property
     def location(self):
         """Location the user is in"""
-        return self.locations.select_related('state').get(
-            userlocation__is_active=True)
+        return self.locations.filter(
+            userlocation__is_active=True).select_related('state').first()
 
     @cached_property
     def state(self):

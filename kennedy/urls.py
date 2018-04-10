@@ -30,6 +30,8 @@ urlpatterns = [
         template_name="robots.txt", content_type='text/plain')),
 
     url(r'^user/', include('accounts.urls', namespace='accounts')),
+    url(r'^unsubscribe/',
+        include('mailer.unsubscribe_urls', namespace='unsubscribe')),
 
     url(r'^manage/admin/', admin.site.urls),
     url(r'^manage/', include('manage.urls', namespace='manage')),
