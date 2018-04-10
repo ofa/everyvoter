@@ -116,6 +116,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     'django_celery_results',
+    'django_celery_beat',
 
     # `django.contrib.auth` has to be after `accounts` because we override
     # `django.contrib.auth` management commands.
