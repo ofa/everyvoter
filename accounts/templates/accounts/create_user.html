@@ -20,10 +20,12 @@
     </div>
     <script type="text/javascript">
     function initAutocomplete() {
-        // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('id_address')));
+        var input = document.getElementById('id_address');
+        var options = {
+          types: ['address'],
+          components: ['country:us']
+        };
+        autocomplete = new google.maps.places.Autocomplete(input, options);
     }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSnF27lCEIkyjUukR4uD7hYQ4w7ICMfYw&libraries=places&callback=initAutocomplete"
