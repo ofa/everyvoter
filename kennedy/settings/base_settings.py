@@ -28,7 +28,8 @@ env = environ.Env(
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
     CORS_ORIGIN_WHITELIST=(list, ['localhost:8000', '127.0.0.1:8000']),
-    SES_CONFIGURATIONSET_NAME=(str, 'everyvoter')
+    SES_CONFIGURATIONSET_NAME=(str, 'everyvoter'),
+    SECURE_SSL_REDIRECT=(bool, False)
 )
 
 
@@ -49,6 +50,7 @@ DEBUG = env('DEBUG')
 ROOT_URLCONF = 'kennedy.urls'
 WSGI_APPLICATION = 'kennedy.wsgi.application'
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 
 
 #####
