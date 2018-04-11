@@ -11,6 +11,7 @@ import livereload from 'gulp-livereload';
 import notify from 'gulp-notify';
 import rename from 'gulp-rename';
 import sass from 'gulp-sass';
+import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import gutil from 'gulp-util';
 
@@ -81,8 +82,10 @@ function error(err) {
    standard and min stylesheets */
 gulp.task('scss', () => {
     gulp.src(scssPaths.src)
+        .pipe(sourcemaps.init({largeFile: true}))
         .pipe(sass().on('error', error))
         .pipe(autoprefixer({browsers: ['last 2 versions']}))
+        .pipe(sourcemaps.write('maps/'))
         .pipe(gulp.dest(scssPaths.dest))
         .pipe(cleanCss())
         .pipe(gulp.dest(scssPaths.destMin))
