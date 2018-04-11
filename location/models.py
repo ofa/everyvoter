@@ -9,7 +9,6 @@ class UserLocation(TimestampModel):
     """A specific location for a user"""
     user = models.ForeignKey('accounts.User')
     location = models.ForeignKey('Location')
-    is_active = models.BooleanField(default=True, db_index=True)
 
     class Meta(object):
         """Meta options for the UserLocation Model"""

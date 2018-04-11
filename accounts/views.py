@@ -72,6 +72,7 @@ class UserCreatedView(TemplateView):
 class UserManageListView(OrganizationViewMixin, ManageViewMixin, ListView):
     """List all users"""
     model = User
+    queryset = User.objects.select_related()
     template_name = "accounts/manage/list_users.html"
     paginate_by = 10
     context_object_name = 'accounts'

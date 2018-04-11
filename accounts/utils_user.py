@@ -41,12 +41,13 @@ def create_user(organization, email, address, first_name, last_name):
         organization=organization,
         first_name=first_name,
         last_name=last_name,
-        email=email
+        email=email,
+        location=location
     )
     user.save()
 
     # Attach the user to the location
-    UserLocation(user=user, location=location, is_active=True).save()
+    UserLocation(user=user, location=location).save()
 
     return user
 
@@ -62,11 +63,9 @@ def update_user_location(user, address):
     """
     location = get_location(address)
 
-    UserLocation.objects.filter(user=user).update(is_active=False)
-
     if location not in user.locations.all():
         UserLocation.objects.create(
-            user=user, location=location, is_active=True)
-    else:
-        UserLocation.objects.filter(
-            location=location, user=user).update(is_active=True)
+            user=user, location=location)
+
+    user.location = location
+    user.save()

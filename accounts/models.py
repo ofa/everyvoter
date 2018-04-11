@@ -49,7 +49,9 @@ class User(
     last_name = models.CharField(_('Last Name'), max_length=200, blank=True)
 
     locations = models.ManyToManyField(
-        'location.Location', through='location.UserLocation')
+        'location.Location', through='location.UserLocation',
+        related_name='userlocations_set')
+    location = models.ForeignKey('location.Location')
 
     unsubscribed = models.BooleanField(default=False)
 
@@ -78,12 +80,6 @@ class User(
     def get_short_name(self):
         """Short name representation of user"""
         return self.first_name
-
-    @cached_property
-    def location(self):
-        """Location the user is in"""
-        return self.locations.filter(
-            userlocation__is_active=True).select_related('state').first()
 
     @cached_property
     def state(self):

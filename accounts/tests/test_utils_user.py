@@ -34,7 +34,7 @@ class TestCreateUser(KennedyTestMixin, TestCase):
                            '60657', 'First', 'Last')
 
         self.assertTrue(UserLocation.objects.filter(
-            user=user, location=mock_location, is_active=True).exists())
+            user=user, location=mock_location).exists())
 
         with self.assertRaises(ValidationError) as error:
             create_user(self.organization, 'validemail@localhost.com',
@@ -59,7 +59,10 @@ class TestCreateUser(KennedyTestMixin, TestCase):
         self.assertEqual(newuser.email, 'email@localhost.com')
         self.assertEqual(newuser.first_name, 'First')
         self.assertEqual(newuser.last_name, 'Last')
+        self.assertEqual(newuser.location, mock_location)
 
         # Verify creates UserLocation
         self.assertTrue(UserLocation.objects.filter(
-            user=newuser, location=mock_location, is_active=True).exists())
+            user=newuser, location=mock_location).exists())
+
+        self.assertIn(mock_location, newuser.locations.all())

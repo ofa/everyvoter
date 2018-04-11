@@ -18,6 +18,7 @@
                     <th>Email</th>
                     <th>Join Date</th>
                     <th>Location</th>
+                    <th>State</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                     <td>{{ account.email }}</td>
                     <td>{{ account.created_at }}</td>
                     <td>{{ account.location }}</td>
+                    <td>{{ account.location.state.name }}</td>
                 </tr>
                 {% endfor %}
 
