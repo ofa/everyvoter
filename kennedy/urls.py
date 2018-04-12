@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^unsubscribe/',
         include('mailer.unsubscribe_urls', namespace='unsubscribe')),
 
+    url(r'^hirefire/', include('hirefire.urls', namespace='hirefire')),
+
     url(r'^manage/admin/', admin.site.urls),
     url(r'^manage/', include('manage.urls', namespace='manage')),
 

@@ -24,6 +24,8 @@ env = environ.Env(
     AWS_DEFAULT_REGION=(str, 'us-east-1'),
     DEFAULT_FROM_EMAIL=(str, 'Everyvoter <app@everyvoter.us>'),
     EMAIL_ACTIVE=(bool, False),
+    HIREFIRE_TOKEN=(str, ''),
+    HIREFIRE_QUEUES=(list, ['celery']),
     DEBUG_TOOLBAR_IPS=(list, ['127.0.0.1']),
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
@@ -132,6 +134,8 @@ INSTALLED_APPS = [
     'mailer',
 
     'user_import',
+
+    'hirefire',
 
     'django_s3_collectstatic',
 
@@ -276,6 +280,12 @@ EMAIL_ACTIVE = env('EMAIL_ACTIVE')
 ####
 # Geocod.io Key
 GEOCODIO_KEY = env('GEOCODIO_KEY')
+
+
+####
+# HireFire Settings
+HIREFIRE_TOKEN = env('HIREFIRE_TOKEN')
+HIREFIRE_QUEUES = env('HIREFIRE_QUEUES')
 
 
 ####
