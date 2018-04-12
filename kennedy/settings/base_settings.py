@@ -135,6 +135,8 @@ INSTALLED_APPS = [
 
     'user_import',
 
+    'kennedy_common',
+
     'hirefire',
 
     'django_s3_collectstatic',
