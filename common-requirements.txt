@@ -1,8 +1,8 @@
 # Basic Packages
-Django==1.11.11
-psycopg2==2.7.1
-six==1.10.0
-pytz==2018.3
+Django==1.11.12
+psycopg2-binary==2.7.4
+six==1.11.0
+pytz==2018.4
 django-localflavor==1.4.1
 
 
@@ -13,8 +13,7 @@ django-celery-beat==1.1.1
 
 
 # Useful packages
-phonenumberslite==8.8.9
--e git+https://github.com/ofa/pygeocodio.git@f5d06184724da7dcfebc8ca255fd297aa570b186#egg=pygeocodio
+pygeocodio==0.7.0
 django-html5==1.0.0
 django_sekizai==0.10.0
 django-crispy-forms==1.7.2
@@ -22,15 +21,15 @@ django-smalluuid==1.1.1
 unicodecsv==0.14.1
 
 # Environ for management
-django-environ==0.4.1
+django-environ==0.4.4
 
 
 # NewRelic for monitoring
-newrelic==2.96.0.80
+newrelic==3.2.0.91
 
 
 # API-Related Packages
-djangorestframework==3.6.2
+djangorestframework==3.8.2
 django-filter==1.0.2
 django-cors-headers==2.0.2
 
