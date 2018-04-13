@@ -65,6 +65,8 @@ if env('USE_S3'):
     MEDIA_URL = '//%s/%s/' % (
         AWS_S3_CUSTOM_DOMAIN, DEFAULT_S3_PATH)
 
+    COLLECTFAST_THREADS = 15
+
 else:
     MEDIA_ROOT = os.path.join(BASE_PATH, 'uploads')
     MEDIA_URL = '/uploads/'

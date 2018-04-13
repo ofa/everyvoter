@@ -108,7 +108,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 
     'corsheaders',
 
@@ -139,7 +138,8 @@ INSTALLED_APPS = [
 
     'hirefire',
 
-    'django_s3_collectstatic',
+    'collectfast',
+    'django.contrib.staticfiles',
 
     'django_nose',
     'clear_cache',
