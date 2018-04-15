@@ -53,5 +53,5 @@ testfixtures==6.0.0
 
 # Debugging and general utilities
 django-clear-cache==0.3
-django_debug_toolbar==1.7
+django_debug_toolbar==1.9.1
 ipython==5.5.0
