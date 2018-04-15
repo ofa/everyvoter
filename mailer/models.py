@@ -6,6 +6,7 @@ from django.template import Template
 from django_smalluuid.models import SmallUUIDField, uuid_default
 
 from branding.mixins import OrganizationMixin
+from rendering.validators import validate_template
 from kennedy_common.utils.models import TimestampModel
 
 
@@ -28,8 +29,8 @@ UNSUBSCRIBE_ORIGINS = (
 class EmailWrapper(TimestampModel, OrganizationMixin):
     """Template for email"""
     name = models.CharField('Name', max_length=50)
-    header = models.TextField('Header')
-    footer = models.TextField('Footer')
+    header = models.TextField('Header', validators=[validate_template])
+    footer = models.TextField('Footer', validators=[validate_template])
     default = models.BooleanField('Default', default=False)
 
     class Meta(object):
@@ -59,7 +60,7 @@ class EmailWrapper(TimestampModel, OrganizationMixin):
             if self.pk:
                 queryset = queryset.exclude(pk=self.pk)
             # and deactive them
-            queryset.update(active=False)
+            queryset.update(default=False)
 
         return super(EmailWrapper, self).save(*args, **kwargs)
 

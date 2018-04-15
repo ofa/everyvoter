@@ -1,0 +1,18 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Create Wrapper{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "email" %}
+    <div class="col-md-12">
+        <h2>{{ organization.platform_name }} Wrapper Creation</h2>
+
+            <form role="form" method="POST" action="">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Create Wrapper</button>
+            {% csrf_token %}
+            </form>
+
+    </div>
+{% endblock %}

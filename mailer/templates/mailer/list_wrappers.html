@@ -1,0 +1,41 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags %}
+
+{% block title %}{{ organization.platform_name }} Mailing Wrappers{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "email" %}
+    <div class="col-md-12">
+        <h2>{{ organization.platform_name }} Email Wrappers</h2>
+        <p><a href="{% url 'manage:mailer:create_wrapper' %}" class="btn btn-primary">New Wrapper</a></p>
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Existing Wrappers</div>
+          <!-- Table -->
+          <div class="table-responsive-lg">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wrapper in wrappers %}
+                <tr>
+                    <th scope="row"><a href="{% url 'manage:mailer:update_wrapper' wrapper.pk %}">{{ wrapper.name}}</a></th>
+                    <td>{{ wrapper.default }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+          </table></div>
+
+        </div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}
