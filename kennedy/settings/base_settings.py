@@ -24,6 +24,7 @@ env = environ.Env(
     AWS_DEFAULT_REGION=(str, 'us-east-1'),
     DEFAULT_FROM_EMAIL=(str, 'Everyvoter <app@everyvoter.us>'),
     EMAIL_ACTIVE=(bool, False),
+    SES_FEEDBACK_TOPIC_ARN=(str, ''),
     HIREFIRE_TOKEN=(str, ''),
     HIREFIRE_QUEUES=(list, ['celery']),
     DEBUG_TOOLBAR_IPS=(list, ['127.0.0.1']),
@@ -131,6 +132,7 @@ INSTALLED_APPS = [
     'branding',
     'election',
     'mailer',
+    'feedback',
 
     'user_import',
 
@@ -279,6 +281,12 @@ AWS_DEFAULT_REGION = env('AWS_DEFAULT_REGION')
 SES_CONFIGURATIONSET_NAME = env('SES_CONFIGURATIONSET_NAME')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 EMAIL_ACTIVE = env('EMAIL_ACTIVE')
+
+
+####
+# Email Feedback Settings
+SES_FEEDBACK_TOPIC_ARN = env('SES_FEEDBACK_TOPIC_ARN')
+
 
 ####
 # Geocod.io Key

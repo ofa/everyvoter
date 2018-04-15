@@ -1,0 +1,86 @@
+{
+    "eventType":"Click",
+    "mail":{
+        "timestamp":"2018-04-14T01:47:32.952Z",
+        "source":"Test From <info@everyvoter.us>",
+        "sendingAccountId":"12345",
+        "messageId":"01000162c1d60ad8-f3163420-9b55-483c-aebf-ad4c4f994461-000000",
+        "destination":[
+            "Test To <ssmith@ishouldvote.us>"
+        ],
+        "headersTruncated":false,
+        "headers":[
+            {
+                "name":"From",
+                "value":"Test From <info@everyvoter.us>"
+            },
+            {
+                "name":"To",
+                "value":"Test To <ssmith@ishouldvote.us>"
+            },
+            {
+                "name":"Subject",
+                "value":"⏳ Demo Click"
+            },
+            {
+                "name":"MIME-Version",
+                "value":"1.0"
+            },
+            {
+                "name":"Content-Type",
+                "value":"text/html; charset=UTF-8"
+            },
+            {
+                "name":"Content-Transfer-Encoding",
+                "value":"7bit"
+            },
+            {
+                "name":"Message-ID",
+                "value":"null"
+            }
+        ],
+        "commonHeaders":{
+            "from":[
+                "Test From <info@everyvoter.us>"
+            ],
+            "to":[
+                "Test To <ssmith@ishouldvote.us>"
+            ],
+            "messageId":"01000162c1d60ad8-f3163420-9b55-483c-aebf-ad4c4f994461-000000",
+            "subject":"⏳ Demo Click"
+        },
+        "tags":{
+            "app":[
+                "everyvoter-testing"
+            ],
+            "mailing_id":[
+                "44"
+            ],
+            "recipient_id":[
+                "100"
+            ],
+            "organization_id":[
+                "1"
+            ],
+            "ses:configuration-set":[
+                "everyvoter"
+            ],
+            "ses:source-ip":[
+                "54.146.250.253"
+            ],
+            "ses:from-domain":[
+                "everyvoter.us"
+            ],
+            "ses:caller-identity":[
+                "test_aws_user"
+            ]
+        }
+    },
+    "click":{
+        "timestamp":"2018-04-14T01:48:07.089Z",
+        "ipAddress":"9.9.9.9, 162.158.74.31",
+        "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
+        "link":"https://localhost/register-to-vote/",
+        "linkTags":null
+    }
+}

@@ -1,0 +1,79 @@
+{
+    "eventType":"Send",
+    "mail":{
+        "timestamp":"2018-04-14T02:36:58.597Z",
+        "source":"Test From <info@everyvoter.us>",
+        "sourceArn":"arn:aws:ses:us-east-1:12345:identity/everyvoter.us",
+        "sendingAccountId":"12345",
+        "messageId":"01000162c2034b65-659d12cd-8e7b-48f7-8c56-bcb447b88b8f-000000",
+        "destination":[
+            "Test To <ssmith@ishouldvote.us>"
+        ],
+        "headersTruncated":false,
+        "headers":[
+            {
+                "name":"From",
+                "value":"Test From <info@everyvoter.us>"
+            },
+            {
+                "name":"To",
+                "value":"Test To <ssmith@ishouldvote.us>"
+            },
+            {
+                "name":"Subject",
+                "value":"⏳ Demo Send"
+            },
+            {
+                "name":"MIME-Version",
+                "value":"1.0"
+            },
+            {
+                "name":"Content-Type",
+                "value":"text/html; charset=UTF-8"
+            },
+            {
+                "name":"Content-Transfer-Encoding",
+                "value":"7bit"
+            }
+        ],
+        "commonHeaders":{
+            "from":[
+                "Test From <info@everyvoter.us>"
+            ],
+            "to":[
+                "Test To <ssmith@ishouldvote.us>"
+            ],
+            "messageId":"01000162c2034b65-659d12cd-8e7b-48f7-8c56-bcb447b88b8f-000000",
+            "subject":"⏳ Demo Send"
+        },
+        "tags":{
+            "app":[
+                "everyvoter-testing"
+            ],
+            "mailing_id":[
+                "44"
+            ],
+            "recipient_id":[
+                "100"
+            ],
+            "organization_id":[
+                "1"
+            ],
+            "ses:configuration-set":[
+                "everyvoter"
+            ],
+            "ses:source-ip":[
+                "54.146.250.253"
+            ],
+            "ses:from-domain":[
+                "everyvoter.us"
+            ],
+            "ses:caller-identity":[
+                "test_aws_user"
+            ]
+        }
+    },
+    "send":{
+
+    }
+}

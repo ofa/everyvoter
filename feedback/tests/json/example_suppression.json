@@ -1,0 +1,91 @@
+{
+    "eventType":"Bounce",
+    "bounce":{
+        "bounceType":"Permanent",
+        "bounceSubType":"Suppressed",
+        "bouncedRecipients":[
+            {
+                "emailAddress":"suppressionlist@simulator.amazonses.com",
+                "action":"failed",
+                "status":"5.1.1",
+                "diagnosticCode":"Amazon SES has suppressed sending to this address because it has a recent history of bouncing as an invalid address. For more information about how to remove an address from the suppression list, see the Amazon SES Developer Guide: http://docs.aws.amazon.com/ses/latest/DeveloperGuide/remove-from-suppressionlist.html "
+            }
+        ],
+        "timestamp":"2018-04-14T01:53:16.247Z",
+        "feedbackId":"01000162c1db476d-3d427d7c-c305-4fca-b7e2-bfb58083430d-000000",
+        "reportingMTA":"dns; amazonses.com"
+    },
+    "mail":{
+        "timestamp":"2018-04-14T01:53:15.944Z",
+        "source":"Test From <info@everyvoter.us>",
+        "sourceArn":"arn:aws:ses:us-east-1:12345:identity/everyvoter.us",
+        "sendingAccountId":"12345",
+        "messageId":"01000162c1db46a8-c19ffb50-59c2-46b1-9fde-6a2d6894b110-000000",
+        "destination":[
+            "Test Suppression List Recipient <suppressionlist@simulator.amazonses.com>"
+        ],
+        "headersTruncated":false,
+        "headers":[
+            {
+                "name":"From",
+                "value":"Test From <info@everyvoter.us>"
+            },
+            {
+                "name":"To",
+                "value":"Test Suppression List Recipient <suppressionlist@simulator.amazonses.com>"
+            },
+            {
+                "name":"Subject",
+                "value":"⏳ Demo Suppression List"
+            },
+            {
+                "name":"MIME-Version",
+                "value":"1.0"
+            },
+            {
+                "name":"Content-Type",
+                "value":"text/html; charset=UTF-8"
+            },
+            {
+                "name":"Content-Transfer-Encoding",
+                "value":"7bit"
+            }
+        ],
+        "commonHeaders":{
+            "from":[
+                "Test From <info@everyvoter.us>"
+            ],
+            "to":[
+                "Test Suppression List Recipient <suppressionlist@simulator.amazonses.com>"
+            ],
+            "messageId":"01000162c1db46a8-c19ffb50-59c2-46b1-9fde-6a2d6894b110-000000",
+            "subject":"⏳ Demo Suppression List"
+        },
+        "tags":{
+            "app":[
+                "everyvoter-testing"
+            ],
+            "mailing_id":[
+                "44"
+            ],
+            "recipient_id":[
+                "100"
+            ],
+            "organization_id":[
+                "1"
+            ],
+            "ses:configuration-set":[
+                "everyvoter"
+            ],
+            "ses:source-ip":[
+                "54.146.250.253"
+            ],
+            "ses:from-domain":[
+                "everyvoter.us"
+            ],
+            "ses:caller-identity":[
+                "test_aws_user"
+            ]
+        }
+    }
+}

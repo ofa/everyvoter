@@ -1,0 +1,91 @@
+{
+    "eventType":"Bounce",
+    "bounce":{
+        "bounceType":"Permanent",
+        "bounceSubType":"General",
+        "bouncedRecipients":[
+            {
+                "emailAddress":"Test Hard Bounce Recipient <bounce@simulator.amazonses.com>",
+                "action":"failed",
+                "status":"5.1.1",
+                "diagnosticCode":"smtp; 550 5.1.1 user unknown"
+            }
+        ],
+        "timestamp":"2018-04-14T01:51:10.581Z",
+        "feedbackId":"01000162c1d95c05-9356cb5f-5aa4-43c2-82a1-a2d856b170d8-000000",
+        "reportingMTA":"dsn; a11-102.smtp-out.amazonses.com"
+    },
+    "mail":{
+        "timestamp":"2018-04-14T01:51:09.250Z",
+        "source":"Test From <info@everyvoter.us>",
+        "sourceArn":"arn:aws:ses:us-east-1:12345:identity/everyvoter.us",
+        "sendingAccountId":"12345",
+        "messageId":"01000162c1d957c2-3de85a8f-04f1-4005-a902-61231a95628a-000000",
+        "destination":[
+            "Test Hard Bounce Recipient <bounce@simulator.amazonses.com>"
+        ],
+        "headersTruncated":false,
+        "headers":[
+            {
+                "name":"From",
+                "value":"Test From <info@everyvoter.us>"
+            },
+            {
+                "name":"To",
+                "value":"Test Hard Bounce Recipient <bounce@simulator.amazonses.com>"
+            },
+            {
+                "name":"Subject",
+                "value":"⏳ Demo Hard Bounce"
+            },
+            {
+                "name":"MIME-Version",
+                "value":"1.0"
+            },
+            {
+                "name":"Content-Type",
+                "value":"text/html; charset=UTF-8"
+            },
+            {
+                "name":"Content-Transfer-Encoding",
+                "value":"7bit"
+            }
+        ],
+        "commonHeaders":{
+            "from":[
+                "Test From <info@everyvoter.us>"
+            ],
+            "to":[
+                "Test Hard Bounce Recipient <bounce@simulator.amazonses.com>"
+            ],
+            "messageId":"01000162c1d957c2-3de85a8f-04f1-4005-a902-61231a95628a-000000",
+            "subject":"⏳ Demo Hard Bounce"
+        },
+        "tags":{
+            "app":[
+                "everyvoter-testing"
+            ],
+            "mailing_id":[
+                "44"
+            ],
+            "recipient_id":[
+                "100"
+            ],
+            "organization_id":[
+                "1"
+            ],
+            "ses:configuration-set":[
+                "everyvoter"
+            ],
+            "ses:source-ip":[
+                "54.146.250.253"
+            ],
+            "ses:from-domain":[
+                "everyvoter.us"
+            ],
+            "ses:caller-identity":[
+                "test_aws_user"
+            ]
+        }
+    }
+}

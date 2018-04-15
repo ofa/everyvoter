@@ -12,6 +12,7 @@ from kennedy_common.utils.models import TimestampModel
 POSSIBLE_ACTIVITIES = (
     ('send', 'Sent'),
     ('bounce', 'Bounce'),
+    ('soft_bounce', 'Soft Bounce'),
     ('complaint', 'Complaint'),
     ('open', 'Open'),
     ('click', 'Click')
@@ -100,8 +101,9 @@ class Mailing(TimestampModel):
 
 class EmailActivity(TimestampModel):
     """Single activity related to an email"""
-    mailing = models.ForeignKey(Mailing)
-    recipient = models.ForeignKey('accounts.User')
+    message_id = models.CharField('Message ID from ESP', max_length=100)
+    mailing = models.ForeignKey(Mailing, null=True)
+    recipient = models.ForeignKey('accounts.User', null=True)
     activity = models.CharField(
         'Action Type', choices=POSSIBLE_ACTIVITIES, max_length=50)
     link = models.CharField(
@@ -113,13 +115,17 @@ class EmailActivity(TimestampModel):
         verbose_name_plural = "Email Activities"
 
 
-class Unsubscribe(TimestampModel, OrganizationMixin):
+class Unsubscribe(TimestampModel):
     """Unsubscription"""
+    organization = models.ForeignKey(
+        'branding.Organization', editable=False, db_index=True, null=True)
     email = models.EmailField()
     user = models.ForeignKey('accounts.User', null=True)
     mailing = models.ForeignKey(Mailing, null=True)
     origin = models.CharField(
         choices=UNSUBSCRIBE_ORIGINS, max_length=50)
+    reason = models.CharField('Reason', max_length=255, blank=True)
+    global_unsub = models.BooleanField('Applies Globally', db_index=True)
 
     class Meta(object):
         """Meta options for Unsubscribe model"""

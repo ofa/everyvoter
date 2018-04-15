@@ -1,0 +1,88 @@
+{
+    "eventType":"Complaint",
+    "complaint":{
+        "complainedRecipients":[
+            {
+                "emailAddress":"Test Complaint Recipient <complaint@simulator.amazonses.com>"
+            }
+        ],
+        "timestamp":"2018-04-14T01:52:50.833Z",
+        "feedbackId":"01000162c1dae410-78e05f02-b41d-4efa-aed7-dcb38b5ed4a5-000000",
+        "userAgent":"Amazon SES Mailbox Simulator",
+        "complaintFeedbackType":"abuse",
+        "arrivalDate":"2018-04-14T01:52:50.833Z"
+    },
+    "mail":{
+        "timestamp":"2018-04-14T01:52:49.294Z",
+        "source":"Test From <info@everyvoter.us>",
+        "sourceArn":"arn:aws:ses:us-east-1:12345:identity/test.us",
+        "sendingAccountId":"12345",
+        "messageId":"01000162c1dade8e-7e98c826-366e-45d3-bf70-3552abc1ca99-000000",
+        "destination":[
+            "Test Complaint Recipient <complaint@simulator.amazonses.com>"
+        ],
+        "headersTruncated":false,
+        "headers":[
+            {
+                "name":"From",
+                "value":"Test From <info@everyvoter.us>"
+            },
+            {
+                "name":"To",
+                "value":"Test Complaint Recipient <complaint@simulator.amazonses.com>"
+            },
+            {
+                "name":"Subject",
+                "value":"⏳ Demo Complaint"
+            },
+            {
+                "name":"MIME-Version",
+                "value":"1.0"
+            },
+            {
+                "name":"Content-Type",
+                "value":"text/html; charset=UTF-8"
+            },
+            {
+                "name":"Content-Transfer-Encoding",
+                "value":"7bit"
+            }
+        ],
+        "commonHeaders":{
+            "from":[
+                "Test From <info@everyvoter.us>"
+            ],
+            "to":[
+                "Test Complaint Recipient <complaint@simulator.amazonses.com>"
+            ],
+            "messageId":"01000162c1dade8e-7e98c826-366e-45d3-bf70-3552abc1ca99-000000",
+            "subject":"⏳ Demo Complaint"
+        },
+        "tags":{
+            "app":[
+                "everyvoter-testing"
+            ],
+            "mailing_id":[
+                "44"
+            ],
+            "recipient_id":[
+                "100"
+            ],
+            "organization_id":[
+                "1"
+            ],
+            "ses:configuration-set":[
+                "everyvoter"
+            ],
+            "ses:source-ip":[
+                "54.146.250.253"
+            ],
+            "ses:from-domain":[
+                "everyvoter.us"
+            ],
+            "ses:caller-identity":[
+                "test_aws_user"
+            ]
+        }
+    }
+}

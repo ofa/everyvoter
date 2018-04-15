@@ -1,0 +1,26 @@
+{
+    "app":[
+        "everyvoter-testing"
+    ],
+    "mailing_id":[
+        "44"
+    ],
+    "recipient_id":[
+        "100"
+    ],
+    "organization_id":[
+        "1"
+    ],
+    "ses:configuration-set":[
+        "everyvoter"
+    ],
+    "ses:source-ip":[
+        "54.146.250.253"
+    ],
+    "ses:from-domain":[
+        "test.us"
+    ],
+    "ses:caller-identity":[
+        "test_aws_user"
+    ]
+}

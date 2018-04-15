@@ -1,0 +1,84 @@
+{
+    "eventType":"Open",
+    "mail":{
+        "timestamp":"2018-04-14T01:47:32.952Z",
+        "source":"Test From <info@everyvoter.us>",
+        "sendingAccountId":"12345",
+        "messageId":"01000162c1d60ad8-f3163420-9b55-483c-aebf-ad4c4f994461-000000",
+        "destination":[
+            "Test To <ssmith@ishouldvote.us>"
+        ],
+        "headersTruncated":false,
+        "headers":[
+            {
+                "name":"From",
+                "value":"Test From <info@everyvoter.us>"
+            },
+            {
+                "name":"To",
+                "value":"Test To <ssmith@ishouldvote.us>"
+            },
+            {
+                "name":"Subject",
+                "value":"⏳ Demo Subject"
+            },
+            {
+                "name":"MIME-Version",
+                "value":"1.0"
+            },
+            {
+                "name":"Content-Type",
+                "value":"text/html; charset=UTF-8"
+            },
+            {
+                "name":"Content-Transfer-Encoding",
+                "value":"7bit"
+            },
+            {
+                "name":"Message-ID",
+                "value":"null"
+            }
+        ],
+        "commonHeaders":{
+            "from":[
+                "Test From <info@everyvoter.us>"
+            ],
+            "to":[
+                "Test To <ssmith@ishouldvote.us>"
+            ],
+            "messageId":"01000162c1d60ad8-f3163420-9b55-483c-aebf-ad4c4f994461-000000",
+            "subject":"⏳ Demo Subject"
+        },
+        "tags":{
+            "app":[
+                "everyvoter-testing"
+            ],
+            "mailing_id":[
+                "44"
+            ],
+            "recipient_id":[
+                "100"
+            ],
+            "organization_id":[
+                "1"
+            ],
+            "ses:configuration-set":[
+                "everyvoter"
+            ],
+            "ses:source-ip":[
+                "54.146.250.253"
+            ],
+            "ses:from-domain":[
+                "test.us"
+            ],
+            "ses:caller-identity":[
+                "test_aws_user"
+            ]
+        }
+    },
+    "open":{
+        "timestamp":"2018-04-14T01:48:05.204Z",
+        "userAgent":"Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)",
+        "ipAddress":"66.102.6.113, 172.68.58.185"
+    }
+}
