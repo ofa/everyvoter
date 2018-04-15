@@ -1,12 +1,16 @@
 {% extends "management/manage_base.html" %}
-{% load sekizai_tags %}
+{% load sekizai_tags crispy_forms_tags %}
 
 {% block title %}{{ organization.platform_name }} Users{% endblock title %}
 
 {% block page_content %}
 {% add_data "body-class" "people" %}
     <div class="col-md-12">
-        <h2>{{ organization.platform_name }} Users</h2>
+
+      <div class="row">
+
+        <div class="col-md-9">
+          <h2>{{ organization.platform_name }} Users</h2>
         <div class="card card-default">
           <!-- Default panel contents -->
           <div class="card-header">Users</div>
@@ -38,6 +42,20 @@
         </div>
 
         </div>
+        </div>
+
+        <div class="col-md-3">
+            <form action="" method="get">
+                {{ filter.form|crispy }}
+                <input class="btn btn-primary btn-block" type="submit" value="Search" />
+            </form>
+        </div>
+      </div>
+
+
+        
+
+
 
 
 {% if is_paginated %}

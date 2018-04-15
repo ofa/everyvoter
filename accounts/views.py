@@ -4,8 +4,10 @@ from django.urls import reverse_lazy
 from django.views.generic import (
     FormView, TemplateView, ListView, DetailView, UpdateView
 )
+from django_filters.views import FilterView
 
 from accounts.forms import UserForm, UserEditForm
+from accounts.filters import AccountManageFilter
 from accounts.utils_user import create_user, update_user_location
 from accounts.models import User
 from branding.mixins import OrganizationViewMixin
@@ -69,13 +71,14 @@ class UserCreatedView(TemplateView):
     template_name = "accounts/user_created.html"
 
 
-class UserManageListView(OrganizationViewMixin, ManageViewMixin, ListView):
+class UserManageListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     """List all users"""
     model = User
     queryset = User.objects.select_related()
     template_name = "accounts/manage/list_users.html"
     paginate_by = 10
     context_object_name = 'accounts'
+    filterset_class = AccountManageFilter
 
 
 class UserManageDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):

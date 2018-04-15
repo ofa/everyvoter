@@ -30,7 +30,7 @@ newrelic==3.2.0.91
 
 # API-Related Packages
 djangorestframework==3.8.2
-django-filter==1.0.2
+django-filter==1.1
 django-cors-headers==2.0.2
 
 
