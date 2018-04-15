@@ -7,11 +7,12 @@
 {% add_data "body-class" "people" %}
     <div class="col-md-12">
         <h2>{{ organization.platform_name }} Users</h2>
-        <div class="panel panel-default">
+        <div class="card card-default">
           <!-- Default panel contents -->
-          <div class="panel-heading">Users</div>
+          <div class="card-header">Users</div>
           <!-- Table -->
-          <table class="table">
+          <div class="table-responsive-lg">
+          <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -34,31 +35,13 @@
 
             </tbody>
           </table>
+        </div>
 
         </div>
 
+
 {% if is_paginated %}
-<nav>
-  <ul class="pagination">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-</nav>
+{% include "inc/pagination.html" %}
 {% endif %}
 
     </div>

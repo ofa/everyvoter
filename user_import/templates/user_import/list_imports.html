@@ -7,11 +7,12 @@
 {% add_data "body-class" "people" %}
     <div class="col-md-12">
         <h2>{{ organization.platform_name }} User Imports</h2>
-        <p><a href="{% url 'manage:user_import:create_import' %}">New Import</a></p>
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <div class="panel-heading">Existing User Imports</div>
+        <p><a href="{% url 'manage:user_import:create_import' %}" class="btn btn-primary">New Import</a></p>
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Existing User Imports</div>
           <!-- Table -->
+          <div class="table-responsive-lg">
           <table class="table">
             <thead>
                 <tr>
@@ -25,7 +26,8 @@
             <tbody>
                 {% for import in imports %}
                 <tr>
-                    <th scope="row"><a href="{{ import.file.url }}">{{ import.name }}</a></th>
+                    <th scope="row">{% if import.file %}
+                      <a href="{{ import.file.url }}">{{ import.name }}</a>{% else %}{{ import.name}}{% endif %}</th>
                     <td>{{ import.modified_at }}</td>
                     <td>{{ import.status }}</td>
                     <td>{{ import.total_succeeded }}</td>
@@ -34,32 +36,12 @@
                 {% endfor %}
 
             </tbody>
-          </table>
+          </table></div>
 
         </div>
 
 {% if is_paginated %}
-<nav>
-  <ul class="pagination">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-</nav>
+{% include "inc/pagination.html" %}
 {% endif %}
 
     </div>
