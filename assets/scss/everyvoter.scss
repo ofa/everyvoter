@@ -56,6 +56,9 @@
 @import "structure/_footer.scss";
 @import "structure/_header.scss";
 
+/* Vendor Libs */
+@import "../../node_modules/codemirror/lib/codemirror";
+
 /* Pages */
 @import "pages/public-page.scss";
 @import "pages/manage.scss";

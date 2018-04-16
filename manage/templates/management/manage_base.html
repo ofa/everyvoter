@@ -20,3 +20,8 @@
     {% endfor %}
 {% endif %}
 {% endblock subnav %}
+
+{% block footerjs %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'js-min/codemirror/codemirror-combined.js' %}"></script>
+{% endblock footerjs %}

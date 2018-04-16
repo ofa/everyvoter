@@ -16,3 +16,21 @@
 
     </div>
 {% endblock %}
+
+{% block footerjs %}
+    {{ block.super }}
+    <script>
+      CodeMirror.fromTextArea(document.getElementById("id_header"), {
+        lineNumbers: true,
+        mode: "django",
+        indentUnit: 4,
+        lineWrapping: true
+      });
+    CodeMirror.fromTextArea(document.getElementById("id_footer"), {
+        lineNumbers: true,
+        mode: "django",
+        indentUnit: 4,
+        lineWrapping: true
+      });
+    </script>
+{% endblock footerjs %}

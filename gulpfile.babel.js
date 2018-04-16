@@ -37,9 +37,15 @@ const vendorConcatPaths = {
     dest: `${dirs.dest}/js-min`
 }
 
-const vendorOtherPaths = {
-    src: [],
-    dest: `${dirs.dest}/js-min/vendor`
+const codeMirrorPaths = {
+    src: [
+        'node_modules/codemirror/lib/codemirror.js',
+        'node_modules/codemirror/addon/mode/overlay.js',
+        'node_modules/codemirror/mode/django/django.js',
+        'node_modules/codemirror/mode/htmlmixed/htmlmixed.js',
+        'node_modules/codemirror/mode/xml/xml.js'
+        ],
+    dest: `${dirs.dest}/js-min/codemirror`
 }
 
 const jsPaths = {
@@ -93,16 +99,17 @@ gulp.task('scss', () => {
         .pipe(notify({ message: 'Styles task complete' }));
 });
 
+gulp.task('codemirrorConcat', () => {
+    gulp.src(codeMirrorPaths.src)
+        .pipe(uglify())
+        .pipe(concat('codemirror-combined.js'))
+        .pipe(gulp.dest(codeMirrorPaths.dest));
+});
+
 gulp.task('vendorConcat', () => {
     gulp.src(vendorConcatPaths.src)
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest(vendorConcatPaths.dest));
-});
-
-gulp.task('vendorOther', () =>{
-    gulp.src(vendorOtherPaths.src)
-        .pipe(uglify())
-        .pipe(gulp.dest(vendorOtherPaths.dest));
 });
 
 
@@ -157,10 +164,10 @@ gulp.task('watch', () => {
 });
 
 /* Default task to process all and start watch */
-gulp.task('default', ['scss','vendorConcat','vendorOther','js','img','fonts','watch']);
+gulp.task('default', ['scss','vendorConcat','codemirrorConcat','js','img','fonts','watch']);
 
 /* Build task to run during build processes */
-gulp.task('build', ['scss','vendorConcat','vendorOther','js','img','fonts']);
+gulp.task('build', ['scss','vendorConcat','codemirrorConcat','js','img','fonts']);
 
 /* Develop */
 gulp.task('develop', ['build','watch']);
