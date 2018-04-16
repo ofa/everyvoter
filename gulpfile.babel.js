@@ -43,7 +43,8 @@ const codeMirrorPaths = {
         'node_modules/codemirror/addon/mode/overlay.js',
         'node_modules/codemirror/mode/django/django.js',
         'node_modules/codemirror/mode/htmlmixed/htmlmixed.js',
-        'node_modules/codemirror/mode/xml/xml.js'
+        'node_modules/codemirror/mode/xml/xml.js',
+        'node_modules/codemirror/mode/css/css.js'
         ],
     dest: `${dirs.dest}/js-min/codemirror`
 }
