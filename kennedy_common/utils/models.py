@@ -1,6 +1,7 @@
 """Utility models for whatsnext"""
 from django.db import models
 from django.utils.text import slugify
+from django_smalluuid.models import SmallUUIDField, uuid_default
 
 
 class CacheMixinModel(object):
@@ -36,6 +37,16 @@ class TimestampModel(CacheMixinModel, models.Model):
     """
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
+    class Meta(object):
+        """Meta info for TimeStamp abstract model"""
+        abstract = True
+
+
+class UUIDModel(models.Model):
+    """Abstract model that adds a UUID Field"""
+    uuid = SmallUUIDField(default=uuid_default(), editable=False,
+                          db_index=True)
 
     class Meta(object):
         """Meta info for TimeStamp abstract model"""

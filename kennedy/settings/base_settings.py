@@ -131,6 +131,7 @@ INSTALLED_APPS = [
     'location',
     'branding',
     'election',
+    'blocks',
     'mailer',
     'feedback',
 

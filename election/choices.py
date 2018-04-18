@@ -14,6 +14,15 @@ ELECTION_TYPES = (
 )
 
 
+DEADLINES = (
+    ('evip_start_date', 'Early Vote Start'),
+    ('evip_close_date', 'Early Vote End'),
+    ('vbm_application_deadline', 'Vote By Mail Applications Due'),
+    ('ballot_return_date', 'Vote By Mail Returns Due'),
+    ('election_date', 'Election Day')
+)
+
+
 # From https://github.com/democrats/election-calendar
 STATES = (
     ('AL', 'Alabama'),
