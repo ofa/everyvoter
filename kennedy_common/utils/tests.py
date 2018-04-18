@@ -3,10 +3,9 @@ import os
 import json
 import uuid
 
-from model_mommy import mommy
-
 from accounts.utils_user import create_user
-from branding.models import Organization, Domain
+from branding.models import Organization
+from branding.utils import get_or_create_organization
 from location.utils import get_location
 
 # pylint: disable=invalid-name
@@ -21,8 +20,14 @@ class KennedyTestMixin(object):
     """Mixin for Kennedy tests"""
     def create_organization(self):
         """Create an organization with the test domain"""
-        domain = Domain.objects.get(hostname='testserver')
-        return mommy.make('Organization', primary_domain=domain)
+        name = unicode(uuid.uuid4())
+        platform_name = unicode(uuid.uuid4())
+        hostname = unicode(uuid.uuid4())
+        homepage = u'http://' + unicode(uuid.uuid4())
+        organization, _ = get_or_create_organization(
+            name=name, platform_name=platform_name, hostname=hostname,
+            homepage=homepage)
+        return organization
 
     def create_location(self, state_id='IL', address=None):
         """Create a new Location"""
