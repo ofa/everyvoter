@@ -93,7 +93,7 @@ def destroy_districts(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('election', '0001_initial'),
+        ('election', '0002_foreign_relationships'),
     ]
 
     operations = [
