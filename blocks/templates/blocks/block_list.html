@@ -1,11 +1,14 @@
 {% extends "management/manage_base.html" %}
-{% load sekizai_tags %}
+{% load sekizai_tags crispy_forms_tags %}
 
 {% block title %}{{ organization.platform_name }} Blocks{% endblock title %}
 
 {% block page_content %}
 {% add_data "body-class" "targets" %}
     <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-9">
         <h2>{{ organization.platform_name }} Blocks</h2>
         <p><a href="{% url 'manage:blocks:create_block' %}" class="btn btn-primary">New Block</a></p>
         <div class="card">
@@ -17,6 +20,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Tag</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -25,6 +29,7 @@
                 {% for content_block in blocks %}
                 <tr>
                     <th scope="row">{{ content_block.name }}</th>
+                    <th scope="row">{{ content_block.tag }}</th>
                     <th scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></th>
                     <th scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></th>
                 </tr>
@@ -32,6 +37,16 @@
 
             </tbody>
           </table></div>
+        </div>
+
+        </div>
+        <div class="col-md-3">
+            <form action="" method="get">
+                {{ filter.form|crispy }}
+                <input class="btn btn-primary btn-block" type="submit" value="Search" />
+            </form>
+        </div>
+      </div>
 
         </div>
 

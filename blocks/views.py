@@ -2,17 +2,22 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from django.urls import reverse_lazy
+from django_filters.views import FilterView
 
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin
 from blocks.models import Block, BlockTag
+from blocks.filters import BlockFilter
 
 
-class BlockListView(OrganizationViewMixin, ManageViewMixin, ListView):
+class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     """List all blocks"""
     model = Block
+    queryset = Block.objects.select_related('tag')
     paginate_by = 10
     context_object_name = 'blocks'
+    filterset_class = BlockFilter
+    template_name_suffix = '_list'
 
 
 class BlockCreateView(ManageViewMixin, SuccessMessageMixin, CreateView):
