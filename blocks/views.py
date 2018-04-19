@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django_filters.views import FilterView
 
 from manage.mixins import ManageViewMixin
-from branding.mixins import OrganizationViewMixin
+from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from blocks.models import Block, BlockTag
 from blocks.filters import BlockFilter
 
@@ -20,19 +20,14 @@ class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     template_name_suffix = '_list'
 
 
-class BlockCreateView(ManageViewMixin, SuccessMessageMixin, CreateView):
+class BlockCreateView(ManageViewMixin, SuccessMessageMixin,
+                      OrganizationCreateViewMixin, CreateView):
     """Create a block"""
     model = Block
     template_name_suffix = '_create'
     fields = ['name', 'tag', 'code']
     success_url = reverse_lazy('manage:blocks:list_blocks')
     success_message = "Block %(name)s was created"
-
-    def form_valid(self, form):
-        """Handle a valid form"""
-        form.instance.organization = self.request.organization
-
-        return super(BlockCreateView, self).form_valid(form)
 
 
 class BlockUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
@@ -62,19 +57,14 @@ class BlockTagListView(OrganizationViewMixin, ManageViewMixin, ListView):
     context_object_name = 'blocktags'
 
 
-class BlockTagCreateView(ManageViewMixin, SuccessMessageMixin, CreateView):
+class BlockTagCreateView(ManageViewMixin, SuccessMessageMixin,
+                         OrganizationCreateViewMixin, CreateView):
     """Create a block tag"""
     model = BlockTag
     template_name_suffix = '_create'
     fields = ['name']
     success_url = reverse_lazy('manage:blocks:list_blocktags')
     success_message = "Block Tag %(name)s was created"
-
-    def form_valid(self, form):
-        """Handle a valid form"""
-        form.instance.organization = self.request.organization
-
-        return super(BlockTagCreateView, self).form_valid(form)
 
 
 class BlockTagUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):

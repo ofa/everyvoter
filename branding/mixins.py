@@ -28,3 +28,12 @@ class OrganizationViewMixin(object):
         """Get the queryset filtered by organization"""
         queryset = super(OrganizationViewMixin, self).get_queryset()
         return queryset.filter(organization=self.request.organization)
+
+
+class OrganizationCreateViewMixin(object):
+    """Assign an organization to an object in a CreateView"""
+    def form_valid(self, form):
+        """Handle a valid form"""
+        form.instance.organization = self.request.organization
+
+        return super(OrganizationCreateViewMixin, self).form_valid(form)

@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from accounts.models import User
 from manage.mixins import ManageViewMixin
-from branding.mixins import OrganizationViewMixin
+from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from mailer.models import EmailWrapper, Unsubscribe, Mailing
 from mailer.forms import UnsubscribeForm
 
@@ -18,19 +18,14 @@ class WrapperListView(OrganizationViewMixin, ManageViewMixin, ListView):
     context_object_name = 'wrappers'
 
 
-class WrapperCreateView(ManageViewMixin, SuccessMessageMixin, CreateView):
+class WrapperCreateView(ManageViewMixin, SuccessMessageMixin,
+                        OrganizationCreateViewMixin, CreateView):
     """Create a wrapper"""
     model = EmailWrapper
     template_name = 'mailer/create_wrapper.html'
     fields = ['name', 'header', 'footer', 'default']
     success_url = reverse_lazy('manage:mailer:list_wrappers')
     success_message = "Wrapper %(name)s was created"
-
-    def form_valid(self, form):
-        """Handle a valid form"""
-        form.instance.organization = self.request.organization
-
-        return super(WrapperCreateView, self).form_valid(form)
 
 
 class WrapperUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
@@ -43,7 +38,8 @@ class WrapperUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
     success_message = "Wrapper %(name)s was edited"
 
 
-class UnsubscribeCreateView(OrganizationViewMixin, CreateView):
+class UnsubscribeCreateView(OrganizationViewMixin,
+                            OrganizationCreateViewMixin, CreateView):
     """List all imports"""
     model = Unsubscribe
     template_name = "mailer/unsubscribe.html"
@@ -52,7 +48,6 @@ class UnsubscribeCreateView(OrganizationViewMixin, CreateView):
 
     def form_valid(self, form):
         """Handle a valid form"""
-        form.instance.organization = self.request.organization
         form.instance.origin = 'user'
 
         if form.cleaned_data['mailing_uuid']:

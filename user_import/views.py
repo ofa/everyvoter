@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
 from manage.mixins import ManageViewMixin
-from branding.mixins import OrganizationViewMixin
+from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from user_import.models import UserImport
 from user_import.tasks import ingest_import
 from user_import.forms import UserImportForm
@@ -20,7 +20,8 @@ class ImportListView(OrganizationViewMixin, ManageViewMixin, ListView):
 
 
 class ImportCreateView(OrganizationViewMixin, ManageViewMixin,
-                       SuccessMessageMixin, CreateView):
+                       SuccessMessageMixin, OrganizationCreateViewMixin,
+                       CreateView):
     """Create a new import"""
     model = UserImport
     form_class = UserImportForm
@@ -31,7 +32,6 @@ class ImportCreateView(OrganizationViewMixin, ManageViewMixin,
     def form_valid(self, form):
         """Handle a valid form"""
         form.instance.uploader = self.request.user
-        form.instance.organization = self.request.organization
         form.instance.status = 'pending'
 
         response = super(ImportCreateView, self).form_valid(form)
