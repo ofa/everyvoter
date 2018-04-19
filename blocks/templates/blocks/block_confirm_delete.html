@@ -1,0 +1,18 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Edit Block {{ content_block.name }}{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+        <h2>Delete {{ content_block.name }}</h2>
+
+            <form role="form" method="POST" action="">
+                <p>Are you sure you want to delete <strong>{{ content_block.name }}</strong>? You cannot undo this.</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            {% csrf_token %}
+            </form>
+
+    </div>
+{% endblock %}

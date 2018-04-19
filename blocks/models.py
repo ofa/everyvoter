@@ -10,7 +10,8 @@ class Block(TimestampModel, UUIDModel, OrganizationMixin):
     """Block of content"""
     name = models.CharField('Block Name', max_length=50)
     code = models.TextField('HTML Code', validators=[validate_template])
-    tag = models.ForeignKey('blocks.BlockTag', null=True, blank=True)
+    tag = models.ForeignKey(
+        'blocks.BlockTag', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta(object):
         """Meta options for BLock"""

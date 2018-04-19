@@ -1,0 +1,43 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags %}
+
+{% block title %}{{ organization.platform_name }} Blocks{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+        <h2>{{ organization.platform_name }} Blocks</h2>
+        <p><a href="{% url 'manage:blocks:create_block' %}" class="btn btn-primary">New Block</a></p>
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Existing Blocks</div>
+          <!-- Table -->
+          <div class="table-responsive-lg">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for content_block in blocks %}
+                <tr>
+                    <th scope="row">{{ content_block.name }}</th>
+                    <th scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></th>
+                    <th scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></th>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+          </table></div>
+
+        </div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}

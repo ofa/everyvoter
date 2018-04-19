@@ -1,0 +1,18 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Edit Block Tag{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+        <h2>Create Block Tag</h2>
+
+            <form role="form" method="POST" action="">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Save</button>
+            {% csrf_token %}
+            </form>
+
+    </div>
+{% endblock %}

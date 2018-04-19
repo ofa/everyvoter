@@ -84,6 +84,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='block',
             name='tag',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='blocks.BlockTag'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='blocks.BlockTag'),
         ),
     ]
