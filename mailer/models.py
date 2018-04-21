@@ -66,6 +66,11 @@ class EmailWrapper(TimestampModel, UUIDModel, OrganizationMixin):
         return super(EmailWrapper, self).save(*args, **kwargs)
 
 
+class EmailTags(TimestampModel, OrganizationMixin):
+    """Tags for emails"""
+    name = models.CharField('Name', max_length=50)
+
+
 class AbstractEmail(TimestampModel, UUIDModel):
     """Abstract Email"""
     subject = models.CharField('Subject Line', max_length=100)
@@ -73,6 +78,7 @@ class AbstractEmail(TimestampModel, UUIDModel):
     from_name = models.CharField('From Name', max_length=50)
     body_above = models.TextField(verbose_name='Email Body Above', blank=True)
     body_below = models.TextField(verbose_name='Email Body Below', blank=True)
+    tags = models.ManyToManyField('mailer.EmailTags', blank=True)
 
     class Meta(object):
         """Meta options for AbstractEmail"""
