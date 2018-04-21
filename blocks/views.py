@@ -20,8 +20,19 @@ class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     template_name_suffix = '_list'
 
 
+class BlockCreateModifyObjectViewMixin(object):
+    """Mixin for views that crea modify blocks"""
+    def get_form(self):
+        """Get the form, but with tags scoped to that user's organization"""
+        form = super(BlockCreateModifyObjectViewMixin, self).get_form()
+        form.fields['tag'].queryset = form.fields['tag'].queryset.filter(
+            organization=self.request.organization)
+        return form
+
+
 class BlockCreateView(ManageViewMixin, SuccessMessageMixin,
-                      OrganizationCreateViewMixin, CreateView):
+                      OrganizationCreateViewMixin,
+                      BlockCreateModifyObjectViewMixin, CreateView):
     """Create a block"""
     model = Block
     template_name_suffix = '_create'
@@ -30,7 +41,8 @@ class BlockCreateView(ManageViewMixin, SuccessMessageMixin,
     success_message = "Block %(name)s was created"
 
 
-class BlockUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
+class BlockUpdateView(ManageViewMixin, SuccessMessageMixin,
+                      BlockCreateModifyObjectViewMixin, UpdateView):
     """Edit a block"""
     model = Block
     slug_field = 'uuid'
