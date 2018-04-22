@@ -11,5 +11,6 @@ class DistrictSerializer(serializers.ModelSerializer):
     page_size = 700
 
     class Meta(object):
+        """Meta options for serializer"""
         model = LegislativeDistrict
         fields = ('id', 'name', 'state', 'ocd_id', 'district_type')
