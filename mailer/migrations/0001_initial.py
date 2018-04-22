@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
                 ('body_above', models.TextField(blank=True, verbose_name=b'Email Body Above')),
                 ('body_below', models.TextField(blank=True, verbose_name=b'Email Body Below')),
                 ('name', models.CharField(max_length=50, verbose_name=b'Name')),
-                ('deadline_type', models.CharField(choices=[(b'evip_start_date', b'Early Vote Start'), (b'evip_close_date', b'Early Vote End'), (b'vbm_application_deadline', b'Vote By Mail Applications Due'), (b'ballot_return_date', b'Vote By Mail Returns Due'), (b'election_date', b'Election Day')], max_length=50, verbose_name=b'Deadline Type')),
+                ('deadline_type', models.CharField(choices=[(b'registration', b'Registration'), (b'evip_start_date', b'Early Vote Start'), (b'evip_close_date', b'Early Vote End'), (b'vbm_application_deadline', b'Vote By Mail Applications Due'), (b'ballot_return_date', b'Vote By Mail Returns Due'), (b'election_date', b'Election Day')], max_length=50, verbose_name=b'Deadline Type')),
                 ('election_type', models.CharField(choices=[(b'primary', b'Primary'), (b'general', b'General')], max_length=50, verbose_name=b'Election Type')),
                 ('days_to_deadline', models.IntegerField(default=0, verbose_name=b'Days to Deadline')),
                 ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
