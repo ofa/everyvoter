@@ -16,8 +16,8 @@ with open(illinois_file) as json_file:
     illinois_geocode = json.loads(json_file.read())
 
 
-class KennedyTestMixin(object):
-    """Mixin for Kennedy tests"""
+class EveryVoterTestMixin(object):
+    """Mixin for EveryVoter tests"""
     def create_organization(self):
         """Create an organization with the test domain"""
         name = unicode(uuid.uuid4())

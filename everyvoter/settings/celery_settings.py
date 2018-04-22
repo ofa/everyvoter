@@ -47,7 +47,7 @@ else:
 
 CELERY_TASK_EAGER_PROPAGATES = True
 
-# By default Kennedy does not consume results
+# By default EveryVoter does not consume results
 CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
 
 CELERYBEAT_SCHEDULE = {

@@ -1,4 +1,4 @@
-"""Secure storage backends for Kennedy
+"""Secure storage backends for EveryVoter
 
 Swiped from Connect, because this should only ever be written once.
 """

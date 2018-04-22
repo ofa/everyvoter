@@ -1,5 +1,5 @@
 """
-WSGI config for kennedy project.
+WSGI config for EveryVoter project.
 """
 # pylint: disable=invalid-name
 import os

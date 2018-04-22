@@ -1,4 +1,4 @@
-"""Basic settings for Kennedy project"""
+"""Basic settings for EveryVoter project"""
 # pylint: disable=invalid-name
 import os
 
@@ -7,12 +7,12 @@ import environ
 env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
-    APP_NAME=(str, 'kennedy-default'),
+    APP_NAME=(str, 'everyvoter-default'),
     TIME_ZONE=(str, 'US/Eastern'),
     LANGUAGE_CODE=(str, 'en-us'),
     KEY_PREFIX=(str, ''),
-    CSRF_COOKIE_NAME=(str, 'kennedy_csrftoken'),
-    SESSION_COOKIE_NAME=(str, 'kennedy_sessionid'),
+    CSRF_COOKIE_NAME=(str, 'everyvoter_csrftoken'),
+    SESSION_COOKIE_NAME=(str, 'everyvoter_sessionid'),
     SESSION_ENGINE=(str, 'django.contrib.sessions.backends.cached_db'),
     SESSION_SERIALIZER=(
         str, 'django.contrib.sessions.serializers.JSONSerializer'),
@@ -57,7 +57,7 @@ SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 
 
 #####
-# Application name (i.e. `kennedy-prod`, `kennedy-staging`, etc)
+# Application name (i.e. `everyvoter-prod`, `everyvoter-staging`, etc)
 
 APP_NAME = env('APP_NAME')
 

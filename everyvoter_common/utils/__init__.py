@@ -1,1 +1,1 @@
-"""Utilities for Kennedy project"""
+"""Utilities for EveryVoter project"""

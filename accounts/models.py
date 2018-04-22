@@ -1,4 +1,4 @@
-"""Models for the Kennedy App"""
+"""Models for the EveryVoter App"""
 import uuid
 
 from django.core.exceptions import PermissionDenied

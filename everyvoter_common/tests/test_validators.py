@@ -1,4 +1,4 @@
-"""Test kennedy-common field validators"""
+"""Test everyvoter-common field validators"""
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 

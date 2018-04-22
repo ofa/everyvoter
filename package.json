@@ -1,7 +1,7 @@
 {
   "name": "everyvoter",
   "version": "1.0.0",
-  "repository": "git+https://github.com/ofa/kennedy.git",
+  "repository": "git+https://github.com/ofa/everyvoter.git",
   "author": "OFA",
   "dependencies": {
     "babel-core": "^6.26.0",

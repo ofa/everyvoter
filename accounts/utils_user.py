@@ -10,7 +10,7 @@ from location.models import UserLocation
 def create_user(organization, email, address, first_name, last_name):
     """Create a new user
 
-    Function to create a new user on Kennedy
+    Function to create a new user on EveryVoter
 
     Args:
         organization: Organization

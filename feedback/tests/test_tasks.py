@@ -10,7 +10,7 @@ from mailer.models import EmailActivity, Unsubscribe
 from feedback.tasks import (
     process_tags, extract_email, global_unsubscribe, process_feedback
 )
-from everyvoter_common.utils.tests import KennedyTestMixin
+from everyvoter_common.utils.tests import EveryVoterTestMixin
 
 
 def load_example(filename):
@@ -51,7 +51,7 @@ class TestExtract(TestCase):
         self.assertEqual(extract_email(click['mail']), 'ssmith@ishouldvote.us')
 
 
-class TestGlobalUnsubscribe(KennedyTestMixin, TestCase):
+class TestGlobalUnsubscribe(EveryVoterTestMixin, TestCase):
     """Test the global_unsubscribe function"""
     def test_unaffiliated_unsubscribe(self):
         """Test an unsubscribe where there is no mailing or user"""
@@ -95,7 +95,7 @@ class TestGlobalUnsubscribe(KennedyTestMixin, TestCase):
         self.assertTrue(user_repull.unsubscribed)
 
 
-class TestProcessFeedback(KennedyTestMixin, TestCase):
+class TestProcessFeedback(EveryVoterTestMixin, TestCase):
     """Test processing feedback"""
     def setUp(self):
         """Setup the test"""

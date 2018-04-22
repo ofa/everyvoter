@@ -1,4 +1,4 @@
-"""Serializers for the Kennedy project"""
+"""Serializers for the EveryVoter project"""
 from rest_framework import serializers
 from rest_framework.fields import ReadOnlyField
 from rest_framework.pagination import PageNumberPagination

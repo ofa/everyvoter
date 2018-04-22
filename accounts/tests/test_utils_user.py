@@ -7,10 +7,10 @@ from mock import patch
 from accounts.models import User
 from accounts.utils_user import create_user
 from location.models import UserLocation
-from everyvoter_common.utils.tests import KennedyTestMixin
+from everyvoter_common.utils.tests import EveryVoterTestMixin
 
 
-class TestCreateUser(KennedyTestMixin, TestCase):
+class TestCreateUser(EveryVoterTestMixin, TestCase):
     """Test the create_user method"""
     def setUp(self):
         """Setup the test"""

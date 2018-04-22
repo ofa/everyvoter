@@ -1,1 +1,1 @@
-"""Accounts for the Kennedy app"""
+"""Accounts for the EveryVoter app"""

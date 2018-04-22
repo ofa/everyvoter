@@ -1,1 +1,1 @@
-"""Admin app for Kennedy"""
+"""Admin app for EveryVoter"""

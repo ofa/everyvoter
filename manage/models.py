@@ -1,1 +1,1 @@
-"""Models for Kennedy Management"""
+"""Models for EveryVoter Management"""

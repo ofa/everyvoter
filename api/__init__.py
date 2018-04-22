@@ -1,1 +1,1 @@
-"""API app for Kennedy"""
+"""API app for EveryVoter"""

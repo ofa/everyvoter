@@ -8,8 +8,8 @@ import environ
 env = environ.Env(
     DEBUG=(bool, False),
     USE_S3=(bool, False),
-    DEFAULT_S3_PATH=(str, 'kennedy/uploads'),
-    STATIC_S3_PATH=(str, 'kennedy/static'),
+    DEFAULT_S3_PATH=(str, 'everyvoter/uploads'),
+    STATIC_S3_PATH=(str, 'everyvoter/static'),
     AWS_PRIVATE_STORAGE_EXPIRATION=(int, 60 * 60 * 24)
 )
 

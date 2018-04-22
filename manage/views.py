@@ -1,4 +1,4 @@
-"""Views for Kennedy Admin"""
+"""Views for EveryVoter Admin"""
 from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView

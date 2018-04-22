@@ -1,4 +1,4 @@
-"""Settings for Kennedy App"""
+"""Settings for EveryVoter App"""
 # We use wildcard imports here to bring all the settings from the smaller
 # settings files into this __init__ file. This is essentially concatinating
 # multiple files into one large settings.py

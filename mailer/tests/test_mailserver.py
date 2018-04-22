@@ -2,15 +2,15 @@
 from django.test import TestCase, override_settings
 from mock import patch
 
-from everyvoter_common.utils.tests import KennedyTestMixin
+from everyvoter_common.utils.tests import EveryVoterTestMixin
 from mailer.mailserver import deliver
 
 
-class TestDeliver(KennedyTestMixin, TestCase):
+class TestDeliver(EveryVoterTestMixin, TestCase):
     """Test the create_user method"""
 
     @override_settings(EMAIL_ACTIVE=True)
-    @override_settings(SES_CONFIGURATIONSET_NAME='kennedy-set')
+    @override_settings(SES_CONFIGURATIONSET_NAME='everyvoter-set')
     @override_settings(APP_NAME='cool-app')
     @patch('mailer.mailserver.client')
     def test_success(self, mock):
@@ -33,7 +33,7 @@ class TestDeliver(KennedyTestMixin, TestCase):
         self.assertEqual(send_email_call_kwargs['Destination']['ToAddresses'],
                          ['to@example.local'])
         self.assertEqual(send_email_call_kwargs['ConfigurationSetName'],
-                         'kennedy-set')
+                         'everyvoter-set')
 
         # Because Tags is a dictionary with one extra field turned into a list
         # of dictionaries there is essentially no clean way of testing the tags

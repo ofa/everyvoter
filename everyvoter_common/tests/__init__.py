@@ -1,1 +1,1 @@
-"""Tests for Kennedy Common"""
+"""Tests for EveryVoter Common"""
