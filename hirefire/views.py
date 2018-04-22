@@ -4,7 +4,7 @@ from django.conf import settings
 from django.views.generic.base import View
 from django.http import JsonResponse
 
-from kennedy.celery import app as celery_app
+from everyvoter.celery import app as celery_app
 
 
 class HireFireView(View):

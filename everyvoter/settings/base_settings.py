@@ -50,8 +50,8 @@ SECRET_KEY = env('SECRET_KEY')
 # Core Application Settings
 
 DEBUG = env('DEBUG')
-ROOT_URLCONF = 'kennedy.urls'
-WSGI_APPLICATION = 'kennedy.wsgi.application'
+ROOT_URLCONF = 'everyvoter.urls'
+WSGI_APPLICATION = 'everyvoter.wsgi.application'
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
 
@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'blocks',
     'mailer',
     'feedback',
+    'targeting',
 
     'user_import',
 
@@ -154,6 +155,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'branding.middleware.BrandingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -162,8 +164,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 

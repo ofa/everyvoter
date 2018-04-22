@@ -6,9 +6,9 @@ from celery import Celery
 import time
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kennedy.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'everyvoter.settings')
 
-app = Celery('kennedy')
+app = Celery('everyvoter')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

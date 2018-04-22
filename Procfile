@@ -1,3 +1,3 @@
-web: bin/start-pgbouncer bin/start-nginx newrelic-admin run-program gunicorn -k gevent -c config/gunicorn_config.py kennedy.wsgi
-beat: REMAP_SIGTERM=SIGQUIT bin/start-pgbouncer newrelic-admin run-program celery -A kennedy worker -B --scheduler django_celery_beat.schedulers:DatabaseScheduler --without-heartbeat
-celery: REMAP_SIGTERM=SIGQUIT bin/start-pgbouncer newrelic-admin run-program celery -A kennedy worker --without-heartbeat
+web: bin/start-pgbouncer bin/start-nginx newrelic-admin run-program gunicorn -k gevent -c config/gunicorn_config.py everyvoter.wsgi
+beat: REMAP_SIGTERM=SIGQUIT bin/start-pgbouncer newrelic-admin run-program celery -A everyvoter worker -B --scheduler django_celery_beat.schedulers:DatabaseScheduler --without-heartbeat
+celery: REMAP_SIGTERM=SIGQUIT bin/start-pgbouncer newrelic-admin run-program celery -A everyvoter worker --without-heartbeat

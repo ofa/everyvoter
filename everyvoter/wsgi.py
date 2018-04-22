@@ -6,7 +6,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "kennedy.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "everyvoter.settings")
 
 # Fix django closing connection to Memcached after every request
 from django.core.cache.backends.memcached import BaseMemcachedCache
