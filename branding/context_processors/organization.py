@@ -2,4 +2,7 @@
 
 def organization(request):
     """Context processor for organization"""
-    return {'organization': request.organization}
+    if hasattr(request, 'organization'):
+        return {'organization': request.organization}
+    else:
+        return {'organization': None}
