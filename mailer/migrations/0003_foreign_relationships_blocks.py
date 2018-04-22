@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mailing',
             name='blocks',
-            field=models.ManyToManyField(through='blocks.MailingBlocks', to='blocks.Block'),
+            field=models.ManyToManyField(through='blocks.MailingBlocks', to='blocks.Block', blank=True),
         ),
         migrations.AddField(
             model_name='mailingtemplate',
             name='blocks',
-            field=models.ManyToManyField(through='blocks.TemplateBlocks', to='blocks.Block'),
+            field=models.ManyToManyField(through='blocks.TemplateBlocks', to='blocks.Block', blank=True),
         ),
     ]

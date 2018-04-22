@@ -88,11 +88,16 @@ class EmailTags(TimestampModel, OrganizationMixin):
 
 class AbstractEmail(TimestampModel, UUIDModel):
     """Abstract Email"""
-    subject = models.CharField('Subject Line', max_length=100)
-    pre_header = models.CharField('Pre-Header Text', null=True, max_length=100)
+    subject = models.CharField('Subject Line', max_length=100,
+                               validators=[validate_template])
+    pre_header = models.CharField('Pre-Header Text', null=True, blank=True,
+                                  max_length=100,
+                                  validators=[validate_template])
     from_name = models.CharField('From Name', max_length=50)
-    body_above = models.TextField(verbose_name='Email Body Above', blank=True)
-    body_below = models.TextField(verbose_name='Email Body Below', blank=True)
+    body_above = models.TextField(verbose_name='Email Body Above', blank=True,
+                                  validators=[validate_template])
+    body_below = models.TextField(verbose_name='Email Body Below', blank=True,
+                                  validators=[validate_template])
     tags = models.ManyToManyField('mailer.EmailTags', blank=True)
 
     class Meta(object):
@@ -112,15 +117,12 @@ class MailingTemplate(AbstractEmail, OrganizationMixin):
         'Election Type', choices=ELECTION_TYPES, max_length=50)
     days_to_deadline = models.IntegerField('Days to Deadline', default=0)
     blocks = models.ManyToManyField(
-        'blocks.Block', through='blocks.TemplateBlocks')
+        'blocks.Block', through='blocks.TemplateBlocks', blank=True)
 
     class Meta(object):
         """Meta options for template"""
         verbose_name = "Template"
         verbose_name_plural = "Templates"
-
-    def __str__(self):
-        pass
 
 
 class Mailing(AbstractEmail):
@@ -133,7 +135,7 @@ class Mailing(AbstractEmail):
     source = models.CharField('Source Code', max_length=100)
     count = models.IntegerField(verbose_name='Recipients', default=0)
     blocks = models.ManyToManyField(
-        'blocks.Block', through='blocks.MailingBlocks')
+        'blocks.Block', through='blocks.MailingBlocks', blank=True)
 
     class Meta(object):
         """Meta details about the Mailing model"""
