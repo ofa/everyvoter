@@ -49,7 +49,7 @@ if env('USE_S3'):
     AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
     STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-    DEFAULT_FILE_STORAGE = 'kennedy_common.utils.storages.AttachmentStorage'
+    DEFAULT_FILE_STORAGE = 'everyvoter_common.utils.storages.AttachmentStorage'
     ATTACHMENT_STORAGE_ENGINE = 's3_folder_storage.s3.DefaultStorage'
 
     # Paths on S3 for various content

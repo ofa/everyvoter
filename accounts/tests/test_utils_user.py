@@ -7,7 +7,7 @@ from mock import patch
 from accounts.models import User
 from accounts.utils_user import create_user
 from location.models import UserLocation
-from kennedy_common.utils.tests import KennedyTestMixin
+from everyvoter_common.utils.tests import KennedyTestMixin
 
 
 class TestCreateUser(KennedyTestMixin, TestCase):

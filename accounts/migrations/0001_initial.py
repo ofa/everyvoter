@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 import django_smalluuid.models
-import kennedy_common.utils.models
+import everyvoter_common.utils.models
 
 
 class Migration(migrations.Migration):
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
             ],
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.AddIndex(
             model_name='user',

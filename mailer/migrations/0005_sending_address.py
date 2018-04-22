@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import kennedy_common.utils.models
+import everyvoter_common.utils.models
 import rendering.validators
 
 
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.RunPython(create_default_sending_address, lambda x,y: None)
     ]

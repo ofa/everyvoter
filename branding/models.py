@@ -6,7 +6,7 @@ from django.utils.functional import cached_property
 
 from branding.mixins import OrganizationMixin
 from branding.utils import org_domain_cache_key
-from kennedy_common.utils.models import TimestampModel
+from everyvoter_common.utils.models import TimestampModel
 
 
 class Organization(TimestampModel):

@@ -2,7 +2,7 @@
 from django.test import TestCase, override_settings
 from mock import patch
 
-from kennedy_common.utils.tests import KennedyTestMixin
+from everyvoter_common.utils.tests import KennedyTestMixin
 from mailer.mailserver import deliver
 
 

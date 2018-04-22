@@ -3,7 +3,7 @@ from django.db import models
 
 from branding.mixins import OrganizationMixin
 from rendering.validators import validate_template
-from kennedy_common.utils.models import TimestampModel, UUIDModel
+from everyvoter_common.utils.models import TimestampModel, UUIDModel
 
 
 class Block(TimestampModel, UUIDModel, OrganizationMixin):

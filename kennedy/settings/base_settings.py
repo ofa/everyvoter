@@ -137,7 +137,7 @@ INSTALLED_APPS = [
 
     'user_import',
 
-    'kennedy_common',
+    'everyvoter_common',
 
     'hirefire',
 

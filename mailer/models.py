@@ -7,7 +7,7 @@ from django_smalluuid.models import SmallUUIDField, uuid_default
 
 from branding.mixins import OrganizationMixin
 from rendering.validators import validate_template
-from kennedy_common.utils.models import TimestampModel, UUIDModel
+from everyvoter_common.utils.models import TimestampModel, UUIDModel
 from election.choices import DEADLINES, ELECTION_TYPES
 
 

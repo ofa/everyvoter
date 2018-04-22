@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
-import kennedy_common.utils.models
+import everyvoter_common.utils.models
 
 
 class Migration(migrations.Migration):
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='LegislativeDistrict',
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='OrganizationElection',
@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
                 ('election', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='election.Election')),
                 ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
             ],
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='State',
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'State',
                 'verbose_name_plural': 'States',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.AddField(
             model_name='legislativedistrict',

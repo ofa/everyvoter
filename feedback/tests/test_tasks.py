@@ -10,7 +10,7 @@ from mailer.models import EmailActivity, Unsubscribe
 from feedback.tasks import (
     process_tags, extract_email, global_unsubscribe, process_feedback
 )
-from kennedy_common.utils.tests import KennedyTestMixin
+from everyvoter_common.utils.tests import KennedyTestMixin
 
 
 def load_example(filename):

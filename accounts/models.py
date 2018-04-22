@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_smalluuid.models import SmallUUIDField, uuid_default
 
 from branding.mixins import OrganizationMixin, OrganizationManagerMixin
-from kennedy_common.utils.models import TimestampModel
+from everyvoter_common.utils.models import TimestampModel
 
 
 class UserManager(OrganizationManagerMixin, auth_models.BaseUserManager):

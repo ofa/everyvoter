@@ -2,7 +2,7 @@
 from django.db import models
 
 from branding.mixins import OrganizationMixin
-from kennedy_common.utils.models import TimestampModel
+from everyvoter_common.utils.models import TimestampModel
 from election.choices import DISTRICT_TYPES, ELECTION_TYPES, STATES
 
 

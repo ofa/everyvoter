@@ -5,8 +5,8 @@ from __future__ import unicode_literals
 import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
-import kennedy_common.utils.models
-import kennedy_common.utils.storages
+import everyvoter_common.utils.models
+import everyvoter_common.utils.storages
 import uuid
 
 
@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Import Record Status',
                 'verbose_name_plural': 'Import Record Statuses',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='UserImport',
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('total_failed', models.IntegerField(default=0, editable=False, verbose_name=b'Total Failures')),
                 ('ingested', models.IntegerField(default=0, editable=False, verbose_name=b'Total Ingested')),
                 ('status', models.CharField(choices=[(b'pending', b'Pending'), (b'failed', b'Failed'), (b'ingesting', b'Ingesting'), (b'creating', b'Creating Users'), (b'finished', b'Finished')], max_length=50, verbose_name=b'Status')),
-                ('file', models.FileField(null=True, storage=kennedy_common.utils.storages.HighValueStorage(), upload_to=b'user_imports/', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=[b'csv'])], verbose_name=b'Source File')),
+                ('file', models.FileField(null=True, storage=everyvoter_common.utils.storages.HighValueStorage(), upload_to=b'user_imports/', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=[b'csv'])], verbose_name=b'Source File')),
                 ('default', models.BooleanField(default=False, editable=False, verbose_name=b'Default API Import')),
                 ('note', models.TextField(default=False, null=True)),
                 ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'User Import',
                 'verbose_name_plural': 'User Imports',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.AddField(
             model_name='importrecord',

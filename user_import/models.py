@@ -5,8 +5,8 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 
 from branding.mixins import OrganizationMixin
-from kennedy_common.utils.models import TimestampModel
-from kennedy_common.utils.storages import HighValueStorage
+from everyvoter_common.utils.models import TimestampModel
+from everyvoter_common.utils.storages import HighValueStorage
 
 
 RECORD_STATUSES = (

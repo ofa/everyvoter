@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
-from kennedy_common.utils.models import TimestampModel
+from everyvoter_common.utils.models import TimestampModel
 
 
 class UserLocation(TimestampModel):

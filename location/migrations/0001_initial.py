@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
-import kennedy_common.utils.models
+import everyvoter_common.utils.models
 
 
 class Migration(migrations.Migration):
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Geocoding Lookup',
                 'verbose_name_plural': 'Geocoding Lookups',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='Location',
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Location',
                 'verbose_name_plural': 'Locations',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='UserLocation',
@@ -55,6 +55,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'User Location',
                 'verbose_name_plural': 'User Locations',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
     ]

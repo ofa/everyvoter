@@ -7,7 +7,7 @@ import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
 import django.db.models.deletion
 import django_smalluuid.models
-import kennedy_common.utils.models
+import everyvoter_common.utils.models
 import rendering.validators
 
 
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Email Activity',
                 'verbose_name_plural': 'Email Activities',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='EmailWrapper',
@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Email Wrapper',
                 'verbose_name_plural': 'Email Wrappers',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='Mailing',
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Mailing',
                 'verbose_name_plural': 'Mailings',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='MailingTemplate',
@@ -101,7 +101,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Template',
                 'verbose_name_plural': 'Templates',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='Unsubscribe',
@@ -120,7 +120,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Unsubscribe',
                 'verbose_name_plural': 'Unsubscribes',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.AddField(
             model_name='mailing',

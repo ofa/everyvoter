@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 import django_smalluuid.models
-import kennedy_common.utils.models
+import everyvoter_common.utils.models
 import rendering.validators
 
 
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Block',
                 'verbose_name_plural': 'Blocks',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='BlockTag',
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Block Tag',
                 'verbose_name_plural': 'Block Tags',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='MailingBlocks',
@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Mailing Blocks',
                 'verbose_name_plural': 'Mailing Blocks',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
             name='TemplateBlocks',
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Template Blocks',
                 'verbose_name_plural': 'Template Blocks',
             },
-            bases=(kennedy_common.utils.models.CacheMixinModel, models.Model),
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.AddField(
             model_name='block',

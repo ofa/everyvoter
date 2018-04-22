@@ -2,7 +2,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from kennedy_common.validators import validate_template
+from everyvoter_common.validators import validate_template
 
 
 class TestValidateTemplate(TestCase):
