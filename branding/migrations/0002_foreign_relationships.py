@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organization',
             name='primary_domain',
-            field=models.ForeignKey(default=False, help_text=b'Domain to attach all links to', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='primary_domain', to='branding.Domain', verbose_name=b'Primary Domain'),
+            field=models.ForeignKey(default=None, help_text=b'Domain to attach all links to', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='primary_domain', to='branding.Domain', verbose_name=b'Primary Domain'),
         ),
     ]

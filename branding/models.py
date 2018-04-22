@@ -17,7 +17,7 @@ class Organization(TimestampModel):
     primary_domain = models.ForeignKey(
         'Domain', verbose_name='Primary Domain',
         help_text='Domain to attach all links to',
-        related_name='primary_domain', null=True, default=False,
+        related_name='primary_domain', null=True, default=None,
         on_delete=models.SET_NULL)
     elections = models.ManyToManyField(
         'election.Election', through='election.OrganizationElection')
