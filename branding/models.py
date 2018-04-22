@@ -23,6 +23,10 @@ class Organization(TimestampModel):
         'election.Election', through='election.OrganizationElection')
     privacy_url = models.URLField('Privacy Policy URL')
     terms_url = models.URLField('Terms of Service URL')
+    from_address = models.ForeignKey(
+        'mailer.SendingAddress', verbose_name='Sending Address',
+        related_name='default_organizations',
+        on_delete=models.SET_DEFAULT, default=1)
 
     class Meta(object):
         """Meta options for Organization"""

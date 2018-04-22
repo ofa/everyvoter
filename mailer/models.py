@@ -27,6 +27,21 @@ UNSUBSCRIBE_ORIGINS = (
 )
 
 
+class SendingAddress(TimestampModel):
+    """Address an email can be sent from. May need to be whitelisted by ESP"""
+    # We assign organization manually instead of using the mixin because in the
+    # mixin the field is not editable, and we need it to be editable in the
+    # Django admin.
+    organization = models.ForeignKey(
+        'branding.Organization', db_index=True, null=True, blank=True,
+        related_name='eligible_addresses')
+    address = models.EmailField('Email Address')
+
+    def __unicode__(self):
+        """Unicode representation of the address"""
+        return self.address
+
+
 class EmailWrapper(TimestampModel, UUIDModel, OrganizationMixin):
     """Template for email"""
     name = models.CharField('Name', max_length=50)
