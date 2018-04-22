@@ -2,12 +2,72 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView, UpdateView, ListView, TemplateView
 from django.urls import reverse_lazy
+from django_filters.views import FilterView
 
 from accounts.models import User
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
-from mailer.models import EmailWrapper, Unsubscribe, Mailing
-from mailer.forms import UnsubscribeForm
+from blocks.models import TemplateBlocks
+from mailer.models import EmailWrapper, Unsubscribe, Mailing, MailingTemplate
+from mailer.forms import UnsubscribeForm, MailingTemplateForm
+from mailer.filters import MailingTemplateFilter
+
+
+
+class MailingTemplateListView(OrganizationViewMixin, ManageViewMixin,
+                              FilterView):
+    """List all mailing templates"""
+    model = MailingTemplate
+    paginate_by = 10
+    context_object_name = 'mailing_templates'
+    filterset_class = MailingTemplateFilter
+    template_name_suffix = '_list'
+
+
+class MailingTemplateObjectView(object):
+    """Mixin that handles views that create or edit mailing templates"""
+    def get_form(self):
+        """Get the form"""
+        form = super(MailingTemplateObjectView, self).get_form()
+        form.fields['tags'].queryset = form.fields['tags'].queryset.filter(
+            organization=self.request.organization)
+        form.fields['blocks'].queryset = form.fields['blocks'].queryset.filter(
+            organization=self.request.organization)
+        return form
+
+    def form_valid(self, form):
+        """Handle a valid form"""
+        result = super(MailingTemplateObjectView, self).form_valid(form)
+
+        TemplateBlocks.objects.filter(template=self.object).delete()
+        for block in form.cleaned_data['blocks']:
+            templateblock = TemplateBlocks()
+            templateblock.template = self.object
+            templateblock.block = block
+            templateblock.save()
+
+        return result
+
+
+class MailingTemplateCreateView(ManageViewMixin, SuccessMessageMixin,
+                                MailingTemplateObjectView,
+                                OrganizationCreateViewMixin, CreateView):
+    """Create a template"""
+    model = MailingTemplate
+    form_class = MailingTemplateForm
+    success_url = reverse_lazy('manage:mailer:list_templates')
+    success_message = "Template %(name)s was created"
+
+
+class MailingTemplateUpdateView(ManageViewMixin, SuccessMessageMixin,
+                                MailingTemplateObjectView, UpdateView):
+    """Update a template"""
+    model = MailingTemplate
+    form_class = MailingTemplateForm
+    success_url = reverse_lazy('manage:mailer:list_templates')
+    success_message = "Template %(name)s was edited"
+    context_object_name = 'mailing_template'
+    slug_field = 'uuid'
 
 
 class WrapperListView(OrganizationViewMixin, ManageViewMixin, ListView):

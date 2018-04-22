@@ -105,7 +105,7 @@ class AbstractEmail(TimestampModel, UUIDModel):
         abstract = True
 
     def __str__(self):
-        pass
+        return self.name
 
 
 class MailingTemplate(AbstractEmail, OrganizationMixin):

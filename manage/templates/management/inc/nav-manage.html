@@ -16,9 +16,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#">Mailings</a>
-          <a class="dropdown-item" href="#">Templates</a>
-          <a class="dropdown-item" href="#">Stats</a>
+          <a class="dropdown-item" href="{% url 'manage:mailer:list_templates' %}">Templates</a>
           <a class="dropdown-item" href="{% url 'manage:mailer:list_wrappers' %}">Wrappers</a>
+          <a class="dropdown-item" href="#">Senders</a>
         </div>
       </li>
 
