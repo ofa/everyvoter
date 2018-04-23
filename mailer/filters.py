@@ -12,4 +12,4 @@ class MailingTemplateFilter(django_filters.FilterSet):
     class Meta(object):
         """Meta options for the filter"""
         model = MailingTemplate
-        fields = ['name', 'tags']
+        fields = ['name']

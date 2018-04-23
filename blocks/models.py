@@ -37,32 +37,12 @@ class BlockTag(TimestampModel, UUIDModel, OrganizationMixin):
         return self.name
 
 
-class BlockManyToMany(TimestampModel):
+class EmailBlocks(TimestampModel):
     """Abstract M2M join model between an upcoming or past email and a block"""
     priority = models.IntegerField(default=0)
     block = models.ForeignKey('blocks.Block')
+    email = models.ForeignKey('mailer.Email')
 
     class Meta(object):
         """Meta options for abstract model"""
-        abstract = True
         ordering = ['priority']
-
-
-class TemplateBlocks(BlockManyToMany):
-    """Many to many between upcoming emails and blocks"""
-    template = models.ForeignKey('mailer.MailingTemplate')
-
-    class Meta(object):
-        """Meta options for TemplateBlocks"""
-        verbose_name = "Template Blocks"
-        verbose_name_plural = "Template Blocks"
-
-
-class MailingBlocks(BlockManyToMany):
-    """Many to many between past emails and blocks"""
-    mailing = models.ForeignKey('mailer.Mailing')
-
-    class Meta(object):
-        """Meta options for MailingBlocks"""
-        verbose_name = "Mailing Blocks"
-        verbose_name_plural = "Mailing Blocks"

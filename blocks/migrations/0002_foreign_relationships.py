@@ -15,15 +15,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='mailingblocks',
-            name='mailing',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='mailer.Mailing'),
-            preserve_default=False,
-        ),
-        migrations.AddField(
-            model_name='templateblocks',
-            name='template',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='mailer.MailingTemplate'),
+            model_name='emailblocks',
+            name='email',
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='mailer.Email'),
             preserve_default=False,
         ),
     ]

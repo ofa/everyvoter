@@ -14,13 +14,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='mailing',
+            model_name='email',
             name='blocks',
-            field=models.ManyToManyField(through='blocks.MailingBlocks', to='blocks.Block', blank=True),
-        ),
-        migrations.AddField(
-            model_name='mailingtemplate',
-            name='blocks',
-            field=models.ManyToManyField(through='blocks.TemplateBlocks', to='blocks.Block', blank=True),
+            field=models.ManyToManyField(through='blocks.EmailBlocks', to='blocks.Block', blank=True),
         ),
     ]

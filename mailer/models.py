@@ -86,8 +86,12 @@ class EmailTags(TimestampModel, OrganizationMixin):
     name = models.CharField('Name', max_length=50)
 
 
-class AbstractEmail(TimestampModel, UUIDModel):
-    """Abstract Email"""
+class Email(TimestampModel, UUIDModel, OrganizationMixin):
+    """Email
+
+    An "Email" is either a template of an upcoming email, or the historical
+    record of a past email.
+    """
     subject = models.CharField('Subject Line', max_length=100,
                                validators=[validate_template])
     pre_header = models.CharField('Pre-Header Text', null=True, blank=True,
@@ -99,16 +103,14 @@ class AbstractEmail(TimestampModel, UUIDModel):
     body_below = models.TextField(verbose_name='Email Body Below', blank=True,
                                   validators=[validate_template])
     tags = models.ManyToManyField('mailer.EmailTags', blank=True)
-
-    class Meta(object):
-        """Meta options for AbstractEmail"""
-        abstract = True
+    blocks = models.ManyToManyField(
+        'blocks.Block', through='blocks.EmailBlocks', blank=True)
 
     def __str__(self):
         return self.name
 
 
-class MailingTemplate(AbstractEmail, OrganizationMixin):
+class MailingTemplate(TimestampModel):
     """Email template to be sent"""
     name = models.CharField('Name', max_length=50)
     deadline_type = models.CharField(
@@ -116,8 +118,8 @@ class MailingTemplate(AbstractEmail, OrganizationMixin):
     election_type = models.CharField(
         'Election Type', choices=ELECTION_TYPES, max_length=50)
     days_to_deadline = models.IntegerField('Days to Deadline', default=0)
-    blocks = models.ManyToManyField(
-        'blocks.Block', through='blocks.TemplateBlocks', blank=True)
+    email = models.OneToOneField('mailer.Email')
+
 
     class Meta(object):
         """Meta options for template"""
@@ -125,7 +127,7 @@ class MailingTemplate(AbstractEmail, OrganizationMixin):
         verbose_name_plural = "Templates"
 
 
-class Mailing(AbstractEmail):
+class Mailing(TimestampModel):
     """Siingle mailing from the app"""
     organization_election = models.ForeignKey(
         'election.OrganizationElection')
@@ -134,8 +136,7 @@ class Mailing(AbstractEmail):
     stats = JSONField('Stats', null=True)
     source = models.CharField('Source Code', max_length=100)
     count = models.IntegerField(verbose_name='Recipients', default=0)
-    blocks = models.ManyToManyField(
-        'blocks.Block', through='blocks.MailingBlocks', blank=True)
+    email = models.OneToOneField('mailer.Email')
 
     class Meta(object):
         """Meta details about the Mailing model"""

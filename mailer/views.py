@@ -7,14 +7,21 @@ from django_filters.views import FilterView
 from accounts.models import User
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
-from blocks.models import TemplateBlocks
+from blocks.models import EmailBlocks
 from mailer.models import EmailWrapper, Unsubscribe, Mailing, MailingTemplate
 from mailer.forms import UnsubscribeForm, MailingTemplateForm
 from mailer.filters import MailingTemplateFilter
 
 
 
-class MailingTemplateListView(OrganizationViewMixin, ManageViewMixin,
+class EmailListViewMixin(object):
+    def get_queryset(self):
+        """Get the Mailing/MailingTemplate queryset filtered by organization"""
+        queryset = super(EmailListViewMixin, self).get_queryset()
+        return queryset.filter(email__organization=self.request.organization)
+
+
+class MailingTemplateListView(EmailListViewMixin, ManageViewMixin,
                               FilterView):
     """List all mailing templates"""
     model = MailingTemplate
@@ -24,33 +31,7 @@ class MailingTemplateListView(OrganizationViewMixin, ManageViewMixin,
     template_name_suffix = '_list'
 
 
-class MailingTemplateObjectView(object):
-    """Mixin that handles views that create or edit mailing templates"""
-    def get_form(self):
-        """Get the form"""
-        form = super(MailingTemplateObjectView, self).get_form()
-        form.fields['tags'].queryset = form.fields['tags'].queryset.filter(
-            organization=self.request.organization)
-        form.fields['blocks'].queryset = form.fields['blocks'].queryset.filter(
-            organization=self.request.organization)
-        return form
-
-    def form_valid(self, form):
-        """Handle a valid form"""
-        result = super(MailingTemplateObjectView, self).form_valid(form)
-
-        TemplateBlocks.objects.filter(template=self.object).delete()
-        for block in form.cleaned_data['blocks']:
-            templateblock = TemplateBlocks()
-            templateblock.template = self.object
-            templateblock.block = block
-            templateblock.save()
-
-        return result
-
-
 class MailingTemplateCreateView(ManageViewMixin, SuccessMessageMixin,
-                                MailingTemplateObjectView,
                                 OrganizationCreateViewMixin, CreateView):
     """Create a template"""
     model = MailingTemplate
@@ -60,7 +41,7 @@ class MailingTemplateCreateView(ManageViewMixin, SuccessMessageMixin,
 
 
 class MailingTemplateUpdateView(ManageViewMixin, SuccessMessageMixin,
-                                MailingTemplateObjectView, UpdateView):
+                                UpdateView):
     """Update a template"""
     model = MailingTemplate
     form_class = MailingTemplateForm

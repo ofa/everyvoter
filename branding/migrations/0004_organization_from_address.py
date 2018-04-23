@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mailer', '0005_sending_address'),
+        ('mailer', '0004_sending_address'),
         ('branding', '0003_create_initial_organization'),
     ]
 

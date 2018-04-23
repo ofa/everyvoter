@@ -20,9 +20,7 @@ class MailingTemplateForm(forms.ModelForm):
     class Meta(object):
         """Meta options for form"""
         model = MailingTemplate
-        fields = ['name', 'deadline_type', 'days_to_deadline', 'from_name',
-                  'tags', 'subject', 'pre_header', 'body_above', 'blocks',
-                  'body_below']
+        fields = ['name']
 
     def save(self, commit=True):
         """Save the form

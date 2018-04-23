@@ -17,15 +17,15 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
+            model_name='emailactivity',
+            name='recipient',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
             model_name='mailing',
             name='organization_election',
             field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='election.OrganizationElection'),
             preserve_default=False,
-        ),
-        migrations.AddField(
-            model_name='unsubscribe',
-            name='mailing',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='mailer.Mailing'),
         ),
         migrations.AddField(
             model_name='unsubscribe',

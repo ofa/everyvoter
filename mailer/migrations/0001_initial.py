@@ -16,7 +16,6 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('branding', '0001_initial'),
     ]
 
@@ -57,21 +56,45 @@ class Migration(migrations.Migration):
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
+            name='EmailTags',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
+                ('name', models.CharField(max_length=50, verbose_name=b'Name')),
+                ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
+        ),
+        migrations.CreateModel(
+            name='Email',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
+                ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
+                ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
+                ('body_above', models.TextField(blank=True, verbose_name=b'Email Body Above', validators=[rendering.validators.validate_template])),
+                ('body_below', models.TextField(blank=True, verbose_name=b'Email Body Below', validators=[rendering.validators.validate_template])),
+                ('from_name', models.CharField(max_length=50, verbose_name=b'From Name')),
+                ('pre_header', models.CharField(max_length=100, null=True, blank=True, verbose_name=b'Pre-Header Text', validators=[rendering.validators.validate_template])),
+                ('subject', models.CharField(max_length=100, verbose_name=b'Subject Line', validators=[rendering.validators.validate_template])),
+            ],
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
+        ),
+        migrations.CreateModel(
             name='Mailing',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
-                ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
-                ('subject', models.CharField(max_length=100, verbose_name=b'Subject Line', validators=[rendering.validators.validate_template])),
-                ('pre_header', models.CharField(max_length=100, null=True, blank=True, verbose_name=b'Pre-Header Text', validators=[rendering.validators.validate_template])),
-                ('from_name', models.CharField(max_length=50, verbose_name=b'From Name')),
-                ('body_above', models.TextField(blank=True, verbose_name=b'Email Body Above', validators=[rendering.validators.validate_template])),
-                ('body_below', models.TextField(blank=True, verbose_name=b'Email Body Below', validators=[rendering.validators.validate_template])),
-                ('from_email', models.EmailField(max_length=254, verbose_name=b'From Email')),
                 ('stats', django.contrib.postgres.fields.jsonb.JSONField(null=True, verbose_name=b'Stats')),
                 ('source', models.CharField(max_length=100, verbose_name=b'Source Code')),
                 ('count', models.IntegerField(default=0, verbose_name=b'Recipients')),
+                ('from_email', models.EmailField(max_length=254, verbose_name=b'From Email')),
             ],
             options={
                 'verbose_name': 'Mailing',
@@ -85,17 +108,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
-                ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
-                ('subject', models.CharField(max_length=100, verbose_name=b'Subject Line', validators=[rendering.validators.validate_template])),
-                ('pre_header', models.CharField(max_length=100, null=True, blank=True, verbose_name=b'Pre-Header Text', validators=[rendering.validators.validate_template])),
-                ('from_name', models.CharField(max_length=50, verbose_name=b'From Name')),
-                ('body_above', models.TextField(blank=True, verbose_name=b'Email Body Above', validators=[rendering.validators.validate_template])),
-                ('body_below', models.TextField(blank=True, verbose_name=b'Email Body Below', validators=[rendering.validators.validate_template])),
                 ('name', models.CharField(max_length=50, verbose_name=b'Name')),
                 ('deadline_type', models.CharField(choices=[(b'registration', b'Registration'), (b'evip_start_date', b'Early Vote Start'), (b'evip_close_date', b'Early Vote End'), (b'vbm_application_deadline', b'Vote By Mail Applications Due'), (b'ballot_return_date', b'Vote By Mail Returns Due'), (b'election_date', b'Election Day')], max_length=50, verbose_name=b'Deadline Type')),
                 ('election_type', models.CharField(choices=[(b'primary', b'Primary'), (b'general', b'General')], max_length=50, verbose_name=b'Election Type')),
                 ('days_to_deadline', models.IntegerField(default=0, verbose_name=b'Days to Deadline')),
-                ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
             ],
             options={
                 'verbose_name': 'Template',
@@ -122,6 +138,20 @@ class Migration(migrations.Migration):
             },
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
+        migrations.CreateModel(
+            name='SendingAddress',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
+                ('address', models.EmailField(max_length=254, verbose_name=b'Email Address')),
+                ('organization', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='eligible_addresses', to='branding.Organization', null=True, blank=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
+        ),
         migrations.AddField(
             model_name='mailing',
             name='template',
@@ -133,8 +163,25 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='mailer.Mailing'),
         ),
         migrations.AddField(
-            model_name='emailactivity',
-            name='recipient',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name='mailing',
+            name='email',
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, to='mailer.Email'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='mailingtemplate',
+            name='email',
+            field=models.OneToOneField(default=1, on_delete=django.db.models.deletion.CASCADE, to='mailer.Email'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='email',
+            name='tags',
+            field=models.ManyToManyField(blank=True, to='mailer.EmailTags'),
+        ),
+        migrations.AddField(
+            model_name='unsubscribe',
+            name='mailing',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='mailer.Mailing'),
         ),
     ]

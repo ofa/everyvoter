@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
-            name='MailingBlocks',
+            name='EmailBlocks',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -61,23 +61,7 @@ class Migration(migrations.Migration):
                 ('block', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blocks.Block')),
             ],
             options={
-                'verbose_name': 'Mailing Blocks',
-                'verbose_name_plural': 'Mailing Blocks',
-            },
-            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
-        ),
-        migrations.CreateModel(
-            name='TemplateBlocks',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('priority', models.IntegerField(default=0)),
-                ('block', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blocks.Block')),
-            ],
-            options={
-                'verbose_name': 'Template Blocks',
-                'verbose_name_plural': 'Template Blocks',
+                'ordering': ['priority']
             },
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
