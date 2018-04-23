@@ -21,6 +21,8 @@ class State(TimestampModel):
     governor_2018 = models.BooleanField(
         help_text='Whether the state\'s Governor\'s seat will appear on the '
                   'general election ballot')
+    has_vr = models.BooleanField(help_text='Whether the state registers '
+                                           'voters (North Dakota doesn\'t)')
     automatic_vr = models.BooleanField(
         help_text='Whether the state offers automatic voter registration')
     online_vr = models.BooleanField(
@@ -84,6 +86,7 @@ class Election(TimestampModel):
     date = models.DateField('Election Date')
     vr_deadline = models.DateField(
         'Voter Registration Deadline',
+        null=True, blank=True, # North Dakota does not have voter registration
         help_text='The deadline by which voters in the state must register to '
                   'vote')
     online_vr_deadline = models.DateField(
