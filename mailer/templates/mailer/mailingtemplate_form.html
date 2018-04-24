@@ -12,23 +12,23 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form.name|as_crispy_field }}
+                        {{ mailing_template_form.name|as_crispy_field }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-8">
-                        {{ form.deadline_type }}
+                        {{ mailing_template_form.deadline_type|as_crispy_field }}
                     </div>
                     <div class="col-md-4">
-                        {{ form.days_to_deadline }}
+                        {{ mailing_template_form.days_to_deadline|as_crispy_field }}
                     </div>
                 </div>
 
 
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form.from_name }}
+                        {{ email_form.from_name|as_crispy_field }}
                     </div>
                     <div class="col-md-6">
                         {% comment %}
@@ -39,32 +39,32 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form.subject }}
+                        {{ email_form.subject|as_crispy_field }}
                     </div>
                 </div>
 
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form.pre_header }}
+                        {{ email_form.pre_header|as_crispy_field }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form.body_above }}
+                        {{ email_form.body_above|as_crispy_field }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form.blocks}}
+                        {{ email_form.blocks|as_crispy_field }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {{ form.body_below }}
+                        {{ email_form.body_below|as_crispy_field }}
                     </div>
                 </div>
 

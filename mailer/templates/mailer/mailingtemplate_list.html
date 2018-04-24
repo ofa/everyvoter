@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ mailing_template.name }}</th>
                     <td>{{ mailing_template.get_deadline_type_display }}</th>
-                    <td><a href="{% url 'manage:mailer:update_template' mailing_template.uuid %}">Update</a></th>
+                    <td><a href="{% url 'manage:mailer:update_template' mailing_template.email.uuid %}">Update</a></th>
                     <td scope="row"><a href="#">Delete</a></th>
                 </tr>
                 {% endfor %}

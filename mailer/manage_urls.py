@@ -11,7 +11,7 @@ urlpatterns = [
         views.MailingTemplateListView.as_view(),
         name='list_templates'),
     url(r'^templates/create/$',
-        views.MailingTemplateCreateView.as_view(), name='create_template'),
+        views.MailingTemplateFormView.as_view(), name='create_template'),
     url(r'^templates/(?P<slug>[-\w]+)/edit/$',
         views.MailingTemplateUpdateView.as_view(),
         name='update_template'),

@@ -1,7 +1,7 @@
 """Forms for mailer app"""
 from django import forms
 
-from mailer.models import Unsubscribe, MailingTemplate
+from mailer.models import Unsubscribe, Email, MailingTemplate
 
 
 class UnsubscribeForm(forms.ModelForm):
@@ -20,13 +20,14 @@ class MailingTemplateForm(forms.ModelForm):
     class Meta(object):
         """Meta options for form"""
         model = MailingTemplate
-        fields = ['name']
+        fields = ['name', 'deadline_type', 'days_to_deadline']
 
-    def save(self, commit=True):
-        """Save the form
 
-        We need to override the parent save() because that method will try to
-        create the blocks, which causes all sorts of havok.
-        """
-        self.instance.save()
-        return self.instance
+class EmailForm(forms.ModelForm):
+    """Email form"""
+
+    class Meta(object):
+        """Meta options for form"""
+        model = Email
+        fields = ['from_name', 'subject', 'pre_header', 'body_above',
+                  'body_below', 'blocks']

@@ -106,9 +106,6 @@ class Email(TimestampModel, UUIDModel, OrganizationMixin):
     blocks = models.ManyToManyField(
         'blocks.Block', through='blocks.EmailBlocks', blank=True)
 
-    def __str__(self):
-        return self.name
-
 
 class MailingTemplate(TimestampModel):
     """Email template to be sent"""
