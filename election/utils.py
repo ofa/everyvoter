@@ -5,6 +5,47 @@ from election.geocodio_ocdids import (
 )
 
 
+def sync_election(election, orgelection_model=None, organization_model=None,
+                  emailwrapper_model=None):
+    """Sync Elections
+
+    Utility that creates OrganizationElections for all orgs for an Election
+
+    Args:
+        election: the election (Election)
+        orgelection_model: optional model for orgelection (allows us to use this
+                           in migrations) (default: {None})
+        organization_model: optional model for organization (for migrations)
+                            (default: {None})
+        emailwrapper_model: optional model for EmailWrapper (for migrations)
+                            (default: {None})
+    """
+
+    if not organization_model:
+        from branding.models import Organization as organization_model
+
+    if not emailwrapper_model:
+        from mailer.models import EmailWrapper as emailwrapper_model
+
+    if not orgelection_model:
+        from election.models import OrganizationElection as orgelection_model
+
+    existing_orgs = election.organizationelection_set.all().values(
+        'organization_id')
+
+    for organization in organization_model.objects.exclude(
+            pk__in=existing_orgs):
+        default_wrapper = emailwrapper_model.objects.get(
+            organization=organization, default=True)
+        orgelection_model.objects.get_or_create(
+            election=election,
+            organization=organization,
+            defaults={
+                'email_wrapper': default_wrapper
+            }
+        )
+
+
 def state_ocd_id(state):
     """Get the OCD ID of the state
 

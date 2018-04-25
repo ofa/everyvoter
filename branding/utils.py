@@ -1,6 +1,8 @@
 """Utilities for brandings"""
 from django.template import loader as template_loader
 
+from election.utils import sync_election
+
 
 def org_domain_cache_key(domain):
     """Cache key for an organization by domain"""
@@ -11,7 +13,9 @@ def org_domain_cache_key(domain):
 def get_or_create_organization(name, platform_name, hostname, homepage,
                                organization_model=None,
                                domain_model=None,
-                               emailwrapper_model=None):
+                               emailwrapper_model=None,
+                               orgelection_model=None,
+                               election_model=None):
     """Get or create a a new organization
 
     Creates a new organization on the platform. Designed to be used during
@@ -54,6 +58,21 @@ def get_or_create_organization(name, platform_name, hostname, homepage,
     else:
         EmailWrapper = emailwrapper_model
 
+    if not emailwrapper_model:
+        from mailer.models import EmailWrapper
+    else:
+        EmailWrapper = emailwrapper_model
+
+    if not orgelection_model:
+        from election.models import OrganizationElection
+    else:
+        OrganizationElection = orgelection_model
+
+    if not election_model:
+        from election.models import Election
+    else:
+        Election = election_model
+
     try:
         domain = Domain.objects.get(hostname=hostname)
         return domain.organization, False
@@ -95,5 +114,12 @@ def get_or_create_organization(name, platform_name, hostname, homepage,
         wrapper.footer = footer_file.read()
 
     wrapper.save()
+
+    # Sync elections
+    for election in Election.objects.all():
+        sync_election(election,
+                      orgelection_model=OrganizationElection,
+                      organization_model=Organization,
+                      emailwrapper_model=EmailWrapper)
 
     return new_organization, True

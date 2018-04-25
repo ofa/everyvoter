@@ -1,5 +1,7 @@
 """Election-related Models"""
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 from branding.mixins import OrganizationMixin
 from everyvoter_common.utils.models import TimestampModel
@@ -125,3 +127,10 @@ class OrganizationElection(TimestampModel, OrganizationMixin):
     class Meta(object):
         """Meta options for OrganizationElection"""
         unique_together = ['organization', 'election']
+
+
+@receiver(post_save, sender=Election)
+def process_election(sender, instance, **kwargs):
+    """Process a saved election"""
+    from election.utils import sync_election
+    sync_election(instance)

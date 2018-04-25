@@ -12,6 +12,8 @@ def create_default_organization(apps, schema_editor):
     Organization = apps.get_model('branding', 'Organization')
     Domain = apps.get_model('branding', 'Domain')
     EmailWrapper = apps.get_model('mailer', 'EmailWrapper')
+    OrganizationElection = apps.get_model('election', 'OrganizationElection')
+    Election = apps.get_model('election', 'Election')
 
     org, _ = get_or_create_organization(name='Default',
                                         platform_name='Voting System',
@@ -19,7 +21,9 @@ def create_default_organization(apps, schema_editor):
                                         homepage='http://localhost',
                                         organization_model=Organization,
                                         domain_model=Domain,
-                                        emailwrapper_model=EmailWrapper)
+                                        emailwrapper_model=EmailWrapper,
+                                        orgelection_model=OrganizationElection,
+                                        election_model=Election)
 
     Domain.objects.get_or_create(hostname='localhost', organization=org)
 
@@ -30,6 +34,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('branding', '0002_foreign_relationships'),
         ('mailer', '0002_foreign_relationships'),
+        ('election', '0004_fill_out_election_model'),
     ]
 
     operations = [
