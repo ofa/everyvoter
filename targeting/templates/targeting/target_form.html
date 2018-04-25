@@ -1,0 +1,19 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{% if target %}Edit{% else %}Create{% endif %} Target{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+        <h2>{% if target %}Edit{% else %}Create{% endif %} Target</h2>
+
+            <form role="form" method="POST" action="" novalidate>
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Save</button>
+            {% csrf_token %}
+            </form>
+
+    </div>
+{% endblock %}
+

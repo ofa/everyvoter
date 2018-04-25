@@ -1,0 +1,60 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ organization.platform_name }} Targets{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-9">
+        <h2>{{ organization.platform_name }} Target</h2>
+        <p><a href="{% url 'manage:targeting:create_target' %}" class="btn btn-primary">New Target</a></p>
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Existing Targets</div>
+          <!-- Table -->
+          <div class="table-responsive-lg">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Election</th>
+                    <th>District</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for target in targets %}
+                <tr>
+                    <th scope="row">{{ target.name }}</th>
+                    <th scope="row">{{ target.election }}</th>
+                    <th scope="row">{{ target.district }}</th>
+                    <th scope="row"><a href="{% url 'manage:targeting:update_target' target.uuid %}">Update</a></th>
+                    <th scope="row"><a href="{% url 'manage:targeting:delete_target' target.uuid %}">Delete</a></th>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+          </table></div>
+        </div>
+
+        </div>
+        <div class="col-md-3">
+            <form action="" method="get">
+                {{ filter.form|crispy }}
+                <input class="btn btn-primary btn-block" type="submit" value="Search" />
+            </form>
+        </div>
+      </div>
+
+        </div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}

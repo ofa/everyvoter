@@ -16,6 +16,8 @@ urlpatterns = [
         include('mailer.manage_urls', namespace='mailer')),
     url(r'^blocks/',
         include('blocks.manage_urls', namespace='blocks')),
+    url(r'^targeting/',
+        include('targeting.manage_urls', namespace='targeting')),
     url(r'^login/$',
         views.LoginView.as_view(), name='manage_login'),
     url(r'^logout/$',

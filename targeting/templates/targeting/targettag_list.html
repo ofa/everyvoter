@@ -1,0 +1,50 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ organization.platform_name }} Target Tags{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-12">
+        <h2>{{ organization.platform_name }} Target Tags</h2>
+        <p><a href="{% url 'manage:targeting:create_targettag' %}" class="btn btn-primary">New Target Tag</a></p>
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Existing Target Tag</div>
+          <!-- Table -->
+          <div class="table-responsive-lg">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for targettag in targettags %}
+                <tr>
+                    <th scope="row">{{ targettag.name }}</th>
+                    <th scope="row"><a href="{% url 'manage:targeting:update_targettag' targettag.uuid %}">Update</a></th>
+                    <th scope="row"><a href="{% url 'manage:targeting:delete_targettag' targettag.uuid %}">Delete</a></th>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+          </table></div>
+        </div>
+
+        </div>
+      </div>
+
+        </div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}

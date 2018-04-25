@@ -35,3 +35,7 @@ class Target(OrganizationMixin, UUIDModel, TimestampModel):
 class TargetTag(OrganizationMixin, UUIDModel, TimestampModel):
     """Tag associated with a target"""
     name = models.CharField('Name', max_length=50)
+
+    def __unicode__(self):
+        """Unicode representation of TargetTags"""
+        return self.name

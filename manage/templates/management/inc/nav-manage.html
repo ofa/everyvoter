@@ -40,7 +40,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#">Elections</a>
-          <a class="dropdown-item" href="#">Targets</a>
+          <a class="dropdown-item" href="{% url 'manage:targeting:list_targets' %}">Targets</a>
+          <a class="dropdown-item" href="{% url 'manage:targeting:list_targettags' %}">Target Tags</a>
           <a class="dropdown-item" href="{% url 'manage:blocks:list_blocks' %}">Blocks</a>
           <a class="dropdown-item" href="{% url 'manage:blocks:list_blocktags' %}">Block Tags</a>
         </div>
