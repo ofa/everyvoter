@@ -12,4 +12,4 @@ class BlockFilter(django_filters.FilterSet):
     class Meta(object):
         """Meta options for the filter"""
         model = Block
-        fields = ['name', 'tag']
+        fields = ['name', 'categories']

@@ -1,16 +1,16 @@
 {% extends "management/manage_base.html" %}
 {% load sekizai_tags crispy_forms_tags %}
 
-{% block title %}Edit Block Tag {{ blocktag.name }}{% endblock title %}
+{% block title %}Delete {{ blockcategory.name }}{% endblock title %}
 
 {% block page_content %}
 {% add_data "body-class" "targets" %}
     <div class="col-md-12">
-        <h2>Edit Block Tag {{ blocktag.name }}</h2>
+        <h2>Delete {{ blockcategory.name }}</h2>
 
             <form role="form" method="POST" action="">
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-block btn-primary">Save</button>
+                <p>Are you sure you want to delete <strong>{{ blockcategory.name }}</strong>? You cannot undo this.</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
             {% csrf_token %}
             </form>
 

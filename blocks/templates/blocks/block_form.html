@@ -1,12 +1,12 @@
 {% extends "management/manage_base.html" %}
 {% load sekizai_tags crispy_forms_tags %}
 
-{% block title %}Edit Block {{ content_block.name }}{% endblock title %}
+{% block title %}{% if content_block %}Edit Block {{ content_block.name }}{% else %}Create Block{% endif %}{% endblock title %}
 
 {% block page_content %}
 {% add_data "body-class" "targets" %}
     <div class="col-md-12">
-        <h2>Edit Block {{ content_block.name }}</h2>
+        <h2>{% if content_block %}Edit Block {{ content_block.name }}{% else %}Create Block{% endif %}</h2>
 
             <form role="form" method="POST" action="">
             {{ form|crispy }}

@@ -6,14 +6,14 @@ from django_filters.views import FilterView
 
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
-from blocks.models import Block, BlockTag
+from blocks.models import Block, BlockCategory
+from blocks.forms import BlockModelForm
 from blocks.filters import BlockFilter
 
 
 class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     """List all blocks"""
     model = Block
-    queryset = Block.objects.select_related('tag')
     paginate_by = 10
     context_object_name = 'blocks'
     filterset_class = BlockFilter
@@ -23,9 +23,9 @@ class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
 class BlockCreateModifyObjectViewMixin(object):
     """Mixin for views that crea modify blocks"""
     def get_form(self):
-        """Get the form, but with tags scoped to that user's organization"""
+        """Get the form, but with categories scoped to that user's org"""
         form = super(BlockCreateModifyObjectViewMixin, self).get_form()
-        form.fields['tag'].queryset = form.fields['tag'].queryset.filter(
+        form.fields['categories'].queryset = form.fields['categories'].queryset.filter(
             organization=self.request.organization)
         return form
 
@@ -35,25 +35,25 @@ class BlockCreateView(ManageViewMixin, SuccessMessageMixin,
                       BlockCreateModifyObjectViewMixin, CreateView):
     """Create a block"""
     model = Block
-    template_name_suffix = '_create'
-    fields = ['name', 'tag', 'code']
+    form_class = BlockModelForm
     success_url = reverse_lazy('manage:blocks:list_blocks')
     success_message = "Block %(name)s was created"
 
 
 class BlockUpdateView(ManageViewMixin, SuccessMessageMixin,
-                      BlockCreateModifyObjectViewMixin, UpdateView):
+                      BlockCreateModifyObjectViewMixin, OrganizationViewMixin,
+                      UpdateView):
     """Edit a block"""
     model = Block
     slug_field = 'uuid'
-    template_name_suffix = '_edit'
-    fields = ['name', 'tag', 'code']
+    form_class = BlockModelForm
     context_object_name = 'content_block'
     success_url = reverse_lazy('manage:blocks:list_blocks')
     success_message = "Block %(name)s was edited"
 
 
-class BlockDeleteView(ManageViewMixin, SuccessMessageMixin, DeleteView):
+class BlockDeleteView(ManageViewMixin, SuccessMessageMixin,
+                      OrganizationViewMixin, DeleteView):
     """Delete a block"""
     model = Block
     slug_field = 'uuid'
@@ -62,38 +62,38 @@ class BlockDeleteView(ManageViewMixin, SuccessMessageMixin, DeleteView):
     success_message = "Block %(name)s was deleted"
 
 
-class BlockTagListView(OrganizationViewMixin, ManageViewMixin, ListView):
+class BlockCategoryListView(OrganizationViewMixin, ManageViewMixin, ListView):
     """List all block tags"""
-    model = BlockTag
+    model = BlockCategory
     paginate_by = 10
-    context_object_name = 'blocktags'
+    context_object_name = 'blockcategories'
 
 
-class BlockTagCreateView(ManageViewMixin, SuccessMessageMixin,
-                         OrganizationCreateViewMixin, CreateView):
-    """Create a block tag"""
-    model = BlockTag
-    template_name_suffix = '_create'
+class BlockCategoryCreateView(ManageViewMixin, SuccessMessageMixin,
+                              OrganizationCreateViewMixin, CreateView):
+    """Create a block category"""
+    model = BlockCategory
     fields = ['name']
-    success_url = reverse_lazy('manage:blocks:list_blocktags')
-    success_message = "Block Tag %(name)s was created"
+    success_url = reverse_lazy('manage:blocks:list_blockcategories')
+    success_message = "Block Category %(name)s was created"
 
 
-class BlockTagUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
-    """Edit a block tag"""
-    model = BlockTag
+class BlockCategoryUpdateView(ManageViewMixin, SuccessMessageMixin,
+                              OrganizationViewMixin, UpdateView):
+    """Edit a block category"""
+    model = BlockCategory
     slug_field = 'uuid'
-    template_name_suffix = '_edit'
     fields = ['name']
-    context_object_name = 'blocktag'
-    success_url = reverse_lazy('manage:blocks:list_blocktags')
-    success_message = "Block Tag %(name)s was edited"
+    context_object_name = 'blockcategory'
+    success_url = reverse_lazy('manage:blocks:list_blockcategories')
+    success_message = "Block Category %(name)s was edited"
 
 
-class BlockTagDeleteView(ManageViewMixin, SuccessMessageMixin, DeleteView):
-    """Delete a block tag"""
-    model = BlockTag
+class BlockCategoryDeleteView(ManageViewMixin, SuccessMessageMixin,
+                              OrganizationViewMixin, DeleteView):
+    """Delete a block category"""
+    model = BlockCategory
     slug_field = 'uuid'
-    context_object_name = 'blocktag'
-    success_url = reverse_lazy('manage:blocks:list_blocktags')
-    success_message = "Block Tag %(name)s was deleted"
+    context_object_name = 'blockcategory'
+    success_url = reverse_lazy('manage:blocks:list_blockcategories')
+    success_message = "Block Category %(name)s was deleted"
