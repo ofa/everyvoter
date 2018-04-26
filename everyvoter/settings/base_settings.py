@@ -134,7 +134,6 @@ INSTALLED_APPS = [
     'blocks',
     'mailer',
     'feedback',
-    'targeting',
 
     'user_import',
 
