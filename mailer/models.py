@@ -81,7 +81,7 @@ class EmailWrapper(TimestampModel, UUIDModel, OrganizationMixin):
         return super(EmailWrapper, self).save(*args, **kwargs)
 
 
-class EmailTags(TimestampModel, OrganizationMixin):
+class EmailCategory(TimestampModel, OrganizationMixin):
     """Tags for emails"""
     name = models.CharField('Name', max_length=50)
 
@@ -102,7 +102,7 @@ class Email(TimestampModel, UUIDModel, OrganizationMixin):
                                   validators=[validate_template])
     body_below = models.TextField(verbose_name='Email Body Below', blank=True,
                                   validators=[validate_template])
-    tags = models.ManyToManyField('mailer.EmailTags', blank=True)
+    categories = models.ManyToManyField('mailer.EmailCategory', blank=True)
     blocks = models.ManyToManyField(
         'blocks.Block', through='blocks.EmailBlocks', blank=True)
 
