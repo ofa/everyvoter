@@ -84,7 +84,13 @@ class Election(TimestampModel):
     """An election"""
     election_type = models.CharField(
         'Election Type', choices=ELECTION_TYPES, max_length=50)
-    state = models.ForeignKey(State)
+    voting_districts = models.ManyToManyField(
+        LegislativeDistrict,
+        verbose_name='Voting Districts',
+        help_text='One or more districts voting in the election (i.e. who '
+                  'should get information about this election)')
+    state = models.ForeignKey(
+        State, help_text='State under whose rules the election follows.')
     date = models.DateField('Election Date')
     vr_deadline = models.DateField(
         'Voter Registration Deadline',
@@ -127,6 +133,20 @@ class OrganizationElection(TimestampModel, OrganizationMixin):
     class Meta(object):
         """Meta options for OrganizationElection"""
         unique_together = ['organization', 'election']
+
+    @property
+    def recipients(self):
+        """Recipients of emails about this election"""
+        districts = self.election.voting_districts.values('pk')
+        return User.objects.filter(
+            location__districts__id__in=districts,
+            unsubscribed=False,
+            organization=self.organization).distinct()
+
+    @cached_property
+    def total_recipients(self):
+        """Total number of recipients email is sent to"""
+        return self.recipients.count()
 
 
 @receiver(post_save, sender=Election)
