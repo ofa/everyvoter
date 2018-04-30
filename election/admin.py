@@ -20,3 +20,4 @@ class ElectionAdmin(admin.ModelAdmin):
     """Admin View for Election"""
     list_display = ('state', 'election_type')
     search_fields = ('state',)
+    raw_id_fields = ('voting_districts',)
