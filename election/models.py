@@ -125,10 +125,18 @@ class Election(TimestampModel):
             state=self.state, election_type=self.election_type)
 
 
-class OrganizationElection(TimestampModel, OrganizationMixin):
+class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
     """Many to many join table of elections an org is participating in"""
     election = models.ForeignKey(Election)
     email_wrapper = models.ForeignKey('mailer.EmailWrapper')
+    vbm_active = models.BooleanField(
+        'Vote By Mail Notifications', default=True)
+    evip_active = models.BooleanField(
+        'Early Vote In Person Notifications', default=True)
+    vr_active = models.BooleanField(
+        'Voter Registration Notifications', default=True)
+    eday_active = models.BooleanField(
+        'Election Day Notifications', default=True)
 
     class Meta(object):
         """Meta options for OrganizationElection"""
