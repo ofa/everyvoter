@@ -77,3 +77,11 @@ class Domain(TimestampModel):
         """String representation of the domain"""
         return self.hostname
 
+
+class Theme(models.Model):
+    """Theme for website of organization"""
+    organization = models.OneToOneField(Organization)
+
+    class Meta(object):
+        verbose_name = "Theme"
+        verbose_name_plural = "Themes"
