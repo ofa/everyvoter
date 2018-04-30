@@ -1,7 +1,7 @@
 """Utilities for brandings"""
 from django.template import loader as template_loader
 
-from election.utils import sync_election
+from election.utils import sync_elections
 
 
 def org_domain_cache_key(domain):
@@ -116,10 +116,8 @@ def get_or_create_organization(name, platform_name, hostname, homepage,
     wrapper.save()
 
     # Sync elections
-    for election in Election.objects.all():
-        sync_election(election,
-                      orgelection_model=OrganizationElection,
-                      organization_model=Organization,
-                      emailwrapper_model=EmailWrapper)
+    sync_elections(election_model=Election,
+                   orgelection_model=OrganizationElection,
+                   organization_model=Organization)
 
     return new_organization, True

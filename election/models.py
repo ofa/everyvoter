@@ -132,5 +132,6 @@ class OrganizationElection(TimestampModel, OrganizationMixin):
 @receiver(post_save, sender=Election)
 def process_election(sender, instance, **kwargs):
     """Process a saved election"""
-    from election.utils import sync_election
-    sync_election(instance)
+    if kwargs['created']:
+        from election.utils import sync_elections
+        sync_elections()

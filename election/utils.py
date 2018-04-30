@@ -1,49 +1,56 @@
 """Utilities for Elections"""
+import uuid
+
 from election.choices import STATES
 from election.geocodio_ocdids import (
     GEOCODIO_OCDIDS_HOUSE, GEOCODIO_OCDIDS_SENATE
 )
 
 
-def sync_election(election, orgelection_model=None, organization_model=None,
-                  emailwrapper_model=None):
+def sync_elections(election_model=None, orgelection_model=None,
+                   organization_model=None):
     """Sync Elections
 
     Utility that creates OrganizationElections for all orgs for an Election
 
     Args:
-        election: the election (Election)
-        orgelection_model: optional model for orgelection (allows us to use this
-                           in migrations) (default: {None})
+        election_model: optional model for Election (allows us to use this in
+                        migrations) (default: {None})
+        orgelection_model: optional model for orgelection (for migrations)
+                           (default: {None})
         organization_model: optional model for organization (for migrations)
                             (default: {None})
-        emailwrapper_model: optional model for EmailWrapper (for migrations)
-                            (default: {None})
+
     """
+
+    if not election_model:
+        from election.models import Election as election_model
 
     if not organization_model:
         from branding.models import Organization as organization_model
 
-    if not emailwrapper_model:
-        from mailer.models import EmailWrapper as emailwrapper_model
-
     if not orgelection_model:
         from election.models import OrganizationElection as orgelection_model
 
-    existing_orgs = election.organizationelection_set.all().values(
-        'organization_id')
+    new_orgelections = []
 
-    for organization in organization_model.objects.exclude(
-            pk__in=existing_orgs):
-        default_wrapper = emailwrapper_model.objects.get(
-            organization=organization, default=True)
-        orgelection_model.objects.get_or_create(
-            election=election,
-            organization=organization,
-            defaults={
-                'email_wrapper': default_wrapper
-            }
-        )
+    for organization in organization_model.objects.all():
+        existing_orgelections = orgelection_model.objects.filter(
+            organization=organization).values('election_id')
+        missing_elections = election_model.objects.exclude(
+            id__in=existing_orgelections)
+
+        email_wrapper = organization.emailwrapper_set.get(default=True)
+
+        for election in missing_elections:
+            new_orgelections.append(orgelection_model(
+                uuid=uuid.uuid4(),
+                organization=organization,
+                election=election,
+                email_wrapper=email_wrapper
+            ))
+
+    orgelection_model.objects.bulk_create(new_orgelections)
 
 
 def state_ocd_id(state):
