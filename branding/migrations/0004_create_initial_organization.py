@@ -32,9 +32,9 @@ def create_default_organization(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('branding', '0002_foreign_relationships'),
-        ('mailer', '0002_foreign_relationships'),
-        ('election', '0004_fill_out_election_model'),
+        ('branding', '0003_foreign_relationships_mailer'),
+        ('mailer', '0004_sending_address'),
+        ('election', '0003_load_data'),
     ]
 
     operations = [

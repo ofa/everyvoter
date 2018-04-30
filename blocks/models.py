@@ -13,6 +13,7 @@ class Block(TimestampModel, UUIDModel, OrganizationMixin):
     categories = models.ManyToManyField(
         'blocks.BlockCategory', blank=True)
     weight = models.IntegerField('Weight', default=50)
+    geodataset = models.ForeignKey('geodataset.GeoDataset')
 
     class Meta(object):
         """Meta options for BLock"""
