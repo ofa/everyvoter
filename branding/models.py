@@ -27,6 +27,11 @@ class Organization(TimestampModel):
         'mailer.SendingAddress', verbose_name='Sending Address',
         related_name='default_organizations',
         on_delete=models.SET_DEFAULT, default=1)
+    online_vr = models.BooleanField(
+        default=False,
+        verbose_name='Online Voter Registion',
+        help_text='If offered use the Online Voter Registration deadline as '
+                  'the registration deadline')
 
     class Meta(object):
         """Meta options for Organization"""

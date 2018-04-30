@@ -12,7 +12,7 @@ class OrgUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
     """Create a new import"""
     model = Organization
     fields = ['name', 'platform_name', 'homepage', 'privacy_url', 'terms_url',
-              'from_address']
+              'from_address', 'online_vr']
     template_name = "branding/update_organization.html"
     success_url = reverse_lazy('manage:branding:update_organization')
     success_message = "%(name)s updated"
