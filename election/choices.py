@@ -4,13 +4,13 @@ DISTRICT_TYPES = (
     ('cd', 'Congressional District'),
     ('stateleg_upper', 'State Senate/Upper State'),
     ('stateleg_lower', 'State Rep/Lower State'),
-    ('county', 'County/Parish')
 )
 
 
 ELECTION_TYPES = (
-    ('primary', 'Primary'),
-    ('general', 'General')
+    ('primary', 'Federal Primary'),
+    ('general', 'Federal General'),
+    ('special', 'Federal Special')
 )
 
 
@@ -18,14 +18,8 @@ DEADLINES = (
     ('registration', 'Registration'),
     ('evip_start_date', 'Early Vote Start'),
     ('evip_close_date', 'Early Vote End'),
-    ('vbm_all_application_deadline', 'Vote By Mail Applications Due (All)'),
-    ('vbm_all_return_date', 'Vote By Mail Returns Due (All)'),
-    ('vbm_fault_application_deadline',
-     'Vote By Mail Applications Due (Fault)'),
-    ('vbm_fault_return_date', 'Vote By Mail Returns Due (Fault)'),
-    ('vbm_nofault_application_deadline',
-     'Vote By Mail Applications Due (No Fault)'),
-    ('vbm_nofault_return_date', 'Vote By Mail Returns Due (No Fault)'),
+    ('vbm_application_deadline', 'Vote By Mail Applications Due'),
+    ('vbm_return_date', 'Vote By Mail Returns Due'),
     ('election_date', 'Election Day')
 )
 
