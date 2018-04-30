@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     'branding',
     'election',
     'blocks',
+    'geodataset',
     'mailer',
     'feedback',
 
