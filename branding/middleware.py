@@ -26,7 +26,8 @@ class BrandingMiddleware(object):
 
         if not organization:
             domain_queryset = Domain.objects.select_related(
-                'organization', 'organization__primary_domain')
+                'organization', 'organization__primary_domain',
+                'organization__theme')
 
             try:
                 domain = domain_queryset.get(hostname=domain_name)
