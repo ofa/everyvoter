@@ -42,6 +42,7 @@ def load_states(apps, schema_editor):
                     online_vr=yesno(row['online_vr']),
                     same_day_vr=yesno(row['same_day_vr']),
                     eday_vr=yesno(row['eday_vr']),
+                    has_vr=yesno(row['has_vr']),
                     early_vote_in_person=yesno(row['early_vote_in_person']),
                     in_person_absentee=yesno(row['in_person_absentee']),
                     early_vote_by_mail=yesno(row['early_vote_by_mail']),
