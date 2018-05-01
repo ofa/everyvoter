@@ -15,7 +15,7 @@ ELECTION_TYPES = (
 
 
 DEADLINES = (
-    ('registration', 'Registration'),
+    ('vr_deadline', 'Registration'),
     ('evip_start_date', 'Early Vote Start'),
     ('evip_close_date', 'Early Vote End'),
     ('vbm_application_deadline', 'Vote By Mail Applications Due'),

@@ -1,10 +1,12 @@
 """Election-related Models"""
 from django.db import models
 from django.dispatch import receiver
+from django.utils.functional import cached_property
 from django.db.models.signals import post_save
 
+from accounts.models import User
 from branding.mixins import OrganizationMixin
-from everyvoter_common.utils.models import TimestampModel
+from everyvoter_common.utils.models import TimestampModel, UUIDModel
 from election.choices import DISTRICT_TYPES, ELECTION_TYPES, STATES
 
 
@@ -91,13 +93,13 @@ class Election(TimestampModel):
                   'should get information about this election)')
     state = models.ForeignKey(
         State, help_text='State under whose rules the election follows.')
-    date = models.DateField('Election Date')
+    election_date = models.DateField('Election Date')
     vr_deadline = models.DateField(
         'Voter Registration Deadline',
         null=True, blank=True, # North Dakota does not have voter registration
         help_text='The deadline by which voters in the state must register to '
                   'vote')
-    online_vr_deadline = models.DateField(
+    vr_deadline_online = models.DateField(
         'Online Voter Registration Deadline',
         null=True, blank=True,
         help_text='The explicit deadline by which voters in the state must '
@@ -115,7 +117,7 @@ class Election(TimestampModel):
         'Vote By Mail Application Deadline',
         help_text='the date by which voters must return their applications '
                   'applying to vote by mail')
-    ballot_return_date = models.DateField(
+    vbm_return_date = models.DateField(
         'Vote By Mail Ballot Return Date',
         help_text='The date by which voters must return their mailed ballots')
 
