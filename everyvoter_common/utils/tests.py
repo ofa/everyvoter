@@ -2,11 +2,14 @@
 import os
 import json
 import uuid
+from datetime import timedelta
 
+from django.utils.timezone import now
 from accounts.utils_user import create_user
 from branding.models import Organization
 from branding.utils import get_or_create_organization
 from location.utils import get_location
+from election.models import LegislativeDistrict, Election
 
 # pylint: disable=invalid-name
 path = os.path.dirname(os.path.abspath(__file__))
@@ -64,3 +67,52 @@ class EveryVoterTestMixin(object):
         user.save()
 
         return user
+
+    def create_election(self, voting_districts=None, **kwargs):
+        """Create a new election"""
+
+        # The election type is federal general
+        kwargs['election_type'] = kwargs.get('election_type', 'general')
+
+        # The state is Illinois
+        kwargs['state_id'] = kwargs.get('state_id', 'IL')
+
+        # The election is the date provided (or today)
+        kwargs['election_date'] = kwargs.get('election_date', now())
+
+        # The VR deadline was 29 days ago
+        kwargs['vr_deadline'] = kwargs.get(
+            'vr_deadline', kwargs['election_date'] - timedelta(days=29))
+
+        # The Online VR deadline was 30 days ago
+        kwargs['vr_deadline_online'] = kwargs.get(
+            'vr_deadline_online', kwargs['election_date'] - timedelta(days=30))
+
+        # Early Vote started 20 days ago
+        kwargs['evip_start_date'] = kwargs.get(
+            'evip_start_date', kwargs['election_date'] - timedelta(days=20))
+
+        # Early Vote ended 5 days ago
+        kwargs['evip_close_date'] = kwargs.get(
+            'evip_close_date', kwargs['election_date'] - timedelta(days=5))
+
+        # Vote By Mail Application Deadline was 3 days ago
+        kwargs['vbm_application_deadline'] = kwargs.get(
+            'vbm_application_deadline',
+            kwargs['election_date'] - timedelta(days=3))
+
+        # Vote by mail return date was yesterday
+        kwargs['vbm_return_date'] = kwargs.get(
+            'vbm_return_date', kwargs['election_date'] - timedelta(days=1))
+
+        election = Election(**kwargs)
+        election.save()
+
+        # The districts targeted are the state of Illinois
+        if not voting_districts:
+            voting_districts = LegislativeDistrict.objects.filter(
+                state_id='IL', district_type='state')
+
+        election.voting_districts.set(voting_districts)
+
+        return election
