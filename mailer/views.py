@@ -129,7 +129,6 @@ class WrapperCreateView(ManageViewMixin, SuccessMessageMixin,
                         OrganizationCreateViewMixin, CreateView):
     """Create a wrapper"""
     model = EmailWrapper
-    template_name = 'mailer/create_wrapper.html'
     fields = ['name', 'header', 'footer', 'default']
     success_url = reverse_lazy('manage:mailer:list_wrappers')
     success_message = "Wrapper %(name)s was created"
@@ -138,11 +137,20 @@ class WrapperCreateView(ManageViewMixin, SuccessMessageMixin,
 class WrapperUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
     """Create a wrapper"""
     model = EmailWrapper
-    template_name = 'mailer/edit_wrapper.html'
     fields = ['name', 'header', 'footer', 'default']
     context_object_name = 'wrapper'
     success_url = reverse_lazy('manage:mailer:list_wrappers')
     success_message = "Wrapper %(name)s was edited"
+
+
+    def get_form(self):
+        """Get the form"""
+        form = super(WrapperUpdateView, self).get_form()
+
+        if self.object and self.object.default:
+            del form.fields['default']
+
+        return form
 
 
 class UnsubscribeCreateView(OrganizationViewMixin,
