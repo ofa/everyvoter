@@ -17,10 +17,13 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         {{ mailing_template_form.deadline_type|as_crispy_field }}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        {{ mailing_template_form.election_type|as_crispy_field }}
+                    </div>
+                    <div class="col-md-3">
                         {{ mailing_template_form.days_to_deadline|as_crispy_field }}
                     </div>
                 </div>

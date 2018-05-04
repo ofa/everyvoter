@@ -20,7 +20,7 @@ class MailingTemplateForm(forms.ModelForm):
     class Meta(object):
         """Meta options for form"""
         model = MailingTemplate
-        fields = ['name', 'deadline_type', 'days_to_deadline']
+        fields = ['name', 'deadline_type', 'days_to_deadline', 'election_type']
 
 
 class EmailForm(forms.ModelForm):
