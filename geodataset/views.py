@@ -34,6 +34,17 @@ class CommonGeoDatasetEditView(OrganizationViewMixin, ManageViewMixin,
     form_class = GeoDatasetUploadForm
     success_url = reverse_lazy('manage:dataset:list_geodatasets')
 
+    def get_form(self):
+        """Get the form"""
+        form = super(CommonGeoDatasetEditView, self).get_form()
+
+        # pylint: disable=line-too-long
+        form.fields['categories'].queryset = form.fields['categories'].queryset.filter(
+            organization=self.request.organization)
+
+        return form
+
+
     def form_valid(self, form):
         """Handle a valid form"""
 
@@ -45,7 +56,9 @@ class CommonGeoDatasetEditView(OrganizationViewMixin, ManageViewMixin,
         # Assign an organization and save the geodataset itself
         response = super(CommonGeoDatasetEditView, self).form_valid(form)
 
-        process_geodataset_file(form.cleaned_data['file'], self.object, created)
+        if form.cleaned_data['file']:
+            process_geodataset_file(
+                form.cleaned_data['file'], self.object, created)
 
         return response
 
@@ -59,6 +72,13 @@ class GeoDatasetUpdateView(CommonGeoDatasetEditView, UpdateView):
     slug_field = 'uuid'
     context_object_name = 'geodataset'
 
+    def get_form(self):
+        """Get the form"""
+        form = super(GeoDatasetUpdateView, self).get_form()
+
+        form.fields['file'].required = False
+
+        return form
 
 class GeoDatasetCSVView(OrganizationViewMixin, ManageViewMixin, DetailView):
     """Download a CSV of an individual GeoDataset"""
@@ -68,6 +88,7 @@ class GeoDatasetCSVView(OrganizationViewMixin, ManageViewMixin, DetailView):
     def render_to_response(self, context, **response_kwargs):
         """Render to response"""
         response = HttpResponse(content_type='text/csv')
+        # pylint: disable=line-too-long
         response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(
             slugify_header(self.object.name))
 

@@ -12,4 +12,4 @@ class GeoDatasetUploadForm(forms.ModelForm):
     class Meta(object):
         """Meta options for form"""
         model = GeoDataset
-        fields = ['name', 'file', 'categories']
+        fields = ['name', 'categories', 'file']
