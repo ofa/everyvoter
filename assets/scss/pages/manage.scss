@@ -48,6 +48,12 @@
         font-size: 14px;
     }
 
+    // Django crispy forms doesn't add all the relevant classes for errors on
+    // file inputs.
+    .invalid-feedback {
+        display: block;
+    }
+
 }
 
 

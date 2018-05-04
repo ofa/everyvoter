@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='row',
+            model_name='entry',
             name='district',
             field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='election.LegislativeDistrict'),
             preserve_default=False,

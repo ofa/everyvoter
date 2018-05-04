@@ -1,0 +1,18 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{% if geodataset %}Edit Geo Dataset {{ geodataset.name }}{% else %}Create Geo Dataset{% endif %}{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "election" %}
+    <div class="col-md-12">
+        <h2>{% if geodataset %}Update Geo Dataset {{ geodataset.name }}{% else %}Create Geo Dataset{% endif %}</h2>
+
+            <form role="form" method="POST" action="" enctype="multipart/form-data">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Save</button>
+            {% csrf_token %}
+            </form>
+
+    </div>
+{% endblock %}

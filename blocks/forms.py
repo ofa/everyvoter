@@ -10,4 +10,4 @@ class BlockModelForm(forms.ModelForm):
     class Meta(object):
         """Meta options for form"""
         model = Block
-        fields = ['name', 'weight', 'categories', 'code']
+        fields = ['name', 'geodataset', 'weight', 'categories', 'code']

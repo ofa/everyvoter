@@ -1,37 +1,35 @@
 {% extends "management/manage_base.html" %}
 {% load sekizai_tags crispy_forms_tags %}
 
-{% block title %}{{ organization.platform_name }} Blocks{% endblock title %}
+{% block title %}{{ organization.platform_name }} Datasets{% endblock title %}
 
 {% block page_content %}
-{% add_data "body-class" "targets" %}
+{% add_data "body-class" "election" %}
     <div class="col-md-12">
       <div class="row">
 
         <div class="col-md-9">
-        <h2>{{ organization.platform_name }} Blocks</h2>
-        <p><a href="{% url 'manage:blocks:create_block' %}" class="btn btn-primary">New Block</a></p>
+        <h2>{{ organization.platform_name }} Dataset</h2>
+        <p><a href="{% url 'manage:dataset:create_geodataset' %}" class="btn btn-primary">New Dataset</a></p>
         <div class="card">
           <!-- Default card contents -->
-          <div class="card-header">Existing Blocks</div>
+          <div class="card-header">Existing Datasets</div>
           <!-- Table -->
           <div class="table-responsive-lg">
           <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Geodataset</th>
                     <th>Update</th>
-                    <th>Delete</th>
+                    <th>Download</th>
                 </tr>
             </thead>
             <tbody>
-                {% for content_block in blocks %}
+                {% for geodataset in geodatasets %}
                 <tr>
-                    <th scope="row">{{ content_block.name }}</th>
-                    <th scope="row">{{ content_block.geodataset }}</th>
-                    <th scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></th>
-                    <th scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></th>
+                    <th scope="row">{{ geodataset.name }}</th>
+                    <th scope="row"><a href="{% url 'manage:dataset:update_geodataset' geodataset.uuid %}">Update</a></th>
+                    <th scope="row"><a href="{% url 'manage:dataset:download_geodataset' geodataset.uuid %}">Download</a></th>
                 </tr>
                 {% endfor %}
 

@@ -25,7 +25,6 @@ class Migration(migrations.Migration):
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
                 ('name', models.CharField(max_length=255, verbose_name=b'Name')),
-                ('value', models.TextField(verbose_name=b'Value')),
             ],
             options={
                 'verbose_name': 'Field',
@@ -50,23 +49,70 @@ class Migration(migrations.Migration):
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(
-            name='Row',
+            name='GeoDatasetCategory',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
-                ('geodataset', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geodataset.GeoDataset')),
+                ('name', models.CharField(max_length=50, verbose_name=b'GeoDataset Category Name')),
+                ('organization', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
             ],
             options={
-                'verbose_name': 'Geo Dataset Row',
-                'verbose_name_plural': 'Geo Dataset Rows',
+                'verbose_name': 'GeoDataset Category',
+                'verbose_name_plural': 'GeoDataset Categories',
+            },
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
+        ),
+        migrations.CreateModel(
+            name='Entry',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
+                ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
+            ],
+            options={
+                'verbose_name': 'Geo Dataset Entry',
+                'verbose_name_plural': 'Geo Dataset Entry',
+            },
+            bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
+        ),
+        migrations.CreateModel(
+            name='FieldValue',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
+                ('uuid', django_smalluuid.models.SmallUUIDField(db_index=True, default=django_smalluuid.models.UUIDDefault(), editable=False, unique=True)),
+                ('value', models.TextField()),
+                ('entry', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geodataset.Entry')),
+                ('field', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geodataset.Field'))
+            ],
+            options={
+                'abstract': False,
             },
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.AddField(
+            model_name='entry',
+            name='geodataset',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geodataset.GeoDataset'),
+        ),
+        migrations.AddField(
+            model_name='entry',
+            name='fields',
+            field=models.ManyToManyField(through='geodataset.FieldValue', to='geodataset.Field'),
+        ),
+        migrations.AddField(
             model_name='field',
-            name='row',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geodataset.Row'),
+            name='geodataset',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='geodataset.GeoDataset'),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='geodataset',
+            name='categories',
+            field=models.ManyToManyField(blank=True, to='geodataset.GeoDatasetCategory'),
         ),
     ]

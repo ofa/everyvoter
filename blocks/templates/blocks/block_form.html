@@ -8,7 +8,7 @@
     <div class="col-md-12">
         <h2>{% if content_block %}Edit Block {{ content_block.name }}{% else %}Create Block{% endif %}</h2>
 
-            <form role="form" method="POST" action="">
+            <form role="form" method="POST" action="" novalidate>
             {{ form|crispy }}
             <button type="submit" class="btn btn-block btn-primary">Save</button>
             {% csrf_token %}

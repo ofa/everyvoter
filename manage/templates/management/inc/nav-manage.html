@@ -40,6 +40,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#">Elections</a>
+          <a class="dropdown-item" href="{% url 'manage:dataset:list_geodatasets' %}">Datasets</a>
+          <a class="dropdown-item" href="{% url 'manage:dataset:list_geodatasetcategories' %}">Dataset Categories</a>
           <a class="dropdown-item" href="{% url 'manage:blocks:list_blocks' %}">Blocks</a>
           <a class="dropdown-item" href="{% url 'manage:blocks:list_blockcategories' %}">Block Categories</a>
         </div>

@@ -13,6 +13,7 @@ from blocks.filters import BlockFilter
 
 class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     """List all blocks"""
+    queryset = Block.objects.select_related('geodataset', 'organization')
     model = Block
     paginate_by = 10
     context_object_name = 'blocks'
@@ -26,6 +27,8 @@ class BlockCreateModifyObjectViewMixin(object):
         """Get the form, but with categories scoped to that user's org"""
         form = super(BlockCreateModifyObjectViewMixin, self).get_form()
         form.fields['categories'].queryset = form.fields['categories'].queryset.filter(
+            organization=self.request.organization)
+        form.fields['geodataset'].queryset = form.fields['geodataset'].queryset.filter(
             organization=self.request.organization)
         return form
 

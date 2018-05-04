@@ -1,0 +1,43 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags %}
+
+{% block title %}{{ organization.platform_name }} Dataset Categories{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+        <h2>{{ organization.platform_name }} Dataset Categories</h2>
+        <p><a href="{% url 'manage:dataset:create_geodatasetcategory' %}" class="btn btn-primary">New Dataset Category</a></p>
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Existing Dataset Categories</div>
+          <!-- Table -->
+          <div class="table-responsive-lg">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for geodatasetcategory in geodatasetcategories %}
+                <tr>
+                    <th scope="row">{{ geodatasetcategory.name }}</th>
+                    <th scope="row"><a href="{% url 'manage:dataset:update_geodatasetcategory' geodatasetcategory.uuid %}">Update</a></th>
+                    <th scope="row"><a href="{% url 'manage:dataset:delete_geodatasetcategory' geodatasetcategory.uuid %}">Delete</a></th>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+          </table></div>
+
+        </div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}

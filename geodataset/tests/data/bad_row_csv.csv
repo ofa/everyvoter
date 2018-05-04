@@ -1,0 +1,4 @@
+"ocd_id","field1","field2"
+"ocd-division/country:us/state:il/cd:1","row 1 field 1","row 1 field 2"
+"BAD ROW NON OCD ID","row 2 field 1","row 2 field 2"
+"ocd-division/country:us/state:il/sldl:70","row 3 field 1","row 3 field 2"
