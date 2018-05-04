@@ -7,45 +7,41 @@
     <div class="col-md-12">
         <h2>{{ user.first_name }}'s Control Panel.</h2>
 
-        <a href="#">
-            <div class="feature-button row email-bg">
-                <div class="col-xs-11">
-                    <h2>Email</h2>
-                </div>
-            </div>
-        </a>
+        <div class="col-md-12">
+        <div class="card">
+          <!-- Default card contents -->
+          <div class="card-header">Upcoming Sends</div>
+          <!-- Table -->
+          <div class="table-responsive-lg">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Template Name</th>
+                    <th>Deadline Type</th>
+                    <th>State</th>
+                    <th>Recipients</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for send in sends %}
+                <tr>
+                    <td scope="row">{{ send.send_date|date:"F j" }}</td>
+                    <td scope="row">{{ send.name }}</td>
+                    <td scope="row">{{ send.election_type|capfirst }}</td>
+                    <td scope="row">{{ send.election_state_id }}</td>
+                    <td scope="row">{{ send.total_recipients }}</td>
+                </tr>
+                {% endfor %}
 
-        <a href="#">
-            <div class="feature-button row people-bg">
-                <div class="col-xs-11">
-                    <h2>People</h2>
-                </div>
-            </div>
-        </a>
+            </tbody>
+          </table></div>
+        </div>
 
-        <a href="#">
-            <div class="feature-button row election-bg">
-                <div class="col-xs-11">
-                    <h2>Elections</h2>
-                </div>
-            </div>
-        </a>
-
-        <a href="#">
-            <div class="feature-button row organization-bg">
-                <div class="col-xs-11">
-                    <h2>{{ organization.name }}</h2>
-                </div>
-            </div>
-        </a>
-
-        <a href="#">
-            <div class="feature-button row account-bg">
-                <div class="col-xs-11">
-                    <h2>{{ user }}</h2>
-                </div>
-            </div>
-        </a>
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
 
     </div>
+</div>
 {% endblock page_content %}

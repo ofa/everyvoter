@@ -4,10 +4,13 @@ from django.contrib.auth.views import (
     LogoutView as DjangoLogoutView
 )
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
+from django.views.generic import ListView
+from rawpaginator.paginator import Paginator
 
 from manage.forms import AuthenticationForm
 from manage.mixins import ManageViewMixin
+from mailer.send_calendar import mailing_calendar
+from mailer.models import MailingTemplate
 
 
 class LoginView(DjangoLoginView):
@@ -28,6 +31,20 @@ class LogoutView(DjangoLogoutView):
     template_name = 'management/auth/logout.html'
 
 
-class ManageView(ManageViewMixin, TemplateView):
+class ManageView(ManageViewMixin, ListView):
     """Management Homepage"""
     template_name = 'management/manage.html'
+    context_object_name = 'sends'
+    paginator_class = Paginator
+    model = MailingTemplate
+    paginate_by = 10
+
+    def get_queryset(self):
+        """Get the queryset"""
+        return mailing_calendar(
+            organization=self.request.organization, upcoming=True)
+
+    def get_paginator(self, queryset, per_page, orphans=0,
+                      allow_first_empty_page=True, **kwargs):
+        """Get the paginator (in our case a RawQuerySet paginator)"""
+        return Paginator(queryset, per_page)

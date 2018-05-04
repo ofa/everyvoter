@@ -140,6 +140,8 @@ INSTALLED_APPS = [
 
     'everyvoter_common',
 
+    'rawpaginator',
+
     'hirefire',
 
     'collectfast',
