@@ -1,6 +1,5 @@
-"""URLs for Manage app"""
-from django.contrib import admin
-from django.conf.urls import url, include
+"""URLs for User Import app"""
+from django.conf.urls import url
 
 from user_import import views
 

@@ -38,8 +38,8 @@ def validate_geodataset_upload(uploaded_file):
             raise ValidationError('First column must be named \'ocd_id\'')
 
         seen = []
-        for i in range(0, len(reader.fieldnames)):
-            clean_field = slugify_header(reader.fieldnames[i])
+        for i, fieldname in enumerate(reader.fieldnames):
+            clean_field = slugify_header(fieldname)
             if clean_field == '':
                 raise ValidationError(
                     u'Column {} header is empty or decodes to empty'.format(i))
@@ -52,7 +52,7 @@ def validate_geodataset_upload(uploaded_file):
         for row in reader:
             ocd_ids.append(row['ocd_id'])
 
-    if len(ocd_ids) == 0:
+    if not ocd_ids:
         raise ValidationError('File must have at least one entry.')
 
     # Get all the OCD IDs that match in the database, turn it into a list
@@ -63,8 +63,8 @@ def validate_geodataset_upload(uploaded_file):
     # Iterate through user-provided OCD IDs and see if they're in the list
     # that came from the database. If they're not, return an error on the
     # first instance.
-    for i in range(0, len(ocd_ids)):
-        if ocd_ids[i] not in db_ocd_ids:
+    for i, ocd_id in enumerate(ocd_ids):
+        if ocd_id not in db_ocd_ids:
             raise ValidationError(u'One or more OCD IDs not found. First '
                                   'found: Row: {row} ID: {id}'.format(
-                                      row=(i + 2), id=ocd_ids[i]))
+                                      row=(i + 2), id=ocd_id))

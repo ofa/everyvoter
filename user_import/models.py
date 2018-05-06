@@ -97,5 +97,4 @@ class ImportRecordStatus(TimestampModel):
         """Unicode representation of the import record status"""
         if self.account:
             return unicode(self.account)
-        else:
-            return unicode(self.import_record)
+        return unicode(self.import_record)

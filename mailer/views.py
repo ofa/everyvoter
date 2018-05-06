@@ -149,7 +149,6 @@ class EmailPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
 class WrapperListView(OrganizationViewMixin, ManageViewMixin, ListView):
     """List all imports"""
     model = EmailWrapper
-    template_name = "mailer/list_wrappers.html"
     paginate_by = 10
     context_object_name = 'wrappers'
 

@@ -130,8 +130,7 @@ class ProcessMultipleFormsView(View):
                     all_cleaned_data.update(form.cleaned_data)
         if all_forms_valid:
             return self.form_valid(forms, all_cleaned_data)
-        else:
-            return self.render_invalid_response(forms)
+        return self.render_invalid_response(forms)
 
 
 class BaseMultipleFormsView(MultipleFormsMixin, ProcessMultipleFormsView):

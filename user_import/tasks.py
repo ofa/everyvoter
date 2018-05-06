@@ -1,16 +1,16 @@
 """Import-Related Tasks"""
-import unicodecsv
-import uuid
 import time
+import uuid
 
 from celery import shared_task
-from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.core.exceptions import ValidationError
 import requests
+import unicodecsv
 
-from user_import.models import UserImport, ImportRecord, ImportRecordStatus
 from accounts.utils_user import create_user
 from mailer.mailserver import deliver
+from user_import.models import UserImport, ImportRecord, ImportRecordStatus
 
 
 

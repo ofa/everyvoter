@@ -3,8 +3,8 @@ from collections import OrderedDict
 from slugify import slugify
 import unicodecsv
 
-from geodataset.models import Entry, Field, FieldValue
 from election.models import LegislativeDistrict
+from geodataset.models import Entry, Field, FieldValue
 
 
 def slugify_header(header_field):
@@ -68,9 +68,9 @@ def create_entries(ocd_ids, geodataset):
         ocd_id__in=list(set(ocd_ids))).values_list('ocd_id', 'id'))
 
     new_entries = []
-    for ocd_id_row_number in range(0, len(ocd_ids)):
+    for ocd_id in ocd_ids:
         new_entries.append(
-            Entry(district_id=district_pks[ocd_ids[ocd_id_row_number]],
+            Entry(district_id=district_pks[ocd_id],
                   geodataset=geodataset))
 
     return Entry.objects.bulk_create(new_entries)
@@ -90,14 +90,11 @@ def create_fields(headers, geodataset):
 def create_values(data, entries_result, fields_result):
     """Create EntryValues"""
     new_values = []
-    for row_number in range(0, len(data)):
-        row = data[row_number]
+    for row_number, row in enumerate(data):
         entry = entries_result[row_number]
 
         # For each field in the row
-        for field_number in range(0, len(row)):
-
-            value = row[field_number]
+        for field_number, value in enumerate(row):
             field = fields_result[field_number]
 
             new_values.append(

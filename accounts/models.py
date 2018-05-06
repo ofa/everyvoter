@@ -1,9 +1,7 @@
 """Models for the EveryVoter App"""
-import uuid
-
+from django.contrib.auth import models as auth_models
 from django.core.exceptions import PermissionDenied
 from django.db import models
-from django.contrib.auth import models as auth_models
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
@@ -75,8 +73,7 @@ class User(
         """Unicode representation of the user"""
         if self.first_name and self.last_name:
             return self.first_name + u' ' + self.last_name
-        else:
-            return self.email
+        return self.email
 
     def get_short_name(self):
         """Short name representation of user"""
@@ -97,6 +94,7 @@ class User(
 
     def unsubscribe_url(self, email):
         """URL the user can visit to unsubscribe"""
+        # pylint: disable=line-too-long
         return 'https://{domain}{path}?mailing_id={email_uuid}&user={user_uuid}'.format(
             domain=self.organization.primary_domain.hostname,
             path=reverse('unsubscribe:unsubscribe'),

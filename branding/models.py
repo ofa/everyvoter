@@ -1,10 +1,9 @@
 """Models related to different organizations"""
-from django.core.cache import cache
 from django.conf import settings
+from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
 
-from branding.mixins import OrganizationMixin
 from branding.utils import org_domain_cache_key
 from everyvoter_common.utils.models import TimestampModel
 
@@ -38,7 +37,7 @@ class Organization(TimestampModel):
         verbose_name = "Organization"
         verbose_name_plural = "Organizations"
 
-    def __str__(self):
+    def __unicode__(self):
         """String representation of the organization"""
         return self.name
 
@@ -73,7 +72,7 @@ class Domain(TimestampModel):
         verbose_name = "Domain"
         verbose_name_plural = "Domains"
 
-    def __str__(self):
+    def __unicode__(self):
         """String representation of the domain"""
         return self.hostname
 
@@ -83,5 +82,6 @@ class Theme(models.Model):
     organization = models.OneToOneField(Organization)
 
     class Meta(object):
+        """Meta options for Theme"""
         verbose_name = "Theme"
         verbose_name_plural = "Themes"

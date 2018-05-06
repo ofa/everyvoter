@@ -91,9 +91,9 @@ def cd_ocd_id(state, district_number):
     # DC does not have a congressional district
     if state in ['DC']:
         return []
-    else:
-        return ['{state_id}/cd:{cd}'.format(
-            state_id=state_ocd_id(state), cd=district_number)]
+
+    return ['{state_id}/cd:{cd}'.format(
+        state_id=state_ocd_id(state), cd=district_number)]
 
 
 def state_leg_ocd_id(level, state, district_number):
@@ -117,10 +117,10 @@ def state_leg_ocd_id(level, state, district_number):
 
     if state in ocdid_exceptions.keys():
         return ocdid_exceptions[state].get(district_number, [])
-    else:
-        return ['{state_id}/{prefix}:{number}'.format(
-            state_id=state_ocd_id(state), prefix=prefix,
-            number=district_number)]
+
+    return ['{state_id}/{prefix}:{number}'.format(
+        state_id=state_ocd_id(state), prefix=prefix,
+        number=district_number)]
 
 
 def geocodio_ocd_ids(result):

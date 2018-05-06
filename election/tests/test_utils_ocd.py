@@ -8,6 +8,8 @@ from election import utils
 
 
 class GeocodioOCDIDTest(TestCase):
+    """Geocodio to OCD ID Tests"""
+
     def setUp(self):
         """Setup test"""
         path = os.path.dirname(os.path.abspath(__file__))

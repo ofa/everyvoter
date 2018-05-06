@@ -2,14 +2,14 @@
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
 from django.views.generic import (
-    FormView, TemplateView, ListView, DetailView, UpdateView
+    FormView, TemplateView, DetailView, UpdateView
 )
 from django_filters.views import FilterView
 
-from accounts.forms import UserForm, UserEditForm
 from accounts.filters import AccountManageFilter
-from accounts.utils_user import create_user, update_user_location
+from accounts.forms import UserForm, UserEditForm
 from accounts.models import User
+from accounts.utils_user import create_user, update_user_location
 from branding.mixins import OrganizationViewMixin
 from manage.mixins import ManageViewMixin
 

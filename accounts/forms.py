@@ -21,6 +21,7 @@ class UserForm(forms.Form):
 
 
 class UserEditForm(forms.ModelForm):
+    """Form for users to be edited"""
     first_name = forms.CharField(
         max_length=255)
     last_name = forms.CharField(
@@ -30,5 +31,6 @@ class UserEditForm(forms.ModelForm):
         required=False)
 
     class Meta(object):
+        """Meta options for Form"""
         model = User
         fields = ['first_name', 'last_name', 'address']

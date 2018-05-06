@@ -1,11 +1,10 @@
 """EveryVoter API Views"""
 from rest_framework import viewsets
-from rest_framework.pagination import PageNumberPagination
 
+from api.pagination import LargeResultsSetPagination
 from api.serializers import DistrictSerializer
-from api.pagination import LargeResultsSetPagination, StandardResultsSetPagination
-from election.models import LegislativeDistrict
 from election.filters import LegislativeDistrictFilter
+from election.models import LegislativeDistrict
 
 
 class DistrictViewSet(viewsets.ReadOnlyModelViewSet):

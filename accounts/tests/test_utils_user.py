@@ -1,7 +1,6 @@
 """Tests for the utils_user.py file in Accounts"""
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from model_mommy import mommy
 from mock import patch
 
 from accounts.models import User

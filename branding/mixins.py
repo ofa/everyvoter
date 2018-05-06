@@ -18,8 +18,8 @@ class OrganizationManagerMixin(object):
         """Generator for a specific user"""
         if user.is_superuser:
             return self.get_queryset()
-        else:
-            return self.get_queryset().filter(organization=user.organization)
+
+        return self.get_queryset().filter(organization=user.organization)
 
 
 class OrganizationViewMixin(object):
