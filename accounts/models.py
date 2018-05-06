@@ -4,6 +4,7 @@ import uuid
 from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.contrib.auth import models as auth_models
+from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django_smalluuid.models import SmallUUIDField, uuid_default
@@ -85,3 +86,19 @@ class User(
     def state(self):
         """State the user is in"""
         return self.location.state
+
+    def manage_url(self, email):
+        """The URL a user can visit to manage their profile and unsubscribe"""
+        return 'https://{domain}{path}?mailing_id={email_uuid}'.format(
+            domain=self.organization.primary_domain.hostname,
+            path=reverse('accounts:self_update_user',
+                         kwargs={'slug': self.username}),
+            email_uuid=email.uuid)
+
+    def unsubscribe_url(self, email):
+        """URL the user can visit to unsubscribe"""
+        return 'https://{domain}{path}?mailing_id={email_uuid}&user={user_uuid}'.format(
+            domain=self.organization.primary_domain.hostname,
+            path=reverse('unsubscribe:unsubscribe'),
+            email_uuid=email.uuid,
+            user_uuid=self.username)

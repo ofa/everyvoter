@@ -1,6 +1,7 @@
 """Forms for mailer app"""
 from django import forms
 
+from election.models import Election
 from mailer.models import Unsubscribe, Email, MailingTemplate
 
 
@@ -31,3 +32,11 @@ class EmailForm(forms.ModelForm):
         model = Email
         fields = ['from_name', 'subject', 'pre_header', 'body_above',
                   'body_below', 'blocks']
+
+
+class EmailPreviewForm(forms.Form):
+    """Preview form"""
+    election = forms.ModelChoiceField(queryset=Election.objects.all())
+    ocd_ids = forms.CharField(
+        help_text='Comma separated list of OCD IDs', required=False)
+    email = forms.CharField(widget=forms.HiddenInput())

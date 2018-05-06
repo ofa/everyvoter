@@ -28,7 +28,7 @@
             <tbody>
                 {% for mailing_template in mailing_templates %}
                 <tr>
-                    <td>{{ mailing_template.name }}</th>
+                    <td><a href="{% url 'manage:mailer:preview_email' mailing_template.email.uuid %}">{{ mailing_template.name }}</a></th>
                     <td>{{ mailing_template.get_deadline_type_display }}</th>
                     <td><a href="{% url 'manage:mailer:update_template' mailing_template.email.uuid %}">Update</a></th>
                     <td scope="row"><a href="#">Delete</a></th>

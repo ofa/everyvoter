@@ -1,0 +1,32 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Preview Block {{ content_block.name }}{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "targets" %}
+    <div class="col-md-12">
+        <h2>Preview Block {{ content_block.name }}</h2>
+
+            <form role="form" method="GET" action="{% url 'manage:rendering:preview_block' %}" id="preview_form">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Preview</button>
+            </form>
+
+            <div class="embed-responsive embed-responsive-4by3"><iframe src="" class="embed-responsive-item" id="preview"></iframe></div>
+            
+
+    </div>
+{% endblock %}
+
+{% block footerjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function() {
+            $('#preview_form').submit(function(e) {
+                e.preventDefault();
+                $('#preview').attr('src', '{% url 'manage:rendering:preview_block' %}?'+ $.param($(this).serializeArray()));
+            })
+        });
+    </script>
+{% endblock footerjs %}

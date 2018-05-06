@@ -16,6 +16,10 @@ urlpatterns = [
         views.MailingTemplateUpdateView.as_view(),
         name='update_template'),
 
+    url(r'^email/(?P<slug>[-\w]+)/preview/$',
+        views.EmailPreviewView.as_view(),
+        name='preview_email'),
+
     url(r'^wrappers/$',
         views.WrapperListView.as_view(), name='list_wrappers'),
     url(r'^wrappers/create/$',

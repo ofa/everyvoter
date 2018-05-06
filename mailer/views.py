@@ -1,9 +1,11 @@
 """Views for mailer"""
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import CreateView, UpdateView, ListView, TemplateView
-from django.views.generic.detail import SingleObjectMixin
-from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView, UpdateView, ListView, TemplateView, FormView
+)
+from django.views.generic.detail import SingleObjectMixin, BaseDetailView
+from django.urls import reverse_lazy, reverse
 from django_filters.views import FilterView
 
 from accounts.models import User
@@ -11,8 +13,12 @@ from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from blocks.models import Block, EmailBlocks
 from everyvoter_common.utils.multi_form_view import MultipleFormsView
-from mailer.models import EmailWrapper, Unsubscribe, Mailing, MailingTemplate
-from mailer.forms import UnsubscribeForm, MailingTemplateForm, EmailForm
+from mailer.models import (
+    EmailWrapper, Unsubscribe, Mailing, MailingTemplate, Email
+)
+from mailer.forms import (
+    UnsubscribeForm, MailingTemplateForm, EmailForm, EmailPreviewForm
+)
 from mailer.filters import MailingTemplateFilter
 
 
@@ -89,6 +95,13 @@ class MailingTemplateFormView(ManageViewMixin, MultipleFormsView):
         return super(MailingTemplateFormView, self).form_valid(
             forms, all_cleaned_data)
 
+    def get_success_url(self):
+        """Get the success URL"""
+        if 'save_preview' in self.request.POST:
+            return reverse(
+                'manage:mailer:preview_email', args=[self.object.email.uuid])
+        return super(MailingTemplateFormView, self).get_success_url()
+
 
 class MailingTemplateUpdateView(EmailOrganizationViewMixin,
                                 SingleObjectMixin,
@@ -115,6 +128,22 @@ class MailingTemplateUpdateView(EmailOrganizationViewMixin,
         elif form_class_name == 'mailing_template_form':
             kwargs['instance'] = self.object
         return kwargs
+
+
+class EmailPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
+                       FormView):
+    """Preview an email"""
+    model = Email
+    slug_field = 'uuid'
+    form_class = EmailPreviewForm
+    template_name = 'mailer/email_preview.html'
+    context_object_name = 'email'
+
+    def get_form(self):
+        """Get the form"""
+        form = super(EmailPreviewView, self).get_form()
+        form.fields['email'].initial = self.object.id
+        return form
 
 
 class WrapperListView(OrganizationViewMixin, ManageViewMixin, ListView):

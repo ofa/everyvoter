@@ -10,7 +10,8 @@
 
             <form role="form" method="POST" action="" novalidate>
             {{ form|crispy }}
-            <button type="submit" class="btn btn-block btn-primary">Save</button>
+            <button type="submit" class="btn btn-block btn-primary" name="save_preview">Save and Preview</button>
+            <button type="submit" class="btn btn-block btn-primary" name="save">Save</button>
             {% csrf_token %}
             </form>
 

@@ -16,6 +16,9 @@ urlpatterns = [
     url(r'^block/(?P<slug>[-\w]+)/delete/$',
         views.BlockDeleteView.as_view(),
         name='delete_block'),
+    url(r'^block/(?P<slug>[-\w]+)/preview/$',
+        views.BlockPreviewView.as_view(),
+        name='preview_block'),
 
     url(r'^categories/$',
         views.BlockCategoryListView.as_view(), name='list_blockcategories'),

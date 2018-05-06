@@ -28,10 +28,10 @@
             <tbody>
                 {% for content_block in blocks %}
                 <tr>
-                    <th scope="row">{{ content_block.name }}</th>
-                    <th scope="row">{{ content_block.geodataset }}</th>
-                    <th scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></th>
-                    <th scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></th>
+                    <td scope="row"><a href="{% url 'manage:blocks:preview_block' content_block.uuid %}">{{ content_block.name }}</a></th>
+                    <td scope="row">{{ content_block.geodataset }}</th>
+                    <td scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></td>
+                    <td scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></td>
                 </tr>
                 {% endfor %}
 

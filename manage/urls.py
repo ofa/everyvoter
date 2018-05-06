@@ -14,6 +14,8 @@ urlpatterns = [
         include('branding.manage_urls', namespace='branding')),
     url(r'^email/',
         include('mailer.manage_urls', namespace='mailer')),
+    url(r'^rendering/',
+        include('rendering.manage_urls', namespace='rendering')),
     url(r'^dataset/',
         include('geodataset.manage_urls', namespace='dataset')),
     url(r'^blocks/',

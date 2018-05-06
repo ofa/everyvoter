@@ -1,0 +1,32 @@
+{% extends "management/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Preview Email {{ email.name }}{% endblock title %}
+
+{% block page_content %}
+{% add_data "body-class" "email" %}
+    <div class="col-md-12">
+        <h2>Preview Email {{ email.mailingtemplate.name }}</h2>
+
+            <form role="form" method="GET" action="{% url 'manage:rendering:preview_email' %}" id="preview_form">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-block btn-primary">Preview</button>
+            </form>
+
+            <div class="embed-responsive embed-responsive-4by3"><iframe src="" class="embed-responsive-item" id="preview"></iframe></div>
+            
+
+    </div>
+{% endblock %}
+
+{% block footerjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function() {
+            $('#preview_form').submit(function(e) {
+                e.preventDefault();
+                $('#preview').attr('src', '{% url 'manage:rendering:preview_email' %}?'+ $.param($(this).serializeArray()));
+            })
+        });
+    </script>
+{% endblock footerjs %}

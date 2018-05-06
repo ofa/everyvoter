@@ -1,13 +1,16 @@
 """Views for blocks"""
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import CreateView, UpdateView, ListView, DeleteView
-from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView, UpdateView, ListView, DeleteView, FormView, DetailView
+)
+from django.views.generic.detail import BaseDetailView
+from django.urls import reverse_lazy, reverse
 from django_filters.views import FilterView
 
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from blocks.models import Block, BlockCategory
-from blocks.forms import BlockModelForm
+from blocks.forms import BlockModelForm, BlockPreviewForm
 from blocks.filters import BlockFilter
 
 
@@ -32,6 +35,13 @@ class BlockCreateModifyObjectViewMixin(object):
             organization=self.request.organization)
         return form
 
+    def get_success_url(self):
+        """Get the success URL"""
+        if 'save_preview' in self.request.POST:
+            return reverse(
+                'manage:blocks:preview_block', args=[self.object.uuid])
+        return super(BlockCreateModifyObjectViewMixin, self).get_success_url()
+
 
 class BlockCreateView(ManageViewMixin, SuccessMessageMixin,
                       OrganizationCreateViewMixin,
@@ -53,6 +63,25 @@ class BlockUpdateView(ManageViewMixin, SuccessMessageMixin,
     context_object_name = 'content_block'
     success_url = reverse_lazy('manage:blocks:list_blocks')
     success_message = "Block %(name)s was edited"
+
+
+class BlockPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
+                       FormView):
+    """Preview a block"""
+    model = Block
+    slug_field = 'uuid'
+    form_class = BlockPreviewForm
+    template_name = 'blocks/block_preview.html'
+    context_object_name = 'content_block'
+
+    def get_form(self):
+        """Get the form"""
+        form = super(BlockPreviewView, self).get_form()
+        form.fields['district'].queryset = form.fields['district'].queryset.filter(
+            entry__geodataset__block=self.object)
+        form.fields['block'].initial = self.object.id
+        return form
+
 
 
 class BlockDeleteView(ManageViewMixin, SuccessMessageMixin,
