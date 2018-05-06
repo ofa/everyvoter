@@ -65,7 +65,7 @@ class State(TimestampModel):
         verbose_name_plural = "States"
         ordering = ['name']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -77,9 +77,9 @@ class LegislativeDistrict(TimestampModel):
     district_type = models.CharField(
         'District Type', choices=DISTRICT_TYPES, max_length=50)
 
-    def __str__(self):
+    def __unicode__(self):
         """String representation of a Civic District"""
-        return self.ocd_id
+        return self.name
 
 
 class Election(TimestampModel):
@@ -121,10 +121,10 @@ class Election(TimestampModel):
         'Vote By Mail Ballot Return Date',
         help_text='The date by which voters must return their mailed ballots')
 
-    def __str__(self):
+    def __unicode__(self):
         """String representation of Election"""
         return "{state} {election_type} Election".format(
-            state=self.state, election_type=self.election_type)
+            state=self.state, election_type=self.get_election_type_display())
 
 
 class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
