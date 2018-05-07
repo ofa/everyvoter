@@ -19,6 +19,7 @@ django_sekizai==0.10.0
 django-crispy-forms==1.7.2
 django-smalluuid==1.1.1
 unicodecsv==0.14.1
+email_validator==1.0.3
 awesome-slugify==1.6.5
 -e git+https://github.com/nickcatal/django-paginator-rawqueryset.git@b58c0a70f76d0101e83ebc6e12299c7880f6814b#egg=rawpaginator
 

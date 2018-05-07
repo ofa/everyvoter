@@ -1,11 +1,12 @@
 """Rendering Email Views"""
 from django.http import JsonResponse, HttpResponse, Http404
 from django.views.generic import View
-
+from email_validator import validate_email, EmailNotValidError
 
 from blocks.models import Block
 from election.models import Election, LegislativeDistrict
 from rendering.render_email import compose_email, compose_block_preview
+from rendering.tasks import sample_email
 from mailer.models import Email
 from manage.mixins import ManageViewMixin
 
@@ -20,6 +21,7 @@ class EmailPreviewView(ManageViewMixin, View):
         email_id = request.GET.get('email', '')
         election_id = request.GET.get('election', '')
         ocd_ids = request.GET.get('ocd_ids', '').split(',')
+        sample_address = request.GET.get('sample_address', '')
 
         if not email_id.isdigit() or not election_id.isdigit():
             raise Http404
@@ -41,6 +43,22 @@ class EmailPreviewView(ManageViewMixin, View):
             email_id,
             election_id,
             district_ids)
+
+        if sample_address:
+            # Try to verify sample address
+            try:
+                validated = validate_email(sample_address)
+                email = validated['email']
+                sample_email.delay(
+                    email,
+                    self.request.user.id,
+                    email_id,
+                    election_id,
+                    list(district_ids))
+                result['sample_result'] = 'Sample sent to {}'.format(email)
+            except EmailNotValidError as error:
+                result['sample_result'] = 'Sample Error: {}'.format(
+                    unicode(error))
 
         if request.is_ajax():
             return JsonResponse(result)

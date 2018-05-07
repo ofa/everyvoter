@@ -41,6 +41,9 @@
                     $('#pre_header').text(data['pre_header']);
                     $('#from_name').text(data['from_name']);
                     $('#from_address').text(data['from_address']);
+                    if (data['sample_result']) {
+                        alert(data['sample_result']);
+                    }
                 });
             })
         });
