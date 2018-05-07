@@ -12,7 +12,7 @@
 
             <p>In order to give you the best information about upcoming elections in your area, we need the most up-to-date contact information. Please use the form below to update your information.</p>
 
-            <form role="form" method="POST" action="" autocomplete="off">
+            <form role="form" method="POST" action="" autocomplete="off" name="lastpass-disable-search">
             {{ form|crispy }}
             <button type="submit" class="btn btn-block btn-primary">Update User</button>
             {% csrf_token %}
