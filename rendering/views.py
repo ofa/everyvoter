@@ -1,5 +1,5 @@
 """Rendering Email Views"""
-from django.http import HttpResponse, Http404
+from django.http import JsonResponse, HttpResponse, Http404
 from django.views.generic import View
 
 
@@ -41,6 +41,9 @@ class EmailPreviewView(ManageViewMixin, View):
             email_id,
             election_id,
             district_ids)
+
+        if request.is_ajax():
+            return JsonResponse(result)
 
         return HttpResponse(result['body'])
 

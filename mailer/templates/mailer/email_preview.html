@@ -13,6 +13,14 @@
             <button type="submit" class="btn btn-block btn-primary">Preview</button>
             </form>
 
+            <div style="display: none;" id="email_meta">
+            Subject: <span id="subject"></span><br>
+            Pre-Header Text: <span id="pre_header"></span><br>
+            From Name: <span id="from_name"></span><br>
+            From Addres: <span id="from_address"></span>
+            </div>
+
+
             <div class="embed-responsive embed-responsive-4by3"><iframe src="" class="embed-responsive-item" id="preview"></iframe></div>
             
 
@@ -25,7 +33,15 @@
         $(function() {
             $('#preview_form').submit(function(e) {
                 e.preventDefault();
-                $('#preview').attr('src', '{% url 'manage:rendering:preview_email' %}?'+ $.param($(this).serializeArray()));
+                var final_url = '{% url 'manage:rendering:preview_email' %}?'+ $.param($(this).serializeArray());
+                $.getJSON(final_url, function(data) {
+                    $('#preview').contents().find('html').html(data['body']);
+                    $('#email_meta').show();
+                    $('#subject').text(data['subject']);
+                    $('#pre_header').text(data['pre_header']);
+                    $('#from_name').text(data['from_name']);
+                    $('#from_address').text(data['from_address']);
+                });
             })
         });
     </script>
