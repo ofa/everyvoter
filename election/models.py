@@ -52,6 +52,9 @@ class State(TimestampModel):
     early_vote_by_mail_fault = models.BooleanField(
         help_text='Whether there are restrictions as to who can vote by mail '
                   'prior to election day')
+    early_vote_by_county = models.BooleanField(
+        help_text='Whether the availability or dates of early votes is '
+                  'county-by-county')
     perm_absentee = models.BooleanField(
         help_text='Whether the state offers a permanent absentee option in '
                   'which a voter can either elect (or will automatically '
@@ -116,10 +119,13 @@ class Election(TimestampModel):
     vbm_application_deadline = models.DateField(
         'Vote By Mail Application Deadline',
         help_text='the date by which voters must return their applications '
-                  'applying to vote by mail')
+                  'applying to vote by mail', null=True, blank=True)
     vbm_return_date = models.DateField(
         'Vote By Mail Ballot Return Date',
-        help_text='The date by which voters must return their mailed ballots')
+        help_text='The date by which voters must return their mailed ballots',
+        null=True, blank=True)
+    ev_notes = models.TextField(blank=True)
+    vr_notes = models.TextField(blank=True)
 
     def __unicode__(self):
         """String representation of Election"""

@@ -9,7 +9,7 @@ from django.db import migrations
 
 def yesno(value):
     """True if yes, False if anything else"""
-    return value == 'yes'
+    return value.lower() == 'yes'
 
 
 def load_states(apps, schema_editor):
@@ -34,21 +34,22 @@ def load_states(apps, schema_editor):
             bulk_creation.append(
                 State(
                     code=row['code'],
-                    name=row['state_name'],
+                    name=row['name'],
                     is_state=yesno(row['is_state']),
                     senate_2018=yesno(row['senate_2018']),
                     governor_2018=yesno(row['governor_2018']),
                     automatic_vr=yesno(row['automatic_vr']),
                     online_vr=yesno(row['online_vr']),
                     same_day_vr=yesno(row['same_day_vr']),
-                    eday_vr=yesno(row['eday_vr']),
-                    has_vr=yesno(row['has_vr']),
                     early_vote_in_person=yesno(row['early_vote_in_person']),
                     in_person_absentee=yesno(row['in_person_absentee']),
                     early_vote_by_mail=yesno(row['early_vote_by_mail']),
                     early_vote_by_mail_fault=yesno(
                         row['early_vote_by_mail_fault']),
+                    eday_vr=yesno(row['eday_vr']),
+                    has_vr=yesno(row['has_vr']),
                     perm_absentee=yesno(row['perm_absentee']),
+                    early_vote_by_county=yesno(row['early_vote_by_county']),
                     election_calendar_url=row['election_calendar_url'],
                     notes=row['notes']
                 ))
