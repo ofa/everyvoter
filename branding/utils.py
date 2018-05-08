@@ -91,7 +91,8 @@ def get_or_create_organization(name, platform_name, hostname, homepage,
     new_organization.save()
 
     new_domain = Domain(
-        organization=new_organization, hostname=hostname).save()
+        organization=new_organization, hostname=hostname)
+    new_domain.save()
 
     new_organization.primary_domain = new_domain
     new_organization.save()
