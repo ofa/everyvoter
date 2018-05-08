@@ -34,9 +34,7 @@ class Migration(migrations.Migration):
                 ('ev_notes', models.TextField(blank=True)),
                 ('vr_notes', models.TextField(blank=True)),
             ],
-            options={
-                'abstract': False,
-            },
+            options={'abstract': False, 'ordering': ['election_type', 'state_id'], 'verbose_name': 'Election', 'verbose_name_plural': 'Elections'},
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
         migrations.CreateModel(

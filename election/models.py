@@ -139,10 +139,18 @@ class Election(TimestampModel):
 
     objects = ElectionManager()
 
+    class Meta(object):
+        """Meta options for Election"""
+        verbose_name = "Election"
+        verbose_name_plural = "Elections"
+        ordering = ['election_type', 'state_id']
+
     def __unicode__(self):
         """String representation of Election"""
-        return "{state} {election_type} Election".format(
-            state=self.state, election_type=self.get_election_type_display())
+        return "{state} {election_type} Election ({date})".format(
+            state=self.state,
+            election_type=self.get_election_type_display(),
+            date=self.election_date)
 
 
 class OrganizationElectionManager(models.Manager):
