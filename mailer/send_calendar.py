@@ -35,7 +35,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                         AND "accounts_user"."organization_id" = oe.organization_id
                 )) as total_recipients
 
-    FROM
+        FROM
         ((
             -- Registration (`vr_deadline`) Emails
             SELECT
@@ -49,7 +49,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                 END as send_date
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
-            LEFT JOIN election_election e ON mt.election_type = mt.election_type
+            LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             JOIN branding_organization o ON o.id = oe.organization_id
@@ -62,7 +62,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                 e.evip_start_date - cast(mt.days_to_deadline||' days' as Interval) send_date
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
-            LEFT JOIN election_election e ON mt.election_type = mt.election_type
+            LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             WHERE mt.deadline_type = 'evip_start_date' AND oe.evip_active = True
@@ -74,7 +74,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                 e.evip_close_date - cast(mt.days_to_deadline||' days' as Interval) send_date
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
-            LEFT JOIN election_election e ON mt.election_type = mt.election_type
+            LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             WHERE mt.deadline_type = 'evip_close_date' AND oe.evip_active = True
@@ -86,7 +86,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                 e.vbm_application_deadline - cast(mt.days_to_deadline||' days' as Interval) send_date
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
-            LEFT JOIN election_election e ON mt.election_type = mt.election_type
+            LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             WHERE mt.deadline_type = 'vbm_application_deadline' AND oe.vbm_active = True
@@ -98,7 +98,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                 e.vbm_return_date - cast(mt.days_to_deadline||' days' as Interval) send_date
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
-            LEFT JOIN election_election e ON mt.election_type = mt.election_type
+            LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             WHERE mt.deadline_type = 'vbm_return_date' AND oe.vbm_active = True
@@ -110,7 +110,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
                 e.election_date - cast(mt.days_to_deadline||' days' as Interval) send_date
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
-            LEFT JOIN election_election e ON mt.election_type = mt.election_type
+            LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             WHERE mt.deadline_type = 'election_date' AND oe.eday_active = True
