@@ -1,7 +1,4 @@
 """Utilities to get the sending calendar"""
-from django.db import models
-from django_smalluuid.models import SmallUUIDField
-
 from mailer.models import MailingTemplate
 
 
@@ -156,12 +153,4 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
     else:
         attrs['date_filter'] = ''
 
-    return MailingTemplate.objects.annotate(
-        email_uuid=models.Value('email_uuid', SmallUUIDField()),
-        election_id=models.Value('election_id', models.IntegerField()),
-        organizationelection_id=models.Value(
-            'organizationelection_id', models.IntegerField()),
-        send_date=models.Value('send_date', models.DateField()),
-        election_state_id=models.Value('election_state_id', models.CharField()),
-        total_recipients=models.Value('total_recipients', models.IntegerField())
-    ).raw(query.format(**attrs))
+    return MailingTemplate.objects.raw(query.format(**attrs))
