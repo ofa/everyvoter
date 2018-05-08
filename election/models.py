@@ -85,6 +85,16 @@ class LegislativeDistrict(TimestampModel):
         return self.name
 
 
+class ElectionManager(models.Manager):
+    """Manager for Election model."""
+    def get_queryset(self):
+        """
+        Ensures that all queries for elections also query the state
+        """
+        return super(ElectionManager, self).get_queryset().select_related(
+            'state')
+
+
 class Election(TimestampModel):
     """An election"""
     election_type = models.CharField(
@@ -127,10 +137,22 @@ class Election(TimestampModel):
     ev_notes = models.TextField(blank=True)
     vr_notes = models.TextField(blank=True)
 
+    objects = ElectionManager()
+
     def __unicode__(self):
         """String representation of Election"""
         return "{state} {election_type} Election".format(
             state=self.state, election_type=self.get_election_type_display())
+
+
+class OrganizationElectionManager(models.Manager):
+    """Manager for OrganizationElection model."""
+    def get_queryset(self):
+        """
+        Ensure all queries for elections also query the election and state
+        """
+        return super(OrganizationElectionManager, self).get_queryset(
+            ).select_related('election', 'election__state')
 
 
 class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
@@ -145,6 +167,8 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
         'Voter Registration Notifications', default=True)
     eday_active = models.BooleanField(
         'Election Day Notifications', default=True)
+
+    objects = OrganizationElectionManager()
 
     class Meta(object):
         """Meta options for OrganizationElection"""
