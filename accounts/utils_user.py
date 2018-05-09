@@ -20,17 +20,19 @@ def create_user(organization, email, address, first_name, last_name):
         last_name: Last name of new user (optional)
     """
 
+    # Make the email lowercase incase we want to no longer do case insensitive
+    # matching later on.
+    email = email.lower()
+
     # Run the email through the email validator incase someone puts their
     # address in the email field
     email_validator = EmailValidator('Invalid Email Address')
     email_validator(email)
 
-    # Check to see if the user already exists. We retain the case of emails but
-    # only allow 1 email in the system regardless of capitalization, thus the
-    # use of `__iexact`. Raise our custom `UserExists` error for easy exception
-    # handling elsewhere.
+    # Check to see if the user already exists. Raise our custom `UserExists`
+    # error for easy exception handling elsewhere.
     if User.objects.filter(
-            organization=organization, email__iexact=email).exists():
+            organization=organization, email=email).exists():
         raise ValidationError('User with that email address already exists')
 
     # Return a Location for this user. This either creates a new Location or

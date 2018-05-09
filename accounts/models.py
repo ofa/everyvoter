@@ -66,7 +66,9 @@ class User(
         unique_together = ('email', 'organization')
         indexes = [
             models.Index(fields=['organization', 'is_active', 'unsubscribed'],
-                         name="org_active_unsub_idx")
+                         name="org_active_unsub_idx"),
+            models.Index(fields=['organization', 'email'],
+                         name="org_email_idx")
         ]
 
     def __unicode__(self):
