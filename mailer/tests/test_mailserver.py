@@ -1,4 +1,6 @@
 """Test the mailserver code in the mailer app"""
+import logging
+
 from django.test import TestCase, override_settings
 from mock import patch
 
@@ -8,6 +10,8 @@ from mailer.mailserver import deliver
 
 class TestDeliver(EveryVoterTestMixin, TestCase):
     """Test the create_user method"""
+    def setUp(self):
+        logging.disable(logging.CRITICAL)
 
     @override_settings(EMAIL_ACTIVE=True)
     @override_settings(SES_CONFIGURATIONSET_NAME='everyvoter-set')

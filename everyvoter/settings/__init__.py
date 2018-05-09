@@ -14,3 +14,4 @@ environ.Env.read_env('.env')
 from .base_settings import *
 from .storage_settings import *
 from .celery_settings import *
+from .log_settings import *

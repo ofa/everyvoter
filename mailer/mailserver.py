@@ -1,9 +1,13 @@
 """Functionality that sends composed emails"""
+import logging
+
 from django.conf import settings
 import boto3
 
 
 # pylint: disable=invalid-name
+logger = logging.getLogger('email')
+
 client = boto3.client(
     'ses',
     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -71,4 +75,8 @@ def deliver(to_address, from_address, subject, html, tags=None):
         Tags=final_tags,
         ConfigurationSetName=settings.SES_CONFIGURATIONSET_NAME
     )
+
+    logger.info(u'Email Sent %s To: %s From: %s Subject: %s',
+                response['MessageId'], to_address, from_address, subject)
+
     return response['MessageId']
