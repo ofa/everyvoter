@@ -70,7 +70,7 @@ def ingest_import(user_import_id):
                     email=row.get('email', ''),
                     address=row.get('address', '')))
 
-            ImportRecord.objects.bulk_create(new_records)
+            ImportRecord.objects.bulk_create(new_records, 7500)
 
         user_import.ingested = len(new_records)
         user_import.save()
