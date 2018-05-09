@@ -36,7 +36,8 @@ class Location(TimestampModel):
 class GeoLookup(TimestampModel):
     """Lookup on Geocod.io"""
     lookup = models.CharField(
-        'Lookup', help_text="Address provided by user", max_length=255)
+        'Lookup', help_text="Address provided by user", max_length=255,
+        db_index=True)
     response = JSONField()
 
     class Meta(object):
