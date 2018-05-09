@@ -37,7 +37,7 @@ class ManageView(ManageViewMixin, ListView):
     context_object_name = 'sends'
     paginator_class = Paginator
     model = MailingTemplate
-    paginate_by = 50
+    paginate_by = 20
 
     def get_queryset(self):
         """Get the queryset"""
