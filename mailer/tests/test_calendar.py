@@ -24,7 +24,8 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             vbm_return_date=datetime(2018, 7, 20),
             vr_deadline=datetime(2018, 7, 25),
             vr_deadline_online=datetime(2018, 7, 24),
-            election_date=datetime(2018, 7, 30))
+            election_date=datetime(2018, 7, 30),
+            election_type='general')
 
         self.election2 = self.create_election(
             evip_start_date=datetime(2018, 12, 5),
@@ -33,50 +34,58 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             vbm_return_date=datetime(2018, 12, 20),
             vr_deadline=datetime(2018, 12, 25),
             vr_deadline_online=datetime(2018, 12, 24),
-            election_date=datetime(2018, 12, 30))
+            election_date=datetime(2018, 12, 30),
+            election_type='general')
 
         # Create templates for each deadline
         self.template_evip_start_date = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='evip_start_date',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         self.template_evip_close_date = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='evip_close_date',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         self.template_vbm_application_deadline = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='vbm_application_deadline',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         self.template_vbm_return_date = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='vbm_return_date',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         self.template_vr_deadline = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='vr_deadline',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         self.template_election_date = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='election_date',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         self.template_election_day = mommy.make(
             'mailer.MailingTemplate',
             email__organization=self.organization,
             deadline_type='election_date',
-            days_to_deadline=0)
+            days_to_deadline=0,
+            election_type='general')
 
     def test_length(self):
         """Test the length of the response"""
