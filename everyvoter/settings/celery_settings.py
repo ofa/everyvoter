@@ -21,7 +21,7 @@ env = environ.Env(
     CELERY_TIMEZONE=(str, 'UTC'),
     CELERY_SEND_EVENTS=(bool, False),
     CELERY_RESULT_BACKEND=(str, 'django-db'),
-    CELERY_WORKER_CONCURRENCY=(int, 8)
+    CELERY_WORKER_CONCURRENCY=(int, 7)
 )
 
 
