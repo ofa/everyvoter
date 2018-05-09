@@ -143,7 +143,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
         attrs['org_filter'] = ''
 
     if upcoming:
-        attrs['upcoming_filter'] = 'send_date > now() AND'
+        attrs['upcoming_filter'] = 'send_date >= now()::date AND'
     else:
         attrs['upcoming_filter'] = ''
 

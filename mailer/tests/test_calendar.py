@@ -269,7 +269,8 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             'mailer.MailingTemplate',
             email__organization=organization,
             deadline_type='vr_deadline',
-            days_to_deadline=5)
+            days_to_deadline=5,
+            election_type='general')
 
         # Get the OrganizationElection for each election we created in setUp
         org_election1 = self.election1.organizationelection_set.get(
