@@ -116,6 +116,8 @@ class MailingTemplate(TimestampModel):
         'Election Type', choices=ELECTION_TYPES, max_length=50)
     days_to_deadline = models.IntegerField('Days to Deadline', default=0)
     email = models.OneToOneField('mailer.Email')
+    active = models.BooleanField('Active Template', default=True, db_index=True,
+                                 editable=False)
 
 
     class Meta(object):
@@ -128,7 +130,8 @@ class Mailing(TimestampModel):
     """Siingle mailing from the app"""
     organization_election = models.ForeignKey(
         'election.OrganizationElection')
-    template = models.ForeignKey('mailer.MailingTemplate')
+    template = models.ForeignKey('mailer.MailingTemplate',
+                                 on_delete=models.PROTECT)
     from_email = models.EmailField('From Email')
     stats = JSONField('Stats', null=True)
     source = models.CharField('Source Code', max_length=100)
@@ -154,8 +157,9 @@ class Mailing(TimestampModel):
 class EmailActivity(TimestampModel):
     """Single activity related to an email"""
     message_id = models.CharField('Message ID from ESP', max_length=100)
-    mailing = models.ForeignKey(Mailing, null=True)
-    recipient = models.ForeignKey('accounts.User', null=True)
+    mailing = models.ForeignKey(Mailing, null=True, on_delete=models.SET_NULL)
+    recipient = models.ForeignKey(
+        'accounts.User', null=True, on_delete=models.SET_NULL)
     activity = models.CharField(
         'Action Type', choices=POSSIBLE_ACTIVITIES, max_length=50)
     link = models.CharField(

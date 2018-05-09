@@ -36,7 +36,8 @@ class MailingTemplateListView(EmailOrganizationViewMixin, ManageViewMixin,
                               FilterView):
     """List all mailing templates"""
     model = MailingTemplate
-    queryset = MailingTemplate.objects.select_related('email')
+    queryset = MailingTemplate.objects.select_related('email').filter(
+        active=True)
     paginate_by = 10
     context_object_name = 'mailing_templates'
     filterset_class = MailingTemplateFilter

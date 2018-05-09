@@ -53,7 +53,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             JOIN branding_organization o ON o.id = oe.organization_id
-            WHERE mt.deadline_type = 'vr_deadline' AND oe.vr_active = True
+            WHERE mt.deadline_type = 'vr_deadline' AND oe.vr_active = True AND mt.active = True
         ) UNION ALL (
             -- Early Vote Start `evip_start_date` Emails
             SELECT
@@ -65,7 +65,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
-            WHERE mt.deadline_type = 'evip_start_date' AND oe.evip_active = True
+            WHERE mt.deadline_type = 'evip_start_date' AND oe.evip_active = True AND mt.active = True
         ) UNION ALL (
             -- Early Vote End `evip_close_date` Emails
             SELECT
@@ -77,7 +77,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
-            WHERE mt.deadline_type = 'evip_close_date' AND oe.evip_active = True
+            WHERE mt.deadline_type = 'evip_close_date' AND oe.evip_active = True AND mt.active = True
         ) UNION ALL (
             -- Vote By Mail Applications Due `vbm_application_deadline` Emails
             SELECT
@@ -89,7 +89,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
-            WHERE mt.deadline_type = 'vbm_application_deadline' AND oe.vbm_active = True
+            WHERE mt.deadline_type = 'vbm_application_deadline' AND oe.vbm_active = True AND mt.active = True
         ) UNION ALL (
             -- Vote By Mail Returns Due `vbm_return_date` Emails
             SELECT
@@ -101,7 +101,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
-            WHERE mt.deadline_type = 'vbm_return_date' AND oe.vbm_active = True
+            WHERE mt.deadline_type = 'vbm_return_date' AND oe.vbm_active = True AND mt.active = True
         ) UNION ALL (
             -- Election Day `election_date` Emails
             SELECT
@@ -113,7 +113,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             LEFT JOIN election_election e ON mt.election_type = e.election_type
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
-            WHERE mt.deadline_type = 'election_date' AND oe.eday_active = True
+            WHERE mt.deadline_type = 'election_date' AND oe.eday_active = True AND mt.active = True
         )) AS A
         JOIN mailer_mailingtemplate mt ON A.mailing_template_id = mt.id
         JOIN mailer_email me ON mt.email_id = me.id
