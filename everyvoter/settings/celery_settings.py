@@ -3,6 +3,7 @@
 import os
 
 from celery.schedules import crontab
+from kombu import Queue
 import environ
 
 env = environ.Env(
@@ -52,5 +53,16 @@ CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
 
 CELERYBEAT_SCHEDULE = {
 }
+
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+CELERY_TASK_QUEUES = {
+    Queue('default', routing_key='task.#'),
+    Queue('bulk', routing_key='bulk.#'),
+    Queue('bulk_priority', routing_key='bulk_priority.#'),
+}
+
+CELERY_TASK_ROUTES = ([
+    ('user_import.tasks.import_user', {'queue': 'bulk', 'routing_key': 'bulk.user_import'})
+],)
 
 CELERY_TIMEZONE = env('CELERY_TIMEZONE')
