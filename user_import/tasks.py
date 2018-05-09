@@ -50,8 +50,6 @@ def ingest_import(user_import_id):
     user_import.status = 'ingesting'
     user_import.save()
 
-    ingested_count = 0
-
     try:
         filename = load_file(user_import.file)
 
@@ -63,16 +61,18 @@ def ingest_import(user_import_id):
                                      u'address']:
                 raise Exception('Invalid fields.')
 
+            new_records = []
             for row in reader:
-                ImportRecord(
+                new_records.append(ImportRecord(
                     user_import=user_import,
                     first_name=row.get('first_name', ''),
                     last_name=row.get('last_name', ''),
                     email=row.get('email', ''),
-                    address=row.get('address', '')).save()
-                ingested_count += 1
+                    address=row.get('address', '')))
 
-        user_import.ingested = ingested_count
+            ImportRecord.objects.bulk_create(new_records)
+
+        user_import.ingested = len(new_records)
         user_import.save()
         trigger_import.delay(user_import.pk)
     except Exception as error:
