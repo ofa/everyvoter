@@ -49,12 +49,16 @@ class EmailPreviewView(ManageViewMixin, View):
             try:
                 validated = validate_email(sample_address)
                 email = validated['email']
-                sample_email.delay(
-                    email,
-                    self.request.user.id,
-                    email_id,
-                    election_id,
-                    list(district_ids))
+                sample_email.apply_async(
+                    kwargs={
+                        'to_address': email,
+                        'user_id': self.request.user.id,
+                        'email_id': email_id,
+                        'election_id': election_id,
+                        'district_ids': list(district_ids)
+                    },
+                    priority=100
+                )
                 result['sample_result'] = 'Sample sent to {}'.format(email)
             except EmailNotValidError as error:
                 result['sample_result'] = 'Sample Error: {}'.format(
