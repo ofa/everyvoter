@@ -26,7 +26,7 @@ env = environ.Env(
     EMAIL_ACTIVE=(bool, False),
     SES_FEEDBACK_TOPIC_ARN=(str, ''),
     HIREFIRE_TOKEN=(str, ''),
-    HIREFIRE_QUEUES=(list, ['celery']),
+    HIREFIRE_QUEUES=(list, ['default', 'bulk', 'bulk_priority']),
     DEBUG_TOOLBAR_IPS=(list, ['127.0.0.1']),
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
