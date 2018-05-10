@@ -194,17 +194,23 @@ class UnsubscribeCreateView(OrganizationViewMixin,
         """Handle a valid form"""
         form.instance.origin = 'user'
 
-        if form.cleaned_data['mailing_uuid']:
-            form.instance.mailing = Mailing.objects.filter(
-                uuid=form.cleaned_data['mailing_uuid']).first()
+        email_uuid = self.request.GET.get(
+            'email', form.cleaned_data.get('email_uuid', None))
 
-        if form.cleaned_data['user_uuid']:
+        if email_uuid:
+            form.instance.email = Email.objects.filter(
+                uuid=email_uuid).first()
+
+        user_uuid = self.request.GET.get(
+            'user', form.cleaned_data.get('user_uuid', None))
+
+        if user_uuid:
             form.instance.user = User.objects.filter(
                 username=form.cleaned_data['user_uuid']).first()
 
         response = super(UnsubscribeCreateView, self).form_valid(form)
 
-        User.objects.filter(email__iexact=form.cleaned_data['email']).update(
+        User.objects.filter(address__iexact=form.cleaned_data['email']).update(
             unsubscribed=True)
 
         return response

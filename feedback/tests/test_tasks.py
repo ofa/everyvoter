@@ -26,19 +26,19 @@ class TestExtract(TestCase):
     def test_process_tags(self):
         """Test where tags are present"""
         filled = load_example('tags_filled')
-        organization_id, mailing_id, recipient_id = process_tags(filled)
+        organization_id, email_id, recipient_id = process_tags(filled)
 
         self.assertEqual(organization_id, 1)
-        self.assertEqual(mailing_id, 44)
+        self.assertEqual(email_id, 44)
         self.assertEqual(recipient_id, 100)
 
     def test_process_missing_tags(self):
         """Test where the tags are not present"""
         unfilled = load_example('tags_empty')
-        organization_id, mailing_id, recipient_id = process_tags(unfilled)
+        organization_id, email_id, recipient_id = process_tags(unfilled)
 
         self.assertIsNone(organization_id)
-        self.assertIsNone(mailing_id)
+        self.assertIsNone(email_id)
         self.assertIsNone(recipient_id)
 
     def test_extract_email(self):
@@ -54,13 +54,13 @@ class TestExtract(TestCase):
 class TestGlobalUnsubscribe(EveryVoterTestMixin, TestCase):
     """Test the global_unsubscribe function"""
     def test_unaffiliated_unsubscribe(self):
-        """Test an unsubscribe where there is no mailing or user"""
+        """Test an unsubscribe where there is no email or user"""
         global_unsubscribe('unsubtest@test.local', 'bounce')
 
-        unsub = Unsubscribe.objects.get(email='unsubtest@test.local')
+        unsub = Unsubscribe.objects.get(address='unsubtest@test.local')
 
         self.assertIsNone(unsub.organization)
-        self.assertIsNone(unsub.mailing)
+        self.assertIsNone(unsub.email)
         self.assertIsNone(unsub.user)
         self.assertTrue(unsub.global_unsub)
         self.assertEqual(unsub.origin, 'bounce')
@@ -69,7 +69,7 @@ class TestGlobalUnsubscribe(EveryVoterTestMixin, TestCase):
     def test_affiliated_unsubscribe(self):
         """Test an unsubscribe affiliated with other objects
 
-        TODO: Test this with Mailing
+        TODO: Test this with Email
         """
         organization = self.create_organization()
         user = self.create_user(organization=organization)
@@ -79,14 +79,14 @@ class TestGlobalUnsubscribe(EveryVoterTestMixin, TestCase):
 
         global_unsubscribe(
             user_email, 'complaint', reason='A Complaint',
-            organization_id=organization.pk, mailing_id=None,
+            organization_id=organization.pk, email_id=None,
             recipient_id=user.pk)
 
-        unsub = Unsubscribe.objects.get(email=user_email)
+        unsub = Unsubscribe.objects.get(address=user_email)
 
         self.assertEqual(unsub.organization, organization)
         self.assertEqual(unsub.user, user)
-        self.assertIsNone(unsub.mailing)
+        self.assertIsNone(unsub.email)
         self.assertEqual(unsub.origin, 'complaint')
         self.assertEqual(unsub.reason, 'A Complaint')
 
@@ -121,7 +121,7 @@ class TestProcessFeedback(EveryVoterTestMixin, TestCase):
         process_feedback(complaint)
 
         activity = EmailActivity.objects.get(message_id=mid)
-        self.assertIsNone(activity.mailing)
+        self.assertIsNone(activity.email)
         self.assertEqual(activity.recipient, user)
         self.assertEqual(activity.activity, 'complaint')
 
@@ -142,7 +142,7 @@ class TestProcessFeedback(EveryVoterTestMixin, TestCase):
         process_feedback(bounce)
 
         activity = EmailActivity.objects.get(message_id=mid)
-        self.assertIsNone(activity.mailing)
+        self.assertIsNone(activity.email)
         self.assertEqual(activity.recipient, user)
         self.assertEqual(activity.activity, 'bounce')
 
@@ -168,7 +168,7 @@ class TestProcessFeedback(EveryVoterTestMixin, TestCase):
         process_feedback(bounce)
 
         activity = EmailActivity.objects.get(message_id=mid)
-        self.assertIsNone(activity.mailing)
+        self.assertIsNone(activity.email)
         self.assertIsNone(activity.recipient)
         self.assertEqual(activity.activity, 'bounce')
 
@@ -187,7 +187,7 @@ class TestProcessFeedback(EveryVoterTestMixin, TestCase):
         process_feedback(soft_bounce)
 
         activity = EmailActivity.objects.get(message_id=mid)
-        self.assertIsNone(activity.mailing)
+        self.assertIsNone(activity.email)
         self.assertEqual(activity.recipient, user)
         self.assertEqual(activity.activity, 'soft_bounce')
 
@@ -205,7 +205,7 @@ class TestProcessFeedback(EveryVoterTestMixin, TestCase):
         process_feedback(open_message)
 
         activity = EmailActivity.objects.get(message_id=mid, activity='open')
-        self.assertIsNone(activity.mailing)
+        self.assertIsNone(activity.email)
         self.assertEqual(activity.recipient, user)
         self.assertEqual(activity.activity, 'open')
 
@@ -223,7 +223,7 @@ class TestProcessFeedback(EveryVoterTestMixin, TestCase):
         process_feedback(open_message)
 
         activity = EmailActivity.objects.get(message_id=mid, activity='click')
-        self.assertIsNone(activity.mailing)
+        self.assertIsNone(activity.email)
         self.assertEqual(activity.recipient, user)
         self.assertEqual(activity.activity, 'click')
         self.assertEqual(activity.link, 'https://localhost/register-to-vote/')

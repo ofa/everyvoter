@@ -17,10 +17,10 @@ def int_return(number):
 def process_tags(tags):
     """Process the tags from a response"""
     organization_id = int_return(tags.get("organization_id", [None])[0])
-    mailing_id = int_return(tags.get("mailing_id", [None])[0])
+    email_id = int_return(tags.get("email_id", [None])[0])
     recipient_id = int_return(tags.get("recipient_id", [None])[0])
 
-    return organization_id, mailing_id, recipient_id
+    return organization_id, email_id, recipient_id
 
 
 def extract_email(mail):
@@ -29,8 +29,8 @@ def extract_email(mail):
 
 
 # pylint: disable=too-many-arguments
-def global_unsubscribe(email, origin, reason='', organization_id=None,
-                       mailing_id=None, recipient_id=None):
+def global_unsubscribe(address, origin, reason='', organization_id=None,
+                       email_id=None, recipient_id=None):
     """Create a global unsubscription
 
     Create an unsubscription that unsubscribes the user from emails from all
@@ -39,17 +39,17 @@ def global_unsubscribe(email, origin, reason='', organization_id=None,
     may even penalize us for attempting to send to again.
 
     Args:
-        email: email address
+        address: email address
         origin: origin of the unsubscribe ('bounce' or 'complaint')
         reason: reason to be listed (default: {''})
         organization_id: ID of the organization (default: {None})
-        mailing_id: ID of the mailing (default: {None})
+        email_id: ID of the Email (default: {None})
         recipient_id: ID of the recpient (default: {None})
     """
     Unsubscribe(
         organization_id=organization_id,
-        email=email,
-        mailing_id=mailing_id,
+        address=address,
+        email_id=email_id,
         user_id=recipient_id,
         origin=origin,
         reason=reason,
@@ -74,14 +74,14 @@ def process_feedback(data):
     mail = data['mail']
     tags = mail['tags']
 
-    email = extract_email(mail)
-    organization_id, mailing_id, recipient_id = process_tags(tags)
+    address = extract_email(mail)
+    organization_id, email_id, recipient_id = process_tags(tags)
 
     # Start the process of generating a new EmailActivity by creating one but
     # not saving it to the database.
     email_activity = EmailActivity(
         message_id=mail['messageId'],
-        mailing_id=mailing_id,
+        email_id=email_id,
         recipient_id=recipient_id)
 
     if data['eventType'] == 'Complaint':
@@ -110,5 +110,5 @@ def process_feedback(data):
     # If the feedback is a hard bounce or complaint, creat a global
     # unsubscription
     if activity in ['bounce', 'complaint']:
-        global_unsubscribe(email, activity, reason, organization_id,
-                           mailing_id, recipient_id)
+        global_unsubscribe(address, activity, reason, organization_id,
+                           email_id, recipient_id)

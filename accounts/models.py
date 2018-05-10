@@ -88,7 +88,7 @@ class User(
 
     def manage_url(self, email):
         """The URL a user can visit to manage their profile and unsubscribe"""
-        return 'https://{domain}{path}?mailing_id={email_uuid}'.format(
+        return 'https://{domain}{path}?email={email_uuid}'.format(
             domain=self.organization.primary_domain.hostname,
             path=reverse('accounts:self_update_user',
                          kwargs={'slug': self.username}),
@@ -97,7 +97,7 @@ class User(
     def unsubscribe_url(self, email):
         """URL the user can visit to unsubscribe"""
         # pylint: disable=line-too-long
-        return 'https://{domain}{path}?mailing_id={email_uuid}&user={user_uuid}'.format(
+        return 'https://{domain}{path}?email={email_uuid}&user={user_uuid}'.format(
             domain=self.organization.primary_domain.hostname,
             path=reverse('unsubscribe:unsubscribe'),
             email_uuid=email.uuid,
