@@ -57,12 +57,17 @@ CELERYBEAT_SCHEDULE = {
 CELERY_TASK_DEFAULT_QUEUE = 'default'
 CELERY_TASK_QUEUES = {
     Queue('default', routing_key='task.#'),
+    Queue('high_memory', routing_key='high_memory.#'),
+    Queue('feedback', routing_key='feedback.#'),
+    Queue('user_import', routing_key='user_import.#'),
     Queue('bulk', routing_key='bulk.#'),
     Queue('bulk_priority', routing_key='bulk_priority.#'),
 }
 
 CELERY_TASK_ROUTES = ([
-    ('user_import.tasks.import_user', {'queue': 'bulk', 'routing_key': 'bulk.user_import'})
+    ('user_import.tasks.import_user', {'queue': 'user_import', 'routing_key': 'user_import.user_import'}),
+    ('user_import.tasks.*', {'queue': 'high_memory'}),
+    ('feedback.tasks.*', {'queue': 'feedback'}),
 ],)
 
 CELERY_TIMEZONE = env('CELERY_TIMEZONE')
