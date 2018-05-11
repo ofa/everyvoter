@@ -1,5 +1,6 @@
 """Render an email"""
 from django.template import Context, Template
+import newrelic.agent
 
 from accounts.models import User
 from blocks.compose_blocks import compose_blocks
@@ -27,6 +28,11 @@ def get_email_context(user_id,
         'organization', 'organization__primary_domain',
         'organization__from_address', 'location').get(pk=user_id)
     organization = user.organization
+
+    newrelic.agent.add_custom_parameter(
+        'organization_id', organization.pk)
+    newrelic.agent.add_custom_parameter(
+        'email_id', email_id)
 
     if email_id:
         email = Email.objects.select_related(
@@ -149,6 +155,7 @@ def compose_email(user_id, email_id, election_id, district_ids=None):
         'pre_header': render_template(email.pre_header, context),
         'from_name': render_template(email.from_name, context),
         'from_address': user.organization.from_address.address
+        'organization_id': user.organization.id
     }
 
     if district_ids is None:

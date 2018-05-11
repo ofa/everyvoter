@@ -2,6 +2,7 @@
 from email.utils import parseaddr
 
 from celery import shared_task
+import newrelic.agent
 
 from accounts.models import User
 from mailer.models import EmailActivity, Unsubscribe
@@ -76,6 +77,10 @@ def process_feedback(data):
 
     address = extract_email(mail)
     organization_id, email_id, recipient_id = process_tags(tags)
+
+    newrelic.agent.add_custom_parameter('email_id', email_id)
+    newrelic.agent.add_custom_parameter('organization_id', organization_id)
+    newrelic.agent.add_custom_parameter('recipient_id', recipient_id)
 
     # Start the process of generating a new EmailActivity by creating one but
     # not saving it to the database.

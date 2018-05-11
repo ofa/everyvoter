@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 import requests
 import unicodecsv
+import newrelic.agent
 
 from accounts.utils_user import create_user
 from mailer.mailserver import deliver
@@ -46,6 +47,11 @@ def load_file(file_field):
 def ingest_import(user_import_id):
     """Ingest an import file"""
     user_import = UserImport.objects.get(pk=user_import_id)
+
+    newrelic.agent.add_custom_parameter(
+        'organization_id', user_import.organization.pk)
+    newrelic.agent.add_custom_parameter(
+        'user_import_id', user_import_id)
 
     user_import.status = 'ingesting'
     user_import.save()
@@ -87,6 +93,12 @@ def ingest_import(user_import_id):
 def alert_failed_import(user_import_id):
     """Alert someone that an import failed"""
     user_import = UserImport.objects.get(pk=user_import_id)
+
+    newrelic.agent.add_custom_parameter(
+        'organization_id', user_import.organization.pk)
+    newrelic.agent.add_custom_parameter(
+        'user_import_id', user_import_id)
+
     deliver(
         user_import.uploader.email,
         settings.DEFAULT_FROM_EMAIL,
@@ -97,6 +109,12 @@ def alert_failed_import(user_import_id):
 @shared_task
 def trigger_import(user_import_id):
     """Queue up all pending records that need to be imported"""
+    user_import = UserImport.objects.get(id=user_import_id)
+
+    newrelic.agent.add_custom_parameter(
+        'organization_id', user_import.organization_id)
+    newrelic.agent.add_custom_parameter(
+        'user_import_id', user_import_id)
 
     imported_records = ImportRecordStatus.objects.filter(
         user_import_id=user_import_id).values_list(
@@ -108,7 +126,8 @@ def trigger_import(user_import_id):
 
     total_records = import_records.count()
 
-    UserImport.objects.filter(id=user_import_id).update(status='creating')
+    user_import.status = 'creating'
+    user_import.save()
 
     current_record = 1
     for record in import_records:
@@ -127,6 +146,11 @@ def import_user(import_record_id, current_record, final=False):
     """Import a specific user"""
     import_record = ImportRecord.objects.select_related(
         'user_import', 'user_import__organization').get(pk=import_record_id)
+
+    newrelic.agent.add_custom_parameter(
+        'organization_id', import_record.user_import.organization_id)
+    newrelic.agent.add_custom_parameter(
+        'user_import_id', import_record.user_import.pk)
 
     status_record = ImportRecordStatus()
     status_record.user_import_id = import_record.user_import_id

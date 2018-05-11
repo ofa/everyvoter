@@ -3,6 +3,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.http import Http404
 from django.http.request import split_domain_port
+import newrelic.agent
 
 from branding.models import Domain
 from branding.utils import org_domain_cache_key
@@ -43,5 +44,7 @@ class BrandingMiddleware(object):
                 cache.set(cache_key, organization)
 
         request.organization = organization
+
+        newrelic.agent.add_custom_parameter('organization_id', organization.id)
 
         return self.get_response(request)
