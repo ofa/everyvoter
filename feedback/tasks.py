@@ -57,7 +57,7 @@ def global_unsubscribe(address, origin, reason='', organization_id=None,
         global_unsub=True
     ).save()
 
-    User.objects.filter(email__iexact=email).update(unsubscribed=True)
+    User.objects.filter(email__iexact=address).update(unsubscribed=True)
 
 
 @shared_task
