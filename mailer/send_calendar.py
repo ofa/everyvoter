@@ -2,7 +2,8 @@
 from mailer.models import MailingTemplate
 
 
-def mailing_calendar(organization=None, upcoming=False, date=None):
+def mailing_calendar(organization=None, upcoming=False, date=None,
+                     email_active=None):
     """Gets the election calendar and returns an enhanced raw MailingTemplate"""
 
     query = """
@@ -121,6 +122,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             A.election_id = oe.election_id AND oe.organization_id = me.organization_id
         JOIN election_election e ON
             A.election_id = e.id
+        JOIN branding_organization o ON oe.organization_id = o.id
 
         WHERE
 
@@ -128,6 +130,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
         {org_filter}
         {date_filter}
         {upcoming_filter}
+        {email_active_filter}
 
         -- Set a default so we get a "WHERE"
         True
@@ -152,5 +155,10 @@ def mailing_calendar(organization=None, upcoming=False, date=None):
             date.strftime('%Y%m%d'))
     else:
         attrs['date_filter'] = ''
+
+    if email_active:
+        attrs['email_active_filter'] = 'o.email_active = true AND'
+    else:
+        attrs['email_active_filter'] = ''
 
     return MailingTemplate.objects.raw(query.format(**attrs))

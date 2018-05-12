@@ -314,3 +314,26 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
         self.assertEqual(calendar_list[0].id, self.template_election_day.pk)
         self.assertEqual(calendar_list[0].election_id, self.election1.id)
         self.assertEqual(calendar_list[0].send_date, datetime(2018, 7, 30))
+
+    def test_active_only(self):
+        """Test where calendar only shows messages for email enabled orgs"""
+        # Confirm the organizaton is enabled for email
+        self.organization.email_active = True
+        self.organization.save()
+        self.assertTrue(self.organization.email_active)
+
+        # Get the calendar without the email active filter and turn into a list
+        calendar = mailing_calendar(organization=self.organization)
+        calendar_list = list(calendar)
+
+        self.assertEqual(len(calendar_list), 14)
+
+        self.organization.email_active = False
+        self.organization.save()
+        self.assertFalse(self.organization.email_active)
+
+        active_calendar = mailing_calendar(organization=self.organization,
+                                           email_active=True)
+        active_calendar_list = list(active_calendar)
+
+        self.assertEqual(len(active_calendar_list), 0)

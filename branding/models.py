@@ -31,6 +31,8 @@ class Organization(TimestampModel):
         verbose_name='Online Voter Registion',
         help_text='If offered use the Online Voter Registration deadline as '
                   'the registration deadline')
+    email_active = models.BooleanField(
+        'Bulk email enabled', default=False)
 
     class Meta(object):
         """Meta options for Organization"""
