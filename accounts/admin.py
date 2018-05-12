@@ -21,6 +21,7 @@ class UserAdmin(BaseUserAdmin):
         'organization'
     ]
     list_filter = ('organization__name', 'is_staff', 'is_superuser')
+    ordering = ('id',)
 
     def has_add_permission(self, request):
         """No-one should be able to add users using the django admin"""
