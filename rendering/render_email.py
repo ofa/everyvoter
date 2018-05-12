@@ -1,4 +1,5 @@
 """Render an email"""
+from django.core.cache import cache
 from django.template import Context, Template
 import newrelic.agent
 
@@ -8,6 +9,26 @@ from blocks.models import Block
 from election.models import OrganizationElection, LegislativeDistrict
 from mailer.models import Email
 from mailer.utils import html_link_sourcer
+
+
+def get_email(email_id):
+    """Get the email using all the relevant select_relateds"""
+    key = 'get-email-key{email_id}'.format(email_id=email_id)
+    email = cache.get(key)
+    if not email:
+        email = Email.objects.select_related(
+            'mailing',
+            'mailingtemplate',
+            'mailing__organization_election',
+            'mailing__organization_election__election',
+            'mailing__organization_election__election__state',
+            'mailing__organization_election__email_wrapper').get(id=email_id)
+
+        # If the email is a `mailing` add it to the cache
+        if hasattr(email, 'mailing'):
+            cache.set(key, email)
+
+    return email
 
 
 def get_email_context(user_id,
@@ -35,13 +56,7 @@ def get_email_context(user_id,
         'email_id', email_id)
 
     if email_id:
-        email = Email.objects.select_related(
-            'mailing',
-            'mailingtemplate',
-            'mailing__organization_election',
-            'mailing__organization_election__election',
-            'mailing__organization_election__election__state',
-            'mailing__organization_election__email_wrapper').get(id=email_id)
+        email = get_email(email_id)
         manage_url = user.manage_url(email)
         unsubscribe_url = user.unsubscribe_url(email)
     else:
