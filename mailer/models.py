@@ -193,7 +193,7 @@ class UnsubscribeManager(models.Manager):
     def check_global(self, email):
         """Check to see if an email is globally unsubscribed"""
         return self.get_queryset().filter(
-            email__iexact=email, global_unsub=True).exists()
+            address__iexact=email, global_unsub=True).exists()
 
 
 class Unsubscribe(TimestampModel, UUIDModel):
