@@ -26,6 +26,15 @@ UNSUBSCRIBE_ORIGINS = (
     ('complaint', 'Complaint')
 )
 
+MAILING_STATUSES = (
+    ('pending', 'Pending'),
+    ('queued', 'Queued'),
+    ('sending', 'Sending'),
+    ('sent', 'Sent'),
+    ('terminated', 'Terminated'),
+    ('failed', 'Failed')
+)
+
 
 class SendingAddress(TimestampModel):
     """Address an email can be sent from. May need to be whitelisted by ESP"""
@@ -137,6 +146,10 @@ class Mailing(TimestampModel):
     source = models.CharField('Source Code', max_length=100)
     count = models.IntegerField(verbose_name='Recipients', default=0)
     email = models.OneToOneField('mailer.Email')
+    status = models.CharField(
+        'Mailing Status', choices=MAILING_STATUSES, default='pending',
+        max_length=50)
+    sent = models.IntegerField('Total Sent', default=0)
 
     class Meta(object):
         """Meta details about the Mailing model"""
