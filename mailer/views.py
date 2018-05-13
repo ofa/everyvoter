@@ -11,7 +11,7 @@ from django_filters.views import FilterView
 from accounts.models import User
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
-from blocks.models import Block, EmailBlocks
+from blocks.models import Block
 from everyvoter_common.utils.multi_form_view import MultipleFormsView
 from mailer.models import (
     EmailWrapper, Unsubscribe, Mailing, MailingTemplate, Email
@@ -84,12 +84,9 @@ class MailingTemplateFormView(ManageViewMixin, MultipleFormsView):
 
         mailing_template.save()
 
-
-        EmailBlocks.objects.filter(email=email).delete()
-        new_blocks = []
+        email.blocks.clear()
         for block in forms['email_form'].cleaned_data['blocks']:
-            new_blocks.append(EmailBlocks(email=email, block=block))
-        EmailBlocks.objects.bulk_create(new_blocks)
+            email.blocks.add(block)
 
         messages.success(self.request, success_message)
 

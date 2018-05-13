@@ -113,7 +113,7 @@ class Email(TimestampModel, UUIDModel, OrganizationMixin):
                                   validators=[validate_template])
     categories = models.ManyToManyField('mailer.EmailCategory', blank=True)
     blocks = models.ManyToManyField(
-        'blocks.Block', through='blocks.EmailBlocks', blank=True)
+        'blocks.Block', blank=True)
 
 
 class MailingTemplate(TimestampModel):

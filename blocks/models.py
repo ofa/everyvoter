@@ -37,9 +37,3 @@ class BlockCategory(TimestampModel, UUIDModel, OrganizationMixin):
     def __unicode__(self):
         """Unicode representation of the block"""
         return self.name
-
-
-class EmailBlocks(TimestampModel):
-    """Abstract M2M join model between an upcoming or past email and a block"""
-    block = models.ForeignKey('blocks.Block')
-    email = models.ForeignKey('mailer.Email')
