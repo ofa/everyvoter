@@ -182,6 +182,10 @@ class EmailActivity(TimestampModel):
         """Meta options for EmailActivity model"""
         verbose_name = "Email Activity"
         verbose_name_plural = "Email Activities"
+        indexes = [
+            models.Index(fields=['email', 'activity'],
+                         name="email_specific_activity_idx"),
+        ]
 
 
 class UnsubscribeManager(models.Manager):
