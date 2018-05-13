@@ -5,6 +5,8 @@ import uuid
 from datetime import timedelta
 
 from django.utils.timezone import now
+from model_mommy import mommy
+
 from accounts.utils_user import create_user
 from branding.models import Organization
 from branding.utils import get_or_create_organization
@@ -67,6 +69,18 @@ class EveryVoterTestMixin(object):
         user.save()
 
         return user
+
+    def create_template(self, **kwargs):
+        """Create a mailing template"""
+        kwargs['election_type'] = kwargs.get('election_type', 'general')
+        kwargs['days_to_deadline'] = kwargs.get('days_to_deadline', 0)
+        kwargs['email__organization'] = kwargs.get(
+            'email__organization', self.create_organization())
+        kwargs['deadline_type'] = kwargs.get('deadline_type', 'election_date')
+
+        return mommy.make(
+            'mailer.MailingTemplate',
+            **kwargs)
 
     def create_election(self, voting_districts=None, **kwargs):
         """Create a new election"""

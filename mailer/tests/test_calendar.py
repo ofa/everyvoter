@@ -38,50 +38,44 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             election_type='general')
 
         # Create templates for each deadline
-        self.template_evip_start_date = mommy.make(
-            'mailer.MailingTemplate',
+        self.template_evip_start_date = self.create_template(
             email__organization=self.organization,
             deadline_type='evip_start_date',
             days_to_deadline=5,
             election_type='general')
 
-        self.template_evip_close_date = mommy.make(
-            'mailer.MailingTemplate',
+        self.template_evip_close_date = self.create_template(
             email__organization=self.organization,
             deadline_type='evip_close_date',
             days_to_deadline=5,
             election_type='general')
 
-        self.template_vbm_application_deadline = mommy.make(
-            'mailer.MailingTemplate',
+        # pylint: disable=invalid-name
+        self.template_vbm_application_deadline = self.create_template(
             email__organization=self.organization,
             deadline_type='vbm_application_deadline',
             days_to_deadline=5,
             election_type='general')
 
-        self.template_vbm_return_date = mommy.make(
-            'mailer.MailingTemplate',
+        self.template_vbm_return_date = self.create_template(
             email__organization=self.organization,
             deadline_type='vbm_return_date',
             days_to_deadline=5,
             election_type='general')
 
-        self.template_vr_deadline = mommy.make(
-            'mailer.MailingTemplate',
+        self.template_vr_deadline = self.create_template(
             email__organization=self.organization,
             deadline_type='vr_deadline',
             days_to_deadline=5,
             election_type='general')
 
-        self.template_election_date = mommy.make(
-            'mailer.MailingTemplate',
+        self.template_election_date = self.create_template(
             email__organization=self.organization,
             deadline_type='election_date',
             days_to_deadline=5,
             election_type='general')
 
-        self.template_election_day = mommy.make(
-            'mailer.MailingTemplate',
+        self.template_election_day = self.create_template(
             email__organization=self.organization,
             deadline_type='election_date',
             days_to_deadline=0,
