@@ -182,8 +182,7 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
         """Meta options for OrganizationElection"""
         unique_together = ['organization', 'election']
 
-    @property
-    def recipients(self):
+    def get_recipients(self):
         """Recipients of emails about this election"""
         districts = self.election.voting_districts.values('pk')
         return User.objects.filter(
@@ -194,7 +193,7 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
     @cached_property
     def total_recipients(self):
         """Total number of recipients email is sent to"""
-        return self.recipients.count()
+        return self.get_recipients().count()
 
 
 @receiver(post_save, sender=Election)
