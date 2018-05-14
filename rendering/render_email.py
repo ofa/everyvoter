@@ -1,4 +1,6 @@
 """Render an email"""
+from email.utils import formataddr
+
 from django.core.cache import cache
 from django.template import Context, Template
 import newrelic.agent
@@ -173,10 +175,20 @@ def compose_email(user_id, email_id, election_id, district_ids=None):
     result = {
         'subject': render_template(email.subject, context),
         'pre_header': render_template(email.pre_header, context),
+
+
+        # We use these later on in the mailing process.
+
+        'recipient_id': user.id,
         'from_address': from_address,
         'to_address': user.to_address,
         'organization_id': user.organization.id
     }
+
+    if email:
+        result['email_id'] = email.id
+    else:
+        result['email_id'] = None
 
     if district_ids is None:
         districts = user.location.districts.all()
