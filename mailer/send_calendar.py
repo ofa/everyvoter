@@ -134,7 +134,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
 
         -- Set a default so we get a "WHERE"
         True
-        ORDER BY send_date ASC
+        ORDER BY send_date ASC, id ASC
     """
 
     attrs = {}
