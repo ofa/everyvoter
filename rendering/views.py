@@ -65,6 +65,8 @@ class EmailPreviewView(ManageViewMixin, View):
                     unicode(error))
 
         if request.is_ajax():
+            # Remove recipient and organization primary keys
+            del result['recipient_id']
             del result['organization_id']
             return JsonResponse(result)
 

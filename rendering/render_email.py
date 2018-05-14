@@ -162,14 +162,18 @@ def compose_email(user_id, email_id, election_id, district_ids=None):
     organization_election = context['org_election']
     wrapper = organization_election.email_wrapper
 
+    rendered_from_name = render_template(email.from_name, context)
+
+    from_address = formataddr(
+        (rendered_from_name, user.organization.from_address.address))
+
     # We won't pass the context from the blocks into the subject and preheader
     # so to save complexity let's pass in the smaller context and render them
     # now
     result = {
         'subject': render_template(email.subject, context),
         'pre_header': render_template(email.pre_header, context),
-        'from_name': render_template(email.from_name, context),
-        'from_address': user.organization.from_address.address
+        'from_address': from_address,
         'organization_id': user.organization.id
     }
 

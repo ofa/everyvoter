@@ -1,6 +1,5 @@
 """Rendering Related Tasks"""
 from celery import shared_task
-from email.utils import formataddr
 import newrelic.agent
 
 from rendering.render_email import compose_email
@@ -25,6 +24,6 @@ def sample_email(to_address, user_id, email_id, election_id, district_ids):
 
     deliver(
         to_address=to_address,
-        from_address=final_from_address,
+        from_address=result['from_address'],
         subject=final_subject,
         html=result['body'])
