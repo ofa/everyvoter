@@ -174,6 +174,7 @@ def compose_email(user_id, email_id, election_id, district_ids=None):
         'subject': render_template(email.subject, context),
         'pre_header': render_template(email.pre_header, context),
         'from_address': from_address,
+        'to_address': user.to_address,
         'organization_id': user.organization.id
     }
 

@@ -1,4 +1,6 @@
 """Models for the EveryVoter App"""
+from email.utils import formataddr
+
 from django.contrib.auth import models as auth_models
 from django.core.exceptions import PermissionDenied
 from django.db import models
@@ -75,11 +77,18 @@ class User(
         """Unicode representation of the user"""
         if self.first_name and self.last_name:
             return self.first_name + u' ' + self.last_name
+        if self.first_name:
+            return self.first_name
         return self.email
 
     def get_short_name(self):
         """Short name representation of user"""
         return self.first_name
+
+    @property
+    def to_address(self):
+        """Address to be used in the 'To' field in emails"""
+        return formataddr((unicode(self), self.email))
 
     @cached_property
     def state(self):
