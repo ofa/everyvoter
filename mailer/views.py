@@ -160,7 +160,8 @@ class WrapperCreateView(ManageViewMixin, SuccessMessageMixin,
     success_message = "Wrapper %(name)s was created"
 
 
-class WrapperUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
+class WrapperUpdateView(OrganizationViewMixin, ManageViewMixin,
+                        SuccessMessageMixin, UpdateView):
     """Create a wrapper"""
     model = EmailWrapper
     fields = ['name', 'header', 'footer', 'default']
