@@ -16,13 +16,12 @@
             <div style="display: none;" id="email_meta">
             Subject: <span id="subject"></span><br>
             Pre-Header Text: <span id="pre_header"></span><br>
-            From Name: <span id="from_name"></span><br>
-            From Addres: <span id="from_address"></span>
+            From: <span id="from_address"></span>
             </div>
 
 
             <div class="embed-responsive embed-responsive-4by3"><iframe src="" class="embed-responsive-item" id="preview"></iframe></div>
-            
+
 
     </div>
 {% endblock %}
@@ -39,7 +38,6 @@
                     $('#email_meta').show();
                     $('#subject').text(data['subject']);
                     $('#pre_header').text(data['pre_header']);
-                    $('#from_name').text(data['from_name']);
                     $('#from_address').text(data['from_address']);
                     if (data['sample_result']) {
                         alert(data['sample_result']);
