@@ -67,16 +67,23 @@ def ingest_import(user_import_id):
                                      u'address']:
                 raise Exception('Invalid fields.')
 
+            count = 0
             new_records = []
             for row in reader:
+                count += 1
                 new_records.append(ImportRecord(
                     user_import=user_import,
                     first_name=row.get('first_name', ''),
                     last_name=row.get('last_name', ''),
                     email=row.get('email', ''),
                     address=row.get('address', '')))
+                if not count % 5000:
+                    ImportRecord.objects.bulk_create(new_records)
+                    # Empty the list
+                    new_records = []
 
-            ImportRecord.objects.bulk_create(new_records, 7500)
+            # Import any records not imported in the "by-5000" iterator
+            ImportRecord.objects.bulk_create(new_records)
 
         user_import.ingested = len(new_records)
         user_import.save()
