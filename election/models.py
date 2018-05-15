@@ -188,7 +188,7 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
         return User.objects.filter(
             location__districts__id__in=districts,
             unsubscribed=False,
-            organization=self.organization).distinct()
+            organization=self.organization).distinct().order_by('id')
 
     @cached_property
     def total_recipients(self):
