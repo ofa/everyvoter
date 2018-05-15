@@ -23,7 +23,7 @@ with open(illinois_file) as json_file:
 
 class EveryVoterTestMixin(object):
     """Mixin for EveryVoter tests"""
-    def create_organization(self):
+    def create_organization(self, email_active=False, wrapper=None):
         """Create an organization with the test domain"""
         name = unicode(uuid.uuid4())
         platform_name = unicode(uuid.uuid4())
@@ -32,6 +32,11 @@ class EveryVoterTestMixin(object):
         organization, _ = get_or_create_organization(
             name=name, platform_name=platform_name, hostname=hostname,
             homepage=homepage)
+
+        if email_active:
+            organization.email_active = True
+            organization.save()
+
         return organization
 
     def create_location(self, state_id='IL', address=None):
@@ -47,7 +52,8 @@ class EveryVoterTestMixin(object):
 
             return get_location(address)
 
-    def create_user(self, organization=None, location=None):
+    def create_user(self, organization=None, location=None, first='Joe',
+                    last='Smith', email=None):
         """Create a new user"""
         from mock import patch
 
@@ -56,10 +62,12 @@ class EveryVoterTestMixin(object):
         if not organization:
             organization = Organization.objects.get(pk=1)
 
+        if not email:
+            email = unicode(uuid.uuid4()) + '@localhost.com'
+
         with patch('accounts.utils_user.get_location') as patch:
             patch.return_value = self.create_location()
-            email = unicode(uuid.uuid4()) + '@localhost.com'
-            return create_user(organization, email, '20009', 'Joe', 'Smith')
+            return create_user(organization, email, '20009', first, last)
 
     def create_superuser(self, organization=None):
         """Create a new superuser"""
@@ -74,13 +82,33 @@ class EveryVoterTestMixin(object):
         """Create a mailing template"""
         kwargs['election_type'] = kwargs.get('election_type', 'general')
         kwargs['days_to_deadline'] = kwargs.get('days_to_deadline', 0)
-        kwargs['email__organization'] = kwargs.get(
-            'email__organization', self.create_organization())
+
+        if 'email__organization' not in kwargs:
+            kwargs['email__organization'] = self.create_organization()
+
         kwargs['deadline_type'] = kwargs.get('deadline_type', 'election_date')
 
         return mommy.make(
             'mailer.MailingTemplate',
             **kwargs)
+
+    def create_mailing(self, **kwargs):
+        """Create a mailing"""
+        kwargs['email__organization'] = kwargs.get(
+            'email__organization', self.create_organization())
+
+        if 'organization_election' not in kwargs:
+            election = self.create_election()
+            org_election = election.organizationelection_set.get(
+                organization=kwargs['email__organization'])
+            kwargs['organization_election'] = org_election
+
+        if 'template' not in kwargs:
+            template = self.create_template(
+                email__organization=kwargs['email__organization'])
+            kwargs['template'] = template
+
+        return mommy.make('mailer.Mailing', **kwargs)
 
     def create_election(self, voting_districts=None, **kwargs):
         """Create a new election"""
