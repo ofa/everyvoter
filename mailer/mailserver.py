@@ -1,5 +1,6 @@
 """Functionality that sends composed emails"""
 import logging
+import json
 
 from django.conf import settings
 import boto3
@@ -76,7 +77,8 @@ def deliver(to_address, from_address, subject, html, tags=None):
         ConfigurationSetName=settings.SES_CONFIGURATIONSET_NAME
     )
 
-    logger.info(u'Email Sent %s To: %s From: %s Subject: %s',
-                response['MessageId'], to_address, from_address, subject)
+    logger.info(u'Email Sent %s To: %s From: %s Subject: %s | %s',
+                response['MessageId'], to_address, from_address, subject,
+                json.dumps(tags))
 
     return response['MessageId']
