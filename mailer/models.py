@@ -200,13 +200,14 @@ class Unsubscribe(TimestampModel, UUIDModel):
     """Unsubscription"""
     organization = models.ForeignKey(
         'branding.Organization', editable=False, db_index=True, null=True)
-    address = models.EmailField()
+    address = models.EmailField('Email Address')
     user = models.ForeignKey('accounts.User', null=True)
     email = models.ForeignKey(Email, null=True)
     origin = models.CharField(
         choices=UNSUBSCRIBE_ORIGINS, max_length=50)
     reason = models.CharField('Reason', max_length=255, blank=True)
-    global_unsub = models.BooleanField('Applies Globally', db_index=True)
+    global_unsub = models.BooleanField('Applies Globally', default=False,
+                                       db_index=True)
 
     objects = UnsubscribeManager()
 

@@ -1,20 +1,22 @@
 {% extends "constituent/constituent_base.html" %}
 {% load static sekizai_tags crispy_forms_tags %}
 
-{% block title %}{{ account }}'s Profile{% endblock title %}
+{% block title %}Update Your Information{% endblock title %}
 
 {% block page_content %}
 {% add_data "body-class" "public-page" %}
     <div class="col-sm-6 offset-sm-3 public-page-wrap">
         <div class="row">
             <div class="col-md-12">
-            <h2>{{ organization.platform_name }}</h2>
+            <h2>Update Your Information</h2>
 
-            <p>In order to give you the best information about upcoming elections in your area, we need the most up-to-date contact information. Please use the form below to update your information.</p>
+            <p>Want to be plugged into everything you need to know about upcoming elections in your area?</p>
+
+            <p>Make sure we have your up-to-date information below.</p>
 
             <form role="form" method="POST" action="" autocomplete="off" name="lastpass-disable-search">
             {{ form|crispy }}
-            <button type="submit" class="btn btn-block btn-primary">Update User</button>
+            <button type="submit" class="btn btn-block btn-primary">Update</button>
             {% csrf_token %}
             </form>
         </div>

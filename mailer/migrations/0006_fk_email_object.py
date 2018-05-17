@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='unsubscribe',
             name='address',
-            field=models.EmailField(default='help@localhost', max_length=254),
+            field=models.EmailField(default='help@localhost', max_length=254, verbose_name=b'Email Address'),
             preserve_default=False,
         ),
         migrations.AlterField(

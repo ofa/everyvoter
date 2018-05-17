@@ -1,13 +1,15 @@
 {% extends "constituent/constituent_base.html" %}
 {% load static sekizai_tags %}
 
+{% block title %}Thanks for updating your information{% endblock title %}
+
 {% block page_content %}
 {% add_data "body-class" "public-page" %}
     <div class="col-md-6 offset-md-3 public-page-wrap">
         <div class="row">
             <div class="col-md-12">
             <h2>{{ organization.platform_name }}</h2>
-            <p class="subheading">User successfully updated. <a href="{{ organization.homepage }}">Visit our homepage.</a></p>
+            <p>Your information has been successfully updated. Keep an eye out for reminders and updates about key elections in your area, and be sure to get out and vote in 2018!</p>
             </div>
         </div>
     </div>

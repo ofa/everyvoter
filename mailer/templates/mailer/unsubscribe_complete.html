@@ -1,13 +1,16 @@
 {% extends "constituent/constituent_base.html" %}
 {% load static sekizai_tags %}
 
+{% block title %}You've successfully unsubscribed{% endblock title %}
+
 {% block page_content %}
 {% add_data "body-class" "public-page" %}
     <div class="col-md-6 offset-md-3 public-page-wrap">
         <div class="row">
             <div class="col-md-12">
             <h2>{{ request.organization.platform_name }}</h2>
-            <p class="subheading">Unsubscription from {{ organization.platform_name }} successful.</p>
+            <p>We're sorry to see you go! You are now successfully unsubscribed from {{ request.organization.name }}'s election updates and reminders.</p>
+            <p>Please get out and vote in 2018.</p>
             </div>
         </div>
     </div>

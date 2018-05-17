@@ -1,15 +1,15 @@
 {% extends "constituent/constituent_base.html" %}
 {% load static sekizai_tags crispy_forms_tags %}
 
-{% block title %}Unsubscribe{% endblock title %}
+{% block title %}Unsubscribe from {{ organization.name }}'s updates{% endblock title %}
 
 {% block page_content %}
 {% add_data "body-class" "public-page" %}
     <div class="col-sm-6 offset-sm-3 public-page-wrap">
         <div class="row">
             <div class="col-md-12">
-            <h2>{{ organization.platform_name }} Unsubscribe</h2>
-            <p>If you wish to discontinue receiving updates and reminders from {{ organization.name }} about upcoming elections in your area, you can unsubscribe from all future notifications.</p>
+            <h2>Unsubscribe</h2>
+            <p>If you'd no longer like to receive updates and reminders about upcoming elections in your area, you can unsubscribe from {{ organization.name }}'s reminders in one click.</p>
             <form role="form" method="POST" action="">
             {{ form|crispy }}
             <button type="submit" class="btn btn-block btn-danger">Unsubscribe</button>

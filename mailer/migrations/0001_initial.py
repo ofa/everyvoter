@@ -146,7 +146,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=254)),
                 ('origin', models.CharField(choices=[(b'user', b'Manual'), (b'bounce', b'Bounce'), (b'complaint', b'Complaint')], max_length=50)),
                 ('reason', models.CharField(blank=True, max_length=255, verbose_name=b'Reason')),
-                ('global_unsub', models.BooleanField(db_index=True, verbose_name=b'Applies Globally')),
+                ('global_unsub', models.BooleanField(db_index=True, default=False, verbose_name=b'Applies Globally')),
                 ('mailing', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='mailer.Mailing')),
                 ('organization', models.ForeignKey(editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='branding.Organization')),
             ],

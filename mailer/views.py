@@ -1,6 +1,7 @@
 """Views for mailer"""
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.views.generic import (
     CreateView, UpdateView, ListView, TemplateView, FormView
 )
@@ -188,30 +189,54 @@ class UnsubscribeCreateView(OrganizationViewMixin,
     form_class = UnsubscribeForm
     success_url = reverse_lazy('unsubscribe:unsubscribe_complete')
 
+    def dispatch(self, request, *args, **kwargs):
+        """Dispatch the view"""
+        # pylint: disable=attribute-defined-outside-init
+        user_uuid = request.GET.get('user')
+
+        try:
+            self.unsub_user = User.objects.filter(
+                username=user_uuid, organization=request.organization).first()
+        except ValueError:
+            self.unsub_user = None
+
+        return super(UnsubscribeCreateView, self).dispatch(
+            request, *args, **kwargs)
+
+    def get_form(self):
+        """Get the form"""
+        form = super(UnsubscribeCreateView, self).get_form()
+
+        if self.unsub_user:
+            form.fields['address'].initial = self.unsub_user.email
+
+        return form
+
     def form_valid(self, form):
         """Handle a valid form"""
         form.instance.origin = 'user'
 
-        email_uuid = self.request.GET.get(
-            'email', form.cleaned_data.get('email_uuid', None))
+        try:
+            email = Email.objects.filter(
+                uuid=self.request.GET.get('email'),
+                organization=self.request.organization).first()
+        except ValueError:
+            email = None
 
-        if email_uuid:
-            form.instance.email = Email.objects.filter(
-                uuid=email_uuid).first()
+        if email:
+            form.instance.email = email
 
-        user_uuid = self.request.GET.get(
-            'user', form.cleaned_data.get('user_uuid', None))
+        if self.unsub_user:
+            form.instance.user = self.unsub_user
+            User.objects.filter(Q(id=self.unsub_user.id) |
+                                Q(email__iexact=form.cleaned_data['address'])
+                               ).update(unsubscribed=True)
+        else:
+            User.objects.filter(
+                email__iexact=form.cleaned_data['address']).update(
+                    unsubscribed=True)
 
-        if user_uuid:
-            form.instance.user = User.objects.filter(
-                username=form.cleaned_data['user_uuid']).first()
-
-        response = super(UnsubscribeCreateView, self).form_valid(form)
-
-        User.objects.filter(address__iexact=form.cleaned_data['email']).update(
-            unsubscribed=True)
-
-        return response
+        return super(UnsubscribeCreateView, self).form_valid(form)
 
 
 class UnsubscribeCompleteView(TemplateView):
