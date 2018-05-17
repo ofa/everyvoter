@@ -21,22 +21,33 @@ const dirs = {
     dest: 'dist'
 };
 
-const scssPaths = {
-    src: `${dirs.src}/scss/*.scss`,
-    watch: `${dirs.src}/scss/**/**.scss`,
-    dest: `${dirs.dest}/css`,
-    destMin: `${dirs.dest}/css-min`
-};
 
-const vendorConcatPaths = {
+// Files that should be copied over as-is
+const vendorStylePaths = {
+    src: [],
+    dest: `${dirs.dest}/css/vendor`
+}
+const vendorJSPaths = {
     src: [
-            'node_modules/js-cookie/src/js.cookie.js',
-            'node_modules/popper.js/dist/umd/popper.js',
-            'node_modules/bootstrap/dist/js/bootstrap.js',
-        ],
-    dest: `${dirs.dest}/js-min`
+        'node_modules/bootstrap/dist/js/bootstrap.js',
+    ],
+    dest: `${dirs.dest}/js/vendor`
+}
+const imgPaths = {
+    src: [
+        `${dirs.src}/img/**`,
+    ],
+    dest: `${dirs.dest}/img`
+}
+const fontPaths = {
+    src: [
+        `${dirs.src}/fonts/**`,
+    ],
+    dest: `${dirs.dest}/fonts`
 }
 
+
+// Paths related to CodeMirror (these can be concatinated)
 const codeMirrorPaths = {
     src: [
         'node_modules/codemirror/lib/codemirror.js',
@@ -46,28 +57,42 @@ const codeMirrorPaths = {
         'node_modules/codemirror/mode/xml/xml.js',
         'node_modules/codemirror/mode/css/css.js'
         ],
-    dest: `${dirs.dest}/js-min/codemirror`
+    dest: `${dirs.dest}/js/vendor`
 }
 
-const jsPaths = {
-    src: [
-            `${dirs.src}/js/core.js`,
-            `${dirs.src}/js/pages/*.js`
-        ],
-    watch: `${dirs.src}/js/**`,
-    dest: `${dirs.dest}/js`,
-    destMin: `${dirs.dest}/js-min`
-};
 
-const imgPaths = {
-    src: `${dirs.src}/img/**`,
-    dest: `${dirs.dest}/img`
-};
-
-const fontsPaths = {
-    src: `${dirs.src}/fonts/**`,
-    dest: `${dirs.dest}/fonts/`
+// Paths related to app management/admin
+const managePaths = {
+    scssSource: `${dirs.src}/scss/manage/*.scss`,
+    scssWatch: `${dirs.src}/scss/manage/**/**.scss`,
+    scssDest: `${dirs.dest}/css/manage`,
+    jsSource: [
+        `${dirs.src}/js/manage/manage_core.js`,
+        `${dirs.src}/js/manage/pages/*.js`
+    ],
+    jsWatch: [
+        `${dirs.src}/manage/js/core.js`,
+        `${dirs.src}/manage/js/pages/*.js`
+    ],
+    jsDest: `${dirs.dest}/js/manage`
 }
+
+// Paths related to end-user constituents webpages
+const constituentPaths = {
+    scssSource: `${dirs.src}/scss/constituent/*.scss`,
+    scssWatch: `${dirs.src}/scss/constituent/**/**.scss`,
+    scssDest: `${dirs.dest}/css/constituent`,
+    jsSource: [
+        `${dirs.src}/js/constituent/constituent_core.js`,
+        `${dirs.src}/js/constituent/pages/*.js`
+    ],
+    jsWatch: [
+        `${dirs.src}/constituent/js/core.js`,
+        `${dirs.src}/constituent/js/pages/*.js`
+    ],
+    jsDest: `${dirs.dest}/js/constituent`
+}
+
 
 /* Function to process errors and present them in a nice visual manner */
 function error(err) {
@@ -85,90 +110,91 @@ function error(err) {
     this.emit('end');
 }
 
-/* Task processes SCSS, autoprefixes, and creates
-   standard and min stylesheets */
-gulp.task('scss', () => {
-    gulp.src(scssPaths.src)
-        .pipe(sourcemaps.init({largeFile: true}))
-        .pipe(sass().on('error', error))
-        .pipe(autoprefixer({browsers: ['last 2 versions']}))
-        .pipe(sourcemaps.write('maps/'))
-        .pipe(gulp.dest(scssPaths.dest))
-        .pipe(cleanCss())
-        .pipe(gulp.dest(scssPaths.destMin))
-        .pipe(livereload())
-        .pipe(notify({ message: 'Styles task complete' }));
+/* Simple task to copy files from their source dir to the dest */
+gulp.task('simple_copy', () => {
+    gulp.src(vendorStylePaths.src)
+        .pipe(gulp.dest(vendorStylePaths.dest));
+    gulp.src(vendorJSPaths.src)
+        .pipe(gulp.dest(vendorJSPaths.dest));
+    gulp.src(imgPaths.src)
+        .pipe(gulp.dest(imgPaths.dest));
+    gulp.src(fontPaths.src)
+        .pipe(gulp.dest(fontPaths.dest));
 });
 
-gulp.task('codemirrorConcat', () => {
+/* Simple codemirror task */
+gulp.task('codemirrorconcat', () => {
     gulp.src(codeMirrorPaths.src)
         .pipe(uglify())
         .pipe(concat('codemirror-combined.js'))
         .pipe(gulp.dest(codeMirrorPaths.dest));
 });
 
-gulp.task('vendorConcat', () => {
-    gulp.src(vendorConcatPaths.src)
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest(vendorConcatPaths.dest));
-});
-
-
-/* Task processes JavaScript through Babel and browserify
-   creates standard and uglified versions */
-/* Initial setup was supposed to rely on Babel and browserify,
-   but due to resource constraints, we are switching to a simplified solution.
-gulp.task('js', () => {
-    gulp.src(jsPaths.src)
-        .pipe(babel().on('error', error))
-        .pipe(browserify({extensions: ['.js']}))
-        .pipe(gulp.dest(jsPaths.dest))
-        .pipe(uglify())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(jsPaths.destMin))
+/* Constituent Tasks */
+gulp.task('constituent_scss', () => {
+    gulp.src(constituentPaths.scssSource)
+        .pipe(sourcemaps.init({largeFile: true}))
+        .pipe(sass().on('error', error))
+        .pipe(autoprefixer({browsers: ['last 2 versions']}))
+        .pipe(sourcemaps.write('maps/'))
+        .pipe(gulp.dest(constituentPaths.scssDest))
         .pipe(livereload())
-        .pipe(notify({ message: 'Scripts task complete' }));
+        .pipe(notify({ message: 'Constituent styles task complete' }));
 });
 
-*/
-gulp.task('js', () => {
-    gulp.src(jsPaths.src)
-        .pipe(concat('everyvoter.js'))
+gulp.task('constituent_js', () => {
+    gulp.src(constituentPaths.jsSource)
+        .pipe(concat('constituent.js'))
         .pipe(babel().on('error', error))
-        .pipe(gulp.dest(jsPaths.dest))
-        .pipe(uglify())
-        .pipe(gulp.dest(jsPaths.destMin))
+        .pipe(gulp.dest(constituentPaths.jsDest))
         .pipe(livereload())
-        .pipe(notify({ message: 'Scripts task complete' }));
-});
-
-/* Simple task to move img assets to the dist folder */
-gulp.task('img', () =>{
-    gulp.src(imgPaths.src)
-        .pipe(gulp.dest(imgPaths.dest));
-});
-
-/* Task to move fonts to the dist folder */
-gulp.task('fonts', () =>{
-    gulp.src(fontsPaths.src)
-        .pipe(gulp.dest(fontsPaths.dest));
+        .pipe(notify({ message: 'Constituent scripts task complete' }));
 });
 
 
-/* Watch function with live reload */
+/* Manage/Admin Tasks */
+gulp.task('manage_scss', () => {
+    gulp.src(managePaths.scssSource)
+        .pipe(sourcemaps.init({largeFile: true}))
+        .pipe(sass().on('error', error))
+        .pipe(autoprefixer({browsers: ['last 2 versions']}))
+        .pipe(sourcemaps.write('maps/'))
+        .pipe(gulp.dest(managePaths.scssDest))
+        .pipe(livereload())
+        .pipe(notify({ message: 'Manage styles task complete' }));
+});
+
+gulp.task('manage_js', () => {
+    gulp.src(managePaths.jsSource)
+        .pipe(concat('manage.js'))
+        .pipe(babel().on('error', error))
+        .pipe(gulp.dest(managePaths.jsDest))
+        .pipe(livereload())
+        .pipe(notify({ message: 'Manage scripts task complete' }));
+});
+
+
 gulp.task('watch', () => {
     livereload.listen();
 
-    gulp.watch(scssPaths.watch, ['scss']);
-    gulp.watch(jsPaths.watch, ['js']);
-    gulp.watch(imgPaths.src, ['img']);
+    gulp.watch(constituentPaths.scssWatch, ['constituent_scss']);
+    gulp.watch(constituentPaths.jsWatch, ['constituent_js']);
+    gulp.watch(managePaths.scssWatch, ['manage_scss']);
+    gulp.watch(managePaths.jsWatch, ['manage_js']);
 });
 
-/* Default task to process all and start watch */
-gulp.task('default', ['scss','vendorConcat','codemirrorConcat','js','img','fonts','watch']);
-
-/* Build task to run during build processes */
-gulp.task('build', ['scss','vendorConcat','codemirrorConcat','js','img','fonts']);
+/* Default task to process all */
+gulp.task('default', [
+    'simple_copy',
+    'codemirrorconcat',
+    'constituent_scss',
+    'constituent_js',
+    'manage_scss',
+    'manage_js'
+]);
 
 /* Develop */
-gulp.task('develop', ['build','watch']);
+gulp.task('develop', [
+    'default',
+    'watch'
+]);

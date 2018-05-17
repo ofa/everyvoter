@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static sekizai_tags %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/manage/manage.css' %}" />
+{% endblock head %}
+
+{% block body %}
+{% add_data "body-class" "manage" %}
+    <div id="wrap" class="wrap">
+
+        {% include "manage/inc/nav-manage.html" %}
+
+        <div class="container" id="main">
+
+            {% if messages %}
+            {% include "manage/inc/messages.html" %}
+            {% endif %}
+
+            <div class="row">
+                {% block page_content %}{% endblock page_content%}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_js %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'js/vendor/codemirror-combined.js' %}"></script>
+{% endblock footer_js %}

@@ -1,12 +1,10 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "constituent/constituent_base.html" %}
+{% load static sekizai_tags %}
 
-{% block extrabody %}class="404"{% endblock %}
+{% block title %}Page not found{% endblock title %}
 
 {% block head %}
-    <title>Page not found</title>
-    <meta name="robots" content="noindex">
-    <meta name="robots" content="noarchive">
+    {{ block.super }}
     <style>
         body{
             background-image: url({% static "img/img/404_background.jpg" %});
@@ -21,15 +19,11 @@
     </style>
 {% endblock %}
 
-{# Template breaks when meta included #}
-{% block meta %}{% endblock %}
-
-{% block nav_main %}{% endblock nav_main %}
-
 {% block page_content %}
+{% add_data "body-class" "404" %}
     <div class="row">
         <div class="col-md-8 col-md-offset-2 not-found text-center">
-            <h1>Climate change is real—but this page is not.</h1>
+            <h1>Page Not Found</h1>
         </div>
     </div>
 {% endblock %}

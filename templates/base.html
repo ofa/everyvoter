@@ -1,45 +1,32 @@
 {% load static sekizai_tags %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title>{% block title %}{{ request.organization.platform_name }}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'css/everyvoter.css' %}" />
-    {% block head %}{% endblock %}
+
+    {# For now, don't allow robots to index or archive page #}
+    <meta name="robots" content="noindex">
+    <meta name="robots" content="noarchive">
+{% block head %}
+{% endblock head %}
 </head>
+
+{# Body Class #}
 {% with_data "body-class" as body_classes %}
 <body {% block extrabody %}{% endblock %} class="{% for body_class in body_classes %}{{ body_class }} {% endfor %}">
 {% end_with_data %}
 
-        {% block body %}
+{# Main Body #}
+{% block body %}
+{% endblock %}
 
-            <div id="wrap" class="wrap">
-                {% block nav_main %}
-                {% endblock nav_main %}
-
-                {% block content %}
-
-                <div class="container" id="main">
-                    {% block subnav %}{% endblock subnav %}
-                    <div class="row">
-                        {% block page_content %}{% endblock page_content%}
-                    </div>
-                </div>
-                {% endblock content%}
-            </div>
-        {% endblock %}
-
-        {% block foot %}
-            {% include "inc/footer.html" %}
-        {% endblock %}
-
-    {% block footerjs %}
+{# Javascript Footer #}
+{% block footer_js %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js-min/vendor.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/everyvoter.js' %}"></script>
-    {% endblock footerjs %}
-  </body>
+    <script type="text/javascript" src="{% static 'js/vendor/bootstrap.js' %}"></script>
+{% endblock %}
+
+</body>
 </html>

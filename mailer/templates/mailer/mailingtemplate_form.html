@@ -1,4 +1,4 @@
-{% extends "management/manage_base.html" %}
+{% extends "manage/manage_base.html" %}
 {% load sekizai_tags crispy_forms_tags %}
 
 {% block title %}{% if mailing_template %}Edit{% else %}Create{% endif %} Template{% endblock title %}
@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-md-6">
                         {% comment %}
-                            {{ form.tags }}  
+                            {{ form.tags }}
                         {% endcomment %}
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-            
+
             {% csrf_token %}
             </form>
 
