@@ -1,0 +1,62 @@
+{% load static %}
+<header class="container-fluid">
+    <div class="row position-relative">
+
+        <div class="col-md-2">
+            <div class="logo">
+              <a href="{% url 'manage:manage' %}">
+                <span class="sr-only">{{ organization.platform_name }}</span>
+              </a>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+
+            <nav class="navbar-center">
+                <ul class="nav navbar-nav">
+                    <li class="nav-main-item nav-item">
+                        <a class="dropdown-expand-link" href="#"><span class="mdi mdi-email"></span> Email</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'manage:mailer:list_templates' %}">Templates</a>
+                            <a class="dropdown-item" href="{% url 'manage:mailer:list_wrappers' %}">Wrappers</a>
+                            <a class="dropdown-item" href="{% url 'manage:blocks:list_blocks' %}">Blocks</a>
+                            <a class="dropdown-item" href="{% url 'manage:blocks:list_blockcategories' %}">Block Categories</a>
+                        </div>
+                    </li>
+                    <li class="nav-main-item nav-item">
+                        <a class="dropdown-expand-link" href="#"><span class="mdi mdi-account"></span> Constituents</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'manage:accounts:list_users' %}">Find Constituents</a>
+                            <a class="dropdown-item" href="{% url 'manage:user_import:list_imports' %}">Import</a>
+                        </div>
+                    </li>
+                    <li class="nav-main-item nav-item">
+                        <a class="dropdown-expand-link" href="#"><span class="mdi mdi-human-greeting"></span> Elections</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'manage:dataset:list_geodatasets' %}">Datasets</a>
+                            <a class="dropdown-item" href="{% url 'manage:dataset:list_geodatasetcategories' %}">Dataset Categories</a>
+                        </div>
+                    </li>
+                    <li class="nav-main-item nav-item">
+                        <a class="dropdown-expand-link" href="#"><span class="mdi mdi-settings-box"></span> Settings</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'manage:branding:update_organization' %}">Organization Settings</a>
+                            <a class="dropdown-item" href="{% url 'admin:password_change' %}">Change Password</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-md-2">
+            <nav class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="nav-main-item nav-item">
+                        <a class="" href="{% url 'manage:manage_logout' %}"><span class="mdi mdi-logout"></span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</header>

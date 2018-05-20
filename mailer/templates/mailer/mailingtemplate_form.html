@@ -3,10 +3,15 @@
 
 {% block title %}{% if mailing_template %}Edit{% else %}Create{% endif %} Template{% endblock title %}
 
-{% block page_content %}
+{% block content %}
 {% add_data "body-class" "email" %}
-    <div class="col-md-12">
-        <h2>Template Editor</h2>
+
+<div class="content-wrapper form-wrap">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">Template Editor</div>
+    <div class="card-body">
+
 
             <form role="form" method="POST" action="" novalidate>
 
@@ -20,7 +25,7 @@
                     <div class="col-md-5">
                         {{ mailing_template_form.deadline_type|as_crispy_field }}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         {{ mailing_template_form.election_type|as_crispy_field }}
                     </div>
                     <div class="col-md-3">
@@ -83,11 +88,11 @@
 
             {% csrf_token %}
             </form>
-
+</div></div></div>
     </div>
 {% endblock %}
 
-{% block footerjs %}
+{% block footer_js %}
     {{ block.super }}
     <script>
       CodeMirror.fromTextArea(document.getElementById("id_body_above"), {
@@ -103,4 +108,4 @@
         lineWrapping: true
       });
     </script>
-{% endblock footerjs %}
+{% endblock footer_js %}

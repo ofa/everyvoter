@@ -17,7 +17,7 @@
     </div>
 {% endblock %}
 
-{% block footerjs %}
+{% block footer_js %}
     {{ block.super }}
     <script>
       CodeMirror.fromTextArea(document.getElementById("id_header"), {
@@ -33,4 +33,4 @@
         lineWrapping: true
       });
     </script>
-{% endblock footerjs %}
+{% endblock footer_js %}

@@ -4,10 +4,12 @@
   "repository": "git+https://github.com/ofa/everyvoter.git",
   "author": "OFA",
   "dependencies": {
+    "@mdi/font": "^2.3.54",
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^4.0.0",
     "codemirror": "^5.36.0",
+    "compass-mixins": "^0.12.10",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-babel": "^7.0.0",
@@ -27,6 +29,7 @@
     "jest": "^22.1.4",
     "js-cookie": "^2.2.0",
     "jshint": "^2.9.5",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "simple-line-icons": "^2.4.1"
   }
 }

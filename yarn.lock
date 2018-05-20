@@ -27,6 +27,10 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
+"@mdi/font@^2.3.54":
+  version "2.3.54"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-2.3.54.tgz#12dc9a64a5081c488f105fc55e814ecc190c0982"
+
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"
@@ -1251,6 +1255,10 @@ commander@^2.9.0, commander@~2.13.0:
 commondir@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-0.0.1.tgz#89f00fdcd51b519c578733fec563e6a6da7f5be2"
+
+compass-mixins@^0.12.10:
+  version "0.12.10"
+  resolved "https://registry.yarnpkg.com/compass-mixins/-/compass-mixins-0.12.10.tgz#cd9f15f829c4e960cc43bb226f049b28beb99d41"
 
 component-emitter@^1.2.1:
   version "1.2.1"
@@ -5256,6 +5264,10 @@ sigmund@~1.0.0:
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
+
+simple-line-icons@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/simple-line-icons/-/simple-line-icons-2.4.1.tgz#b75bc5a0d87e530928c2ccda5735274bb256f234"
 
 slash@^1.0.0:
   version "1.0.0"

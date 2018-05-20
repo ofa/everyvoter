@@ -30,6 +30,7 @@ const vendorStylePaths = {
 const vendorJSPaths = {
     src: [
         'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/popper.js/dist/umd/popper.min.js'
     ],
     dest: `${dirs.dest}/js/vendor`
 }
@@ -42,6 +43,8 @@ const imgPaths = {
 const fontPaths = {
     src: [
         `${dirs.src}/fonts/**`,
+        'node_modules/simple-line-icons/fonts/*',
+        'node_modules/@mdi/font/fonts/*'
     ],
     dest: `${dirs.dest}/fonts`
 }
