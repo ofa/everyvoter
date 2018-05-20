@@ -3,14 +3,17 @@
 
 {% block title %}{{ organization.platform_name }} User Imports{% endblock title %}
 
-{% block page_content %}
+{% block content %}
 {% add_data "body-class" "people" %}
-    <div class="col-md-12">
-        <h2>New Import</h2>
+<div class="content-wrapper form-wrap">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">New Import</div><div class="card-body">
         <p>Base your import off this <a href="{% static "user_import/example_import.csv" %}">example template</a>.</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     {{ form|crispy }}
     <input type="submit" class="btn btn-primary btn-lg" value="Import" />
 </form>
+</div></div></div></div>
     </div>
-{% endblock page_content %}
+{% endblock content %}

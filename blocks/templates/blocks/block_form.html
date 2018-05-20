@@ -3,10 +3,12 @@
 
 {% block title %}{% if content_block %}Edit Block {{ content_block.name }}{% else %}Create Block{% endif %}{% endblock title %}
 
-{% block page_content %}
+{% block content %}
 {% add_data "body-class" "targets" %}
-    <div class="col-md-12">
-        <h2>{% if content_block %}Edit Block {{ content_block.name }}{% else %}Create Block{% endif %}</h2>
+<div class="content-wrapper form-wrap">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">{% if content_block %}Edit Block {{ content_block.name }}{% else %}Create Block{% endif %}</div><div class="card-body">
 
             <form role="form" method="POST" action="" novalidate>
             {{ form|crispy }}
@@ -14,7 +16,7 @@
             <button type="submit" class="btn btn-block btn-primary" name="save">Save</button>
             {% csrf_token %}
             </form>
-
+</div></div></div></div>
     </div>
 {% endblock %}
 

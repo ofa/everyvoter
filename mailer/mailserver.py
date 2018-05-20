@@ -1,10 +1,12 @@
 """Functionality that sends composed emails"""
+from email.utils import parseaddr
 import logging
 import json
 
 from django.conf import settings
 import boto3
 
+from mailer.models import Unsubscribe
 
 # pylint: disable=invalid-name
 logger = logging.getLogger('email')
@@ -38,6 +40,11 @@ def deliver(to_address, from_address, subject, html, tags=None):
     if not settings.EMAIL_ACTIVE:
         return ''
 
+    # Check to see if the user is globally unsubscribed (i.e. they hard bounced
+    # or complained at some point and SES will count sending the email against
+    # us)
+    if Unsubscribe.objects.check_global(parseaddr(to_address)[1]):
+        return ''
 
     if not tags:
         tags = {}

@@ -3,16 +3,18 @@
 
 {% block title %}{% if geodataset %}Edit Geo Dataset {{ geodataset.name }}{% else %}Create Geo Dataset{% endif %}{% endblock title %}
 
-{% block page_content %}
+{% block content %}
 {% add_data "body-class" "election" %}
-    <div class="col-md-12">
-        <h2>{% if geodataset %}Update Geo Dataset {{ geodataset.name }}{% else %}Create Geo Dataset{% endif %}</h2>
+<div class="content-wrapper form-wrap">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">{% if geodataset %}Update Geo Dataset {{ geodataset.name }}{% else %}Create Geo Dataset{% endif %}</div><div class="card-body">
 
             <form role="form" method="POST" action="" enctype="multipart/form-data">
             {{ form|crispy }}
             <button type="submit" class="btn btn-block btn-primary">Save</button>
             {% csrf_token %}
             </form>
-
+</div></div></div></div>
     </div>
 {% endblock %}
