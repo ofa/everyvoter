@@ -14,10 +14,8 @@
 {% include "manage/inc/nav-top.html" %}
 
 <div class="container-fluid">
-        {% comment %}
-            Hide messages until we have a logical place to put them across the app
-            {% include "manage/inc/messages.html" %}
-        {% endcomment %}
+
+        {% include "manage/inc/messages.html" %}
 
         {% block content %}
         <div class="content-wrapper">
