@@ -3,52 +3,60 @@
 
 {% block title %}{{ organization.platform_name }} Templates{% endblock title %}
 
-{% block page_content %}
+{% block content %}
 {% add_data "body-class" "targets" %}
+<div class="content-wrapper">
+
     <div class="col-md-12">
-      <div class="row">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Existing Templates</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Election</th>
+                            <th>Deadline</th>
+                            <th>Days to Deadline</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mailing_template in mailing_templates %}
+                        <tr>
+                            <td><a href="{% url 'manage:mailer:preview_email' mailing_template.email.uuid %}">{{ mailing_template.name }}</a></td>
+                            <td>{{ mailing_template.get_election_type_display }}</td>
+                            <td>{{ mailing_template.get_deadline_type_display }}</td>
+                            <td>{{ mailing_template.days_to_deadline }}</td>
+                            <td><a href="{% url 'manage:mailer:update_template' mailing_template.email.uuid %}">Update</a></td>
+                        </tr>
+                        {% endfor %}
 
-        <div class="col-md-9">
-        <h2>{{ organization.platform_name }} Templates</h2>
-        <p><a href="{% url 'manage:mailer:create_template' %}" class="btn btn-primary">New Template</a></p>
-        <div class="card">
-          <!-- Default card contents -->
-          <div class="card-header">Existing Templates</div>
-          <!-- Table -->
-          <div class="table-responsive-lg">
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Deadline</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for mailing_template in mailing_templates %}
-                <tr>
-                    <td><a href="{% url 'manage:mailer:preview_email' mailing_template.email.uuid %}">{{ mailing_template.name }}</a></th>
-                    <td>{{ mailing_template.get_deadline_type_display }}</th>
-                    <td><a href="{% url 'manage:mailer:update_template' mailing_template.email.uuid %}">Update</a></th>
-                    <td scope="row"><a href="#">Delete</a></th>
-                </tr>
-                {% endfor %}
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'manage:mailer:create_template' %}" class="btn btn-block btn-primary btn-lg btn-card">New Template</a>
+                <div class="card">
+                    <div class="card-header">Filter</div>
+                    <div class="card-body">
+                        <form action="" method="get">
+                            {{ filter.form|crispy }}
+                            <input class="btn btn-primary btn-block" type="submit" value="Search" />
+                        </form>
+                    </div>
 
-            </tbody>
-          </table></div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        </div>
-        <div class="col-md-3">
-            <form action="" method="get">
-                {{ filter.form|crispy }}
-                <input class="btn btn-primary btn-block" type="submit" value="Search" />
-            </form>
-        </div>
-      </div>
-
-        </div>
+</div>
 
 {% if is_paginated %}
 {% include "inc/pagination.html" %}
