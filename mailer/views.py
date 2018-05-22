@@ -59,7 +59,7 @@ class MailingTemplateFormView(ManageViewMixin, MultipleFormsView):
         forms = super(MailingTemplateFormView, self).get_forms(form_classes)
 
         forms['email_form'].fields['blocks'].queryset = Block.objects.filter(
-            organization=self.request.organization)
+            organization=self.request.organization).select_related('geodataset')
 
         return forms
 
@@ -107,7 +107,7 @@ class MailingTemplateUpdateView(EmailOrganizationViewMixin,
                                 MailingTemplateFormView):
     """View to update a mailing template"""
     model = MailingTemplate
-    queryset = MailingTemplate.objects.select_related('email')
+    queryset = MailingTemplate.objects.select_related('email').order_by('pk')
     context_object_name = 'mailing_template'
 
     def dispatch(self, request, *args, **kwargs):

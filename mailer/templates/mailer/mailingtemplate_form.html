@@ -1,5 +1,5 @@
 {% extends "manage/manage_base.html" %}
-{% load sekizai_tags crispy_forms_tags %}
+{% load sekizai_tags crispy_forms_tags static %}
 
 {% block title %}{% if mailing_template %}Edit{% else %}Create{% endif %} Template{% endblock title %}
 
@@ -94,6 +94,8 @@
 
 {% block footer_js %}
     {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/manage/blocks_widget.js' %}"></script>
+
     <script>
       CodeMirror.fromTextArea(document.getElementById("id_body_above"), {
         lineNumbers: true,

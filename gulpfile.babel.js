@@ -71,11 +71,10 @@ const managePaths = {
     scssDest: `${dirs.dest}/css/manage`,
     jsSource: [
         `${dirs.src}/js/manage/manage_core.js`,
-        `${dirs.src}/js/manage/pages/*.js`
+        `${dirs.src}/js/manage/*.js`
     ],
     jsWatch: [
-        `${dirs.src}/manage/js/core.js`,
-        `${dirs.src}/manage/js/pages/*.js`
+        `${dirs.src}/js/manage/*.js`
     ],
     jsDest: `${dirs.dest}/js/manage`
 }
@@ -169,7 +168,6 @@ gulp.task('manage_scss', () => {
 
 gulp.task('manage_js', () => {
     gulp.src(managePaths.jsSource)
-        .pipe(concat('manage.js'))
         .pipe(babel().on('error', error))
         .pipe(gulp.dest(managePaths.jsDest))
         .pipe(livereload())

@@ -1,6 +1,7 @@
 """Forms for mailer app"""
 from django import forms
 
+from blocks.fields import BlockSelectField
 from election.models import Election
 from mailer.models import Unsubscribe, Email, MailingTemplate
 
@@ -26,6 +27,7 @@ class MailingTemplateForm(forms.ModelForm):
 
 class EmailForm(forms.ModelForm):
     """Email form"""
+    blocks = BlockSelectField(required=False)
 
     class Meta(object):
         """Meta options for form"""
