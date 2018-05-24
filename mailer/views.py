@@ -165,6 +165,7 @@ class WrapperUpdateView(OrganizationViewMixin, ManageViewMixin,
                         SuccessMessageMixin, UpdateView):
     """Create a wrapper"""
     model = EmailWrapper
+    slug_field = 'uuid'
     fields = ['name', 'header', 'footer', 'default']
     context_object_name = 'wrapper'
     success_url = reverse_lazy('manage:mailer:list_wrappers')

@@ -23,7 +23,7 @@
             <tbody>
                 {% for wrapper in wrappers %}
                 <tr>
-                    <th scope="row"><a href="{% url 'manage:mailer:update_wrapper' wrapper.pk %}">{{ wrapper.name}}</a></th>
+                    <th scope="row"><a href="{% url 'manage:mailer:update_wrapper' wrapper.uuid %}">{{ wrapper.name}}</a></th>
                     <td>{{ wrapper.default }}</td>
                 </tr>
                 {% endfor %}

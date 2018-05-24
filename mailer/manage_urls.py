@@ -24,7 +24,7 @@ urlpatterns = [
         views.WrapperListView.as_view(), name='list_wrappers'),
     url(r'^wrappers/create/$',
         views.WrapperCreateView.as_view(), name='create_wrapper'),
-    url(r'^wrappers/(?P<pk>[-\w]+)/edit/$',
+    url(r'^wrappers/(?P<slug>[-\w]+)/edit/$',
         views.WrapperUpdateView.as_view(),
         name='update_wrapper'),
 ]
