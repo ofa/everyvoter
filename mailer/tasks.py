@@ -133,9 +133,16 @@ def update_status(email_id, recipient_number, final):
     mailing.status = 'sending'
     mailing.sent = recipient_number
 
+    # If it's the first recipient start the send clock
+    if recipient_number == 0:
+        mailing.send_start = timezone.now()
+
     if final:
         time.sleep(5)
         mailing.status = 'sent'
+
+        # If it's the final recipient stop the send clock
+        mailing.send_finish = timezone.now()
 
         total_sent = mailing.email.emailactivity_set.filter(
             activity='send').count()

@@ -150,6 +150,10 @@ class Mailing(TimestampModel):
         'Mailing Status', choices=MAILING_STATUSES, default='pending',
         max_length=50)
     sent = models.IntegerField('Total Sent', default=0)
+    send_start = models.DateTimeField(
+        'Time First Email Sent', null=True, default=None)
+    send_finish = models.DateTimeField(
+        'Time Final Email Sent', null=True, default=None)
 
     class Meta(object):
         """Meta details about the Mailing model"""
