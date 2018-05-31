@@ -17,6 +17,7 @@ class State(TimestampModel):
         primary_key=True, editable=False)
     name = models.CharField(
         'Name', max_length=50)
+    demonym = models.CharField('Demonym', max_length=50)
     is_state = models.BooleanField(
         help_text='Whether locale is a state')
     senate_2018 = models.BooleanField(
