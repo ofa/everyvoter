@@ -1,0 +1,57 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ organization.platform_name }} Mailings{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "targets" %}
+<div class="content-wrapper">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Mailings</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Template</th>
+                            <th>Deadline</th>
+                            <th>Election</th>
+                            <th>Recipients</th>
+                            <th>Sent</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mailing in mailings %}
+                        <tr>
+                            <td>{{ mailing.created_at|date:"M j" }}</td>
+                            <td>{{ mailing.template.name }}</td>
+                            <td>{{ mailing.template.get_deadline_type_display }}</td>
+                            <td>{{ mailing.election }}</td>
+
+                            <td>{{ mailing.count }}</td>
+                            <td>{{ mailing.sent }}</td>
+                            <td>{{ mailing.get_status_display }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                  {% if is_paginated %}
+                      {% include "manage/inc/pagination.html" %}
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    </div>
+{% endblock %}

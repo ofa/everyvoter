@@ -7,6 +7,10 @@ from mailer import views
 
 # pylint: disable=invalid-name
 urlpatterns = [
+    url(r'^mailings/$',
+        views.SentMailingListView.as_view(),
+        name='list_mailings'),
+
     url(r'^templates/$',
         views.MailingTemplateListView.as_view(),
         name='list_templates'),

@@ -33,6 +33,16 @@ class EmailOrganizationViewMixin(object):
         return queryset.filter(email__organization=self.request.organization)
 
 
+class SentMailingListView(EmailOrganizationViewMixin, ManageViewMixin,
+                          ListView):
+    """List all sent mailings"""
+    model = Mailing
+    queryset = Mailing.objects.select_related().order_by('-created_at')
+    paginate_by = 30
+    context_object_name = 'mailings'
+    template_name_suffix = '_list'
+
+
 class MailingTemplateListView(EmailOrganizationViewMixin, ManageViewMixin,
                               FilterView):
     """List all mailing templates"""
