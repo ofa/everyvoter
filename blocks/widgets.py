@@ -13,7 +13,10 @@ class BlockSelectWidget(forms.SelectMultiple):
         options = []
 
         for (option_value, instance) in self.choices:
-            selected = bool(option_value in value)
+            if value:
+                selected = bool(option_value in value)
+            else:
+                selected = False
 
             options.append({
                 'block_name': instance.name,
