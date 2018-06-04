@@ -89,6 +89,9 @@ class MailingTemplateFormView(ManageViewMixin, MultipleFormsView):
         for block in forms['email_form'].cleaned_data['blocks']:
             email.blocks.add(block)
 
+        if not hasattr(self, 'object'):
+            self.object = mailing_template
+
         messages.success(self.request, success_message)
 
         return super(MailingTemplateFormView, self).form_valid(
