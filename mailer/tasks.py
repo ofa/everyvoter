@@ -147,7 +147,6 @@ def update_status(email_id, recipient_number, final):
         total_sent = mailing.email.emailactivity_set.filter(
             activity='send').count()
         mailing.sent = total_sent
-        mailing.count = total_sent
 
     mailing.save()
 
