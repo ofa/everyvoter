@@ -17,13 +17,28 @@ class HireFireView(View):
                 settings.HIREFIRE_TOKEN == ''):
             raise Http404('Invalid Token')
 
-        result = []
+        queue_counts = {}
 
         with celery_app.connection_or_acquire() as conn:
             for queue in settings.HIREFIRE_QUEUES:
                 count = celery_app.amqp.queues[queue](
                     conn.default_channel).queue_declare(
                         passive=True).message_count
-                result.append({queue: count})
+                queue_counts[queue] = count
 
-        return JsonResponse(result, safe=False)
+        results = []
+
+        worker_priority = queue_counts.get('bulk_priority', 0)
+
+        results.append({'worker_priority': worker_priority})
+
+        worker = queue_counts.get('bulk', 0)
+        worker += queue_counts.get('default', 0)
+        worker += queue_counts.get('feedback', 0)
+
+        results.append({'worker': worker})
+
+        worker_high_memory = queue_counts.get('high_memory', 0)
+        results.append({'worker_high_memory': worker_high_memory})
+
+        return JsonResponse(results, safe=False)
