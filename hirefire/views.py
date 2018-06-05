@@ -30,15 +30,26 @@ class HireFireView(View):
 
         worker_priority = queue_counts.get('bulk_priority', 0)
 
-        results.append({'worker_priority': worker_priority})
+        results.append(
+            {
+                'name': 'worker_priority',
+                'quantity': worker_priority
+            })
 
         worker = queue_counts.get('bulk', 0)
         worker += queue_counts.get('default', 0)
         worker += queue_counts.get('feedback', 0)
 
-        results.append({'worker': worker})
+        results.append(
+            {
+                'name': 'worker',
+                'quantity': worker
+            })
 
         worker_high_memory = queue_counts.get('high_memory', 0)
-        results.append({'worker_high_memory': worker_high_memory})
+        results.append({
+            'name': 'worker_high_memory',
+            'quantity': worker_high_memory
+            })
 
         return JsonResponse(results, safe=False)
