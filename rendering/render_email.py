@@ -146,7 +146,7 @@ def compose_block_preview(user_id, block_id, election_id, district_id=None):
 
 def compose_pre_header(pre_header):
     """Compose the full HTML of the pre-header"""
-    return mark_safe("""<span style="display:none !important;
+    return mark_safe(u"""<span style="display:none !important;
         visibility:hidden; mso-hide:all; font-size:1px; color:#ffffff;
         line-height:1px; max-height:0px; max-width:0px; opacity:0;
         overflow:hidden;">{pre_header}</span>""".format(pre_header=pre_header))
