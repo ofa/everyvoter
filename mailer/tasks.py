@@ -134,7 +134,7 @@ def update_status(email_id, recipient_number, final):
     mailing.sent = recipient_number
 
     # If it's the first recipient start the send clock
-    if recipient_number == 0:
+    if recipient_number == 1:
         mailing.send_start = timezone.now()
 
     if final:
@@ -175,6 +175,18 @@ def send_email(email_id, recipient_id, election_id, recipient_number, final):
         recipient_id=result['recipient_id'],
         activity='send').save()
 
-    # Every 1000 or when it's the final one, update the count and status
-    if not recipient_number % 1000 or final:
-        update_status.delay(email_id, recipient_number, final)
+    # The first, every 1000, or final email, update the count and status
+    if recipient_number == 1 or not recipient_number % 1000 or final:
+
+        if recipient_number == 1 or final:
+            priority = 4
+        else:
+            priority = 1
+
+        update_status.apply_async(
+            kwargs={
+                'email_id': email_id,
+                'recipient_number': recipient_number,
+                'final': final
+            },
+            priority=priority)

@@ -271,7 +271,7 @@ class TestUpdateStatus(EveryVoterTestMixin, TestCase):
 
     @patch('mailer.tasks.time')
     def test_update_status_final(self, time_patch):
-        """Test updating the status of a non-final time"""
+        """Test updating the status of a final time"""
         mailing = self.create_mailing(status='queued')
 
         for _ in range(0, 10):
@@ -306,8 +306,14 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
 
         self.assertTrue(EmailActivity.objects.filter(
             email=mailing.email, activity='send', recipient=recipient).exists())
-        update_status_patch.delay.assert_called_once_with(
-            mailing.email_id, 2, True)
+
+        update_status_patch.apply_async.assert_called_once_with(
+            kwargs={
+                'email_id': mailing.email_id,
+                'recipient_number': 2,
+                'final': True
+            },
+            priority=4)
 
     @patch('mailer.tasks.update_status')
     def test_send_email_thousand(self, update_status_patch):
@@ -321,8 +327,35 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
 
         self.assertTrue(EmailActivity.objects.filter(
             email=mailing.email, activity='send', recipient=recipient).exists())
-        update_status_patch.delay.assert_called_once_with(
-            mailing.email_id, 1000, False)
+
+        update_status_patch.apply_async.assert_called_once_with(
+            kwargs={
+                'email_id': mailing.email_id,
+                'recipient_number': 1000,
+                'final': False
+            },
+            priority=1)
+
+    @patch('mailer.tasks.update_status')
+    def test_send_email_thousand(self, update_status_patch):
+        """Test sending the first message"""
+        org = self.create_organization()
+        recipient = self.create_user(organization=org)
+        election = self.create_election()
+        mailing = self.create_mailing()
+
+        send_email(mailing.email_id, recipient.id, election.id, 1, False)
+
+        self.assertTrue(EmailActivity.objects.filter(
+            email=mailing.email, activity='send', recipient=recipient).exists())
+
+        update_status_patch.apply_async.assert_called_once_with(
+            kwargs={
+                'email_id': mailing.email_id,
+                'recipient_number': 1,
+                'final': False
+            },
+            priority=4)
 
     @patch('mailer.tasks.timezone')
     @patch('mailer.tasks.time')
