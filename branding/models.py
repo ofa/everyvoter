@@ -20,8 +20,13 @@ class Organization(TimestampModel):
         on_delete=models.SET_NULL)
     elections = models.ManyToManyField(
         'election.Election', through='election.OrganizationElection')
-    privacy_url = models.URLField('Privacy Policy URL')
-    terms_url = models.URLField('Terms of Service URL')
+    privacy_url = models.URLField('Privacy Policy URL', blank=True)
+    terms_url = models.URLField('Terms of Service URL', blank=True)
+    main_unsubscribe_url = models.URLField(
+        'Main list unsubscribe URL',
+        help_text='URL of page where user can submit their email address to '
+                  'be unsubscribed from organization\'s main email list',
+        blank=True)
     from_address = models.ForeignKey(
         'mailer.SendingAddress', verbose_name='Sending Address',
         related_name='default_organizations',

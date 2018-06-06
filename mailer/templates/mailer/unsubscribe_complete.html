@@ -8,8 +8,9 @@
     <div class="col-md-6 offset-md-3 public-page-wrap">
         <div class="row">
             <div class="col-md-12">
-            <h2>{{ request.organization.platform_name }}</h2>
-            <p>We're sorry to see you go! You are now successfully unsubscribed from {{ request.organization.name }}'s election updates and reminders.</p>
+            <h2>{{ organization.platform_name }}</h2>
+            <p>We're sorry to see you go! You are now successfully unsubscribed from {{ organization.name }}'s election updates and reminders.</p>
+            {% if organization.main_unsubscribe_url %}<p>If you'd like to also unsubscribe from {{ organization.name }}'s main email list, <a href="{{ organization.main_unsubscribe_url }}">click here</a>.</p>{% endif %}
             <p>Please get out and vote in 2018.</p>
             </div>
         </div>
