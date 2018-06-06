@@ -1,10 +1,8 @@
 .public-page {
-    background-color: "#000";
-    background-image: url(../../img/img/vote_background.png);
-    @include cover-settings;
-    background-attachment: fixed;
+    background: $blue;
 
     .public-page-wrap {
+        box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.05);
         background-color: #fff;
         margin-top: 75px;
         margin-bottom: 75px;
