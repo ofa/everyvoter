@@ -133,6 +133,11 @@ class MailingTemplate(TimestampModel):
         """Meta options for template"""
         verbose_name = "Template"
         verbose_name_plural = "Templates"
+        ordering = [
+            'election_type',
+            'deadline_type',
+            '-days_to_deadline'
+        ]
 
 
 class Mailing(TimestampModel):

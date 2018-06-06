@@ -119,6 +119,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Template',
                 'verbose_name_plural': 'Templates',
+                'ordering': ['election_type', 'deadline_type', '-days_to_deadline']
             },
             bases=(everyvoter_common.utils.models.CacheMixinModel, models.Model),
         ),
