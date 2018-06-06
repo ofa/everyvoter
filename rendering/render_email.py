@@ -3,6 +3,7 @@ from email.utils import formataddr
 
 from django.core.cache import cache
 from django.template import Context, Template
+from django.utils.safestring import mark_safe
 import newrelic.agent
 
 from accounts.models import User
@@ -143,6 +144,13 @@ def compose_block_preview(user_id, block_id, election_id, district_id=None):
     return result
 
 
+def compose_pre_header(pre_header):
+    """Compose the full HTML of the pre-header"""
+    return mark_safe("""<span style="display:none !important;
+        visibility:hidden; mso-hide:all; font-size:1px; color:#ffffff;
+        line-height:1px; max-height:0px; max-width:0px; opacity:0;
+        overflow:hidden;">{pre_header}</span>""".format(pre_header=pre_header))
+
 
 def compose_email(user_id, email_id, election_id, district_ids=None):
     """Compose an email
@@ -159,8 +167,15 @@ def compose_email(user_id, email_id, election_id, district_ids=None):
     context = get_email_context(user_id, email_id=email_id,
                                 election_id=election_id)
 
-    user = context['recipient']
     email = context['email']
+
+    if email.pre_header:
+        pre_header = render_template(email.pre_header, context)
+        context['pre_header'] = compose_pre_header(pre_header)
+    else:
+        pre_header = ''
+
+    user = context['recipient']
     organization_election = context['org_election']
     wrapper = organization_election.email_wrapper
 
@@ -174,7 +189,7 @@ def compose_email(user_id, email_id, election_id, district_ids=None):
     # now
     result = {
         'subject': render_template(email.subject, context),
-        'pre_header': render_template(email.pre_header, context),
+        'pre_header': pre_header,
 
 
         # We use these later on in the mailing process.
