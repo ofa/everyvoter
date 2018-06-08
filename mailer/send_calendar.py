@@ -7,7 +7,7 @@ from mailer.models import MailingTemplate
 
 def mailing_calendar(organization=None, upcoming=False, date=None,
                      email_active=None, include_sent=False, limit=None,
-                     state_id=None):
+                     state_id=None, election_id=None):
     """Gets the election calendar and returns an enhanced raw MailingTemplate"""
 
     query = """
@@ -137,6 +137,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         {email_active_filter}
         {unsent_filter}
         {state_filter}
+        {election_filter}
 
 
         -- Set a default so we get a "WHERE"
@@ -186,6 +187,11 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         attrs['state_filter'] = 'e.state_id = \'{}\' AND'.format(state_id)
     else:
         attrs['state_filter'] = ''
+
+    if election_id:
+        attrs['election_filter'] = 'e.id = {} AND'.format(int(election_id))
+    else:
+        attrs['election_filter'] = ''
 
     if limit:
         attrs['limit'] = 'LIMIT {}'.format(int(limit))

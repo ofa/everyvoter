@@ -343,6 +343,20 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             limit=4))
         self.assertEquals(len(limited_calendar), 4)
 
+    def test_election_filter(self):
+        """Test that you can filter by election"""
+        initial_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(initial_calendar), 14)
+        self.assertEquals(initial_calendar[0].election_id, self.election1.pk)
+        self.assertEquals(initial_calendar[7].election_id, self.election2.pk)
+
+        filtered_calendar = list(mailing_calendar(
+            organization=self.organization,
+            election_id=self.election2.pk))
+        self.assertEquals(len(filtered_calendar), 7)
+        self.assertEquals(filtered_calendar[0].election_id, self.election2.pk)
+
     def test_unsent_only(self):
         """Test that emails that have been sent are not included"""
         initial_calendar = list(mailing_calendar(
