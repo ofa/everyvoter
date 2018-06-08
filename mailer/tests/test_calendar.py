@@ -332,6 +332,17 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
 
         self.assertEqual(len(active_calendar_list), 0)
 
+    def test_limit(self):
+        """Test that you can limit the number of results in a calendar"""
+        initial_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(initial_calendar), 14)
+
+        limited_calendar = list(mailing_calendar(
+            organization=self.organization,
+            limit=4))
+        self.assertEquals(len(limited_calendar), 4)
+
     def test_unsent_only(self):
         """Test that emails that have been sent are not included"""
         initial_calendar = list(mailing_calendar(
@@ -366,3 +377,39 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
         self.assertEquals(
             post_send_included_calendar[1].id,
             self.template_evip_close_date.id)
+
+    def test_state_filter(self):
+        """Test that you can filter by state ID"""
+        # Change the state of the election
+        election3 = self.create_election(
+            evip_start_date=datetime(2019, 12, 5),
+            evip_close_date=datetime(2019, 12, 10),
+            vbm_application_deadline=datetime(2019, 12, 15),
+            vbm_return_date=datetime(2019, 12, 20),
+            vr_deadline=datetime(2019, 12, 25),
+            vr_deadline_online=datetime(2019, 12, 24),
+            election_date=datetime(2019, 12, 30),
+            election_type='general',
+            state_id='WI')
+
+        # Test that with no state filter everything is returned
+        initial_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(initial_calendar), 21)
+        self.assertEquals(initial_calendar[0].election_id, self.election1.pk)
+        self.assertEquals(initial_calendar[7].election_id, self.election2.pk)
+        self.assertEquals(initial_calendar[14].election_id, election3.pk)
+
+        # Test that only a WI election is returned when filtered
+        filtered_calendar = list(mailing_calendar(
+            organization=self.organization, state_id='WI'))
+        self.assertEquals(len(filtered_calendar), 7)
+        self.assertEquals(filtered_calendar[0].election_id, election3.pk)
+
+        # Test that an invalid state raises an exception
+
+        with self.assertRaises(ValueError) as err:
+            list(mailing_calendar(
+                organization=self.organization,
+                state_id='\'; DROP TABLE accounts_user --'))
+        self.assertEqual(str(err.exception), 'Invalid State ID Provided')

@@ -1,11 +1,13 @@
 """Utilities to get the sending calendar"""
 from django.utils.timezone import localtime
 
+from election.choices import STATES
 from mailer.models import MailingTemplate
 
 
 def mailing_calendar(organization=None, upcoming=False, date=None,
-                     email_active=None, include_sent=False):
+                     email_active=None, include_sent=False, limit=None,
+                     state_id=None):
     """Gets the election calendar and returns an enhanced raw MailingTemplate"""
 
     query = """
@@ -134,10 +136,13 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         {upcoming_filter}
         {email_active_filter}
         {unsent_filter}
+        {state_filter}
+
 
         -- Set a default so we get a "WHERE"
         True
         ORDER BY send_date ASC, id ASC
+        {limit}
     """
 
     attrs = {}
@@ -172,5 +177,19 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         attrs['email_active_filter'] = 'o.email_active = true AND'
     else:
         attrs['email_active_filter'] = ''
+
+    possible_states = [possible_state for possible_state, _ in STATES]
+    if state_id and state_id not in possible_states:
+        raise ValueError('Invalid State ID Provided')
+
+    if state_id:
+        attrs['state_filter'] = 'e.state_id = \'{}\' AND'.format(state_id)
+    else:
+        attrs['state_filter'] = ''
+
+    if limit:
+        attrs['limit'] = 'LIMIT {}'.format(int(limit))
+    else:
+        attrs['limit'] = ''
 
     return MailingTemplate.objects.raw(query.format(**attrs))
