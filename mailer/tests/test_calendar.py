@@ -331,3 +331,38 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
         active_calendar_list = list(active_calendar)
 
         self.assertEqual(len(active_calendar_list), 0)
+
+    def test_unsent_only(self):
+        """Test that emails that have been sent are not included"""
+        initial_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(initial_calendar), 14)
+
+        self.assertEquals(
+            initial_calendar[0].id, self.template_evip_start_date.id)
+        self.assertEquals(
+            initial_calendar[1].id, self.template_evip_close_date.id)
+
+        org_election = self.election1.organizationelection_set.get(
+            organization=self.organization)
+        self.create_mailing(
+            email__organization=self.organization,
+            template=self.template_evip_start_date,
+            organization_election=org_election)
+
+        post_send_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(post_send_calendar), 13)
+        self.assertEquals(
+            post_send_calendar[0].id, self.template_evip_close_date.id)
+
+        # Confirm that you can get the sent ones back if you need them
+        post_send_included_calendar = list(mailing_calendar(
+            organization=self.organization, include_sent=True))
+        self.assertEquals(len(post_send_included_calendar), 14)
+        self.assertEquals(
+            post_send_included_calendar[0].id,
+            self.template_evip_start_date.id)
+        self.assertEquals(
+            post_send_included_calendar[1].id,
+            self.template_evip_close_date.id)

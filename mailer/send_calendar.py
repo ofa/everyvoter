@@ -5,7 +5,7 @@ from mailer.models import MailingTemplate
 
 
 def mailing_calendar(organization=None, upcoming=False, date=None,
-                     email_active=None):
+                     email_active=None, include_sent=False):
     """Gets the election calendar and returns an enhanced raw MailingTemplate"""
 
     query = """
@@ -133,6 +133,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         {date_filter}
         {upcoming_filter}
         {email_active_filter}
+        {unsent_filter}
 
         -- Set a default so we get a "WHERE"
         True
@@ -140,6 +141,14 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
     """
 
     attrs = {}
+
+    if include_sent:
+        attrs['unsent_filter'] = ''
+    else:
+        attrs['unsent_filter'] = ('NOT EXISTS(SELECT 1 FROM mailer_mailing m '
+                                  'WHERE m.organization_election_id = oe.id '
+                                  'AND m.template_id = mt.id) AND')
+
 
     if organization:
         attrs['org_filter'] = 'oe.organization_id = {} AND'.format(
