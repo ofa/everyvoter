@@ -8,6 +8,7 @@ from accounts.models import User
 from branding.mixins import OrganizationMixin
 from everyvoter_common.utils.models import TimestampModel, UUIDModel
 from election.choices import DISTRICT_TYPES, ELECTION_TYPES, STATES
+from mailer.send_calendar import mailing_calendar
 
 
 class State(TimestampModel):
@@ -183,6 +184,10 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
         """Meta options for OrganizationElection"""
         unique_together = ['organization', 'election']
 
+    def __unicode__(self):
+        """String representation of Organization Election"""
+        return unicode(self.election)
+
     def get_recipients(self):
         """Recipients of emails about this election"""
         districts = self.election.voting_districts.values('pk')
@@ -195,6 +200,12 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
     def total_recipients(self):
         """Total number of recipients email is sent to"""
         return self.get_recipients().count()
+
+    @cached_property
+    def upcoming_mailings(self):
+        """Mailings that are upcoming"""
+        return mailing_calendar(
+            election_id=self.election_id, upcoming=True)
 
 
 @receiver(post_save, sender=Election)

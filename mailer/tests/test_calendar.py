@@ -1,9 +1,9 @@
 """Test the election calendar"""
 from datetime import datetime
+import uuid
 
 from django.db import models
 from django.test import TestCase, override_settings
-from smalluuid import SmallUUID
 from mock import patch
 from model_mommy import mommy
 
@@ -142,22 +142,27 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             type(mailing1.organizationelection_id), int)
         self.assertEquals(mailing1.organizationelection_id, org_election.pk)
 
+        self.assertEquals(type(mailing1.organizationelection_uuid), uuid.UUID)
+        self.assertEquals(
+            mailing1.organizationelection_uuid,
+            uuid.UUID(org_election.uuid.hex_grouped))
+
         self.assertEquals(type(mailing1.send_date), datetime)
         self.assertEquals(mailing1.send_date, datetime(2018, 6, 30))
 
         self.assertEquals(
-            type(mailing1.election_state_id), unicode)
-        self.assertEquals(mailing1.election_state_id, 'IL')
+            type(mailing1.election_state), unicode)
+        self.assertEquals(mailing1.election_state, 'Illinois')
 
         self.assertEquals(
             type(mailing1.total_recipients), long)
         self.assertEquals(mailing1.total_recipients, 2)
 
-        # Problem: UUIDs are returned as UUIDs and not SmallUUIDs. Submitted
-        # a question to StackOverflow about this.
-        #self.assertEquals(type(mailing1.email_uuid), SmallUUID)
-        #self.assertEquals(
-        #    mailing1.email_uuid, self.template_evip_start_date.email.uuid)
+        self.assertEquals(type(mailing1.email_uuid), uuid.UUID)
+        self.assertEquals(
+            mailing1.email_uuid,
+            uuid.UUID(self.template_evip_start_date.email.uuid.hex_grouped))
+
 
     def test_election(self):
         """Test the election ids"""

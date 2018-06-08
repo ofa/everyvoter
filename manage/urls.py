@@ -20,6 +20,8 @@ urlpatterns = [
         include('geodataset.manage_urls', namespace='dataset')),
     url(r'^blocks/',
         include('blocks.manage_urls', namespace='blocks')),
+    url(r'^election/',
+        include('election.manage_urls', namespace='election')),
     url(r'^login/$',
         views.LoginView.as_view(), name='manage_login'),
     url(r'^logout/$',

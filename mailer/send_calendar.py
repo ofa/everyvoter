@@ -22,8 +22,9 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
            me.uuid as email_uuid,
 
            A.election_id as election_id,
-           e.state_id as election_state_id,
+           s.name as election_state,
            oe.id as organizationelection_id,
+           oe.uuid as organizationelection_uuid,
            date_trunc('day', A.send_date) as send_date,
 
            (SELECT count(DISTINCT accounts_user.id) FROM "accounts_user"
@@ -126,6 +127,8 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
             A.election_id = oe.election_id AND oe.organization_id = me.organization_id
         JOIN election_election e ON
             A.election_id = e.id
+        LEFT JOIN election_state s ON
+            e.state_id = s.code
         JOIN branding_organization o ON oe.organization_id = o.id
 
         WHERE

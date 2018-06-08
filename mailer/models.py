@@ -164,6 +164,10 @@ class Mailing(TimestampModel):
         """Meta details about the Mailing model"""
         verbose_name = "Mailing"
         verbose_name_plural = "Mailings"
+        ordering = [
+            '-send_start',
+            '-created_at'
+        ]
 
     @cached_property
     def election(self):

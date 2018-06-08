@@ -1,0 +1,57 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Elections{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "elections" %}
+<div class="content-wrapper">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Elections</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for election in elections %}
+                        <tr>
+                            <td><a href="{% url 'manage:election:view_election' election.uuid %}">{{ election }}</a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Filter</div>
+                    <div class="card-body">
+                        <form action="" method="get">
+                            {{ filter.form|crispy }}
+                            <input class="btn btn-primary btn-block" type="submit" value="Search" />
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}

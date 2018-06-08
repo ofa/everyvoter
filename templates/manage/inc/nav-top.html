@@ -34,6 +34,7 @@
                     <li class="nav-main-item nav-item">
                         <a class="dropdown-expand-link" href="#"><span class="mdi mdi-human-greeting"></span> Elections</a>
                         <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'manage:election:list_elections' %}">Elections</a>
                             <a class="dropdown-item" href="{% url 'manage:dataset:list_geodatasets' %}">Datasets</a>
                             <a class="dropdown-item" href="{% url 'manage:dataset:list_geodatasetcategories' %}">Dataset Categories</a>
                         </div>

@@ -1,0 +1,123 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ election }}{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "elections" %}
+<div class="content-wrapper">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ election }}</div>
+                    <div class="card-body">
+                        State: {{ election.state }}<br>
+                        Election Date (election_date): {{ election.election_date }}<br>
+                        Voting Registration Deadline (vr_deadline): {{ election.vr_deadline|default:"No Registration" }}<br>
+                        Voting Registration Deadline (Online) (vr_deadline_online): {{ election.vr_deadline_online|default:"Not Offered" }}<br>
+                        Early Vote In Person Start (evip_start_date): {{ election.evip_start_date|default:"Not Offered" }}<br>
+                        Early Vote In Person Close (evip_close_date): {{ election.evip_close_date|default:"Not Offered" }}<br>
+                        Vote By Mail Application Deadline (vbm_application_deadline): {{ election.vbm_application_deadline|default:"Not Offered" }}<br>
+                        Vote By Mail Return Date (vbm_return_date): {{ election.vbm_return_date|default:"Not Offered" }}
+                    </div>
+
+                </div>
+
+                {% if orgelection.upcoming_mailings %}
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Upcoming Mailings</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Deadline</th>
+                            <th>Days to Deadline</th>
+                            <th>Template Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for send in orgelection.upcoming_mailings %}
+                        <tr>
+                            <td scope="row">{{ send.send_date|date:"F j" }}</td>
+                            <td scope="row">{{ send.get_deadline_type_display }}</td>
+                            <td scope="row">{{ send.days_to_deadline }}</td>
+                            <td scope="row">{{ send.name }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+                {% endif %}
+
+                {% if orgelection.mailing_set.exists %}
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Past Mailings</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Template</th>
+                            <th>Deadline</th>
+                            <th>Sent</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mailing in orgelection.mailing_set.all %}
+                        <tr>
+                            <td>{{ mailing.created_at|date:"M j" }}</td>
+                            <td>{{ mailing.template.name }}</td>
+                            <td>{{ mailing.template.get_deadline_type_display }}</td>
+                            <td>{{ mailing.sent }}</td>
+                            <td>{{ mailing.get_status_display }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+                {% endif %}
+
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Audience Size</div>
+                    <div class="card-body">
+                        <h1>{{ orgelection.total_recipients }}</h1>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Target Audience</div>
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <tbody>
+                        {% for district in election.voting_districts.all %}
+                        <tr>
+                            <td>{{ district }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+    </div>
+{% endblock %}

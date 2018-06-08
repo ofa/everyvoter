@@ -22,4 +22,8 @@ class Migration(migrations.Migration):
             name='send_start',
             field=models.DateTimeField(default=None, null=True, verbose_name=b'Time First Email Sent'),
         ),
+        migrations.AlterModelOptions(
+            name='mailing',
+            options={'ordering': ['-send_start', '-created_at'], 'verbose_name': 'Mailing', 'verbose_name_plural': 'Mailings'},
+        ),
     ]

@@ -1,7 +1,7 @@
 """List filters for accounts"""
 import django_filters
 
-from election.models import LegislativeDistrict
+from election.models import LegislativeDistrict, OrganizationElection
 
 
 class LegislativeDistrictFilter(django_filters.FilterSet):
@@ -13,3 +13,13 @@ class LegislativeDistrictFilter(django_filters.FilterSet):
         """Meta options for the filter"""
         model = LegislativeDistrict
         fields = ['state', 'district_type', 'name', 'ocd_id']
+
+
+class OrganizationElectionFilter(django_filters.FilterSet):
+    """Filter OrganizationElections"""
+    class Meta(object):
+        """Meta options for filter"""
+        model = OrganizationElection
+        fields = [
+            'election__state', 'election__election_type'
+        ]
