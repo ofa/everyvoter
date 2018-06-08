@@ -15,7 +15,8 @@ from rendering.render_email import compose_email
 @shared_task
 def trigger_mailings():
     """Lookup all mailings expected for that day and trigger them"""
-    today_calendar = mailing_calendar(date=timezone.now(), email_active=True)
+    today_calendar = mailing_calendar(
+        date=timezone.localtime(), email_active=True)
     full_calendar = list(today_calendar)
 
     # If the calendar is empty, this won't actually trigger anything

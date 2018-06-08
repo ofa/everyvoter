@@ -1,4 +1,6 @@
 """Utilities to get the sending calendar"""
+from django.utils.timezone import localtime
+
 from mailer.models import MailingTemplate
 
 
@@ -146,7 +148,8 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         attrs['org_filter'] = ''
 
     if upcoming:
-        attrs['upcoming_filter'] = 'send_date >= now()::date AND'
+        attrs['upcoming_filter'] = 'send_date >= \'{}\' AND'.format(
+            localtime().strftime('%Y%m%d'))
     else:
         attrs['upcoming_filter'] = ''
 

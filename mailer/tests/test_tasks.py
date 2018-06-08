@@ -27,7 +27,7 @@ class TestTriggerMailings(EveryVoterTestMixin, TestCase):
     @patch('mailer.tasks.initialize_mailing')
     def test_empty_calendar(self, initialize_mailing_patch, timezone_patch):
         """Test an empty calendar"""
-        timezone_patch.now.return_value = self.test_datetime
+        timezone_patch.localtime.return_value = self.test_datetime
 
         trigger_mailings()
 
@@ -37,7 +37,7 @@ class TestTriggerMailings(EveryVoterTestMixin, TestCase):
     @patch('mailer.tasks.initialize_mailing')
     def test_full_calendar(self, initialize_mailing_patch, timezone_patch):
         """Test that a full calendar is triggered"""
-        timezone_patch.now.return_value = self.test_datetime
+        timezone_patch.localtime.return_value = self.test_datetime
 
         org1 = self.create_organization(email_active=True)
         org2 = self.create_organization(email_active=True)
@@ -84,7 +84,7 @@ class TestTriggerMailings(EveryVoterTestMixin, TestCase):
     @patch('mailer.tasks.timezone')
     def test_inactive_org(self, timezone_patch):
         """Test organizations without active mass mailings"""
-        timezone_patch.now.return_value = self.test_datetime
+        timezone_patch.localtime.return_value = self.test_datetime
         org = self.create_organization(email_active=True)
 
         today_election = self.create_election(election_date=self.test_datetime)
@@ -401,6 +401,7 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
             email__body_below='Below {{recipient.email}}! https://github.com/')
 
         timezone_patch.now.return_value = election_datetime
+        timezone_patch.localtime.return_value = election_datetime
 
         deliver_patch.return_value = 'abcd123'
 
