@@ -1,5 +1,6 @@
 """Mailer-related tasks"""
 import time
+import logging
 
 from celery import shared_task
 from django.utils import timezone
@@ -11,6 +12,8 @@ from mailer.models import Email, Mailing, EmailActivity
 from mailer.send_calendar import mailing_calendar
 from rendering.render_email import compose_email
 
+logger = logging.getLogger('email')
+
 
 @shared_task
 def trigger_mailings():
@@ -18,6 +21,9 @@ def trigger_mailings():
     today_calendar = mailing_calendar(
         date=timezone.localtime(), email_active=True)
     full_calendar = list(today_calendar)
+
+    logger.info(u'Mailing Trigger Fired. Found %s items to send',
+                len(full_calendar))
 
     # If the calendar is empty, this won't actually trigger anything
     for mailing in full_calendar:
@@ -31,6 +37,10 @@ def trigger_mailings():
             },
             priority=priority
         )
+
+        logger.info(u'Mailing Triggered. Template %s OElection %s Priority %s',
+                    mailing.email_id, mailing.organizationelection_id,
+                    priority)
 
 
 @shared_task
@@ -74,6 +84,10 @@ def initialize_mailing(template_email_id, organizationelection_id, priority):
         priority=priority
     )
 
+    logger.info(u'Mailing Initalized. Email %s OElection %s Org %s',
+                new_mailing.pk, source_org_election.id,
+                source_org_election.organization_id)
+
     newrelic.agent.add_custom_parameter('email_id', new_email.pk)
     newrelic.agent.add_custom_parameter(
         'organization_id', source_org_election.organization_id)
@@ -94,6 +108,9 @@ def initialize_recipients(email_id, organizationelection_id, priority):
     mailing.count = total_recipients
     mailing.status = 'queued'
     mailing.save()
+
+    logger.info(u'Mailing Recipient Initalizing. Email %s OElection %s Org %s',
+                email_id, orgelection, orgelection.organization_id)
 
     newrelic.agent.add_custom_parameter('email_id', email_id)
     newrelic.agent.add_custom_parameter(
@@ -126,6 +143,9 @@ def update_status(email_id, recipient_number, final):
     newrelic.agent.add_custom_parameter(
         'organization_id', mailing.email.organization_id)
     newrelic.agent.add_custom_parameter('final', final)
+
+    logger.info(u'Mailing Status Update. Email %s Recipient # %s Final %s',
+                email_id, recipient_number, final)
 
     # If the mailing has already been marked as sent, bail out
     if mailing.status == 'sent':
