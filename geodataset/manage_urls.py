@@ -6,7 +6,7 @@ from geodataset import views
 
 # pylint: disable=invalid-name
 urlpatterns = [
-    url(r'^datasets/$',
+    url(r'^$',
         views.GeoDatasetListView.as_view(), name='list_geodatasets'),
     url(r'^datasets/create/$',
         views.GeoDatasetCreateView.as_view(), name='create_geodataset'),

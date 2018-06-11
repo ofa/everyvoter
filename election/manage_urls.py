@@ -6,9 +6,9 @@ from election import views
 
 # pylint: disable=invalid-name
 urlpatterns = [
-    url(r'^elections/$',
+    url(r'^$',
         views.OrgElectionListView.as_view(), name='list_elections'),
-    url(r'^elections/(?P<slug>[-\w]+)/$',
+    url(r'^(?P<slug>[-\w]+)/$',
         views.OrgElectionDetailView.as_view(),
         name='view_election'),
 ]
