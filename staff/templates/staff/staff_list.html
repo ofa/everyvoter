@@ -1,0 +1,47 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ organization.platform_name }} Administrators{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "settings" %}
+<div class="content-wrapper">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">{{ organization.platform_name }} Administrators</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Last Login</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user }}</td>
+                            <td>{{ user.last_login }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% if is_paginated %}
+{% include "inc/pagination.html" %}
+{% endif %}
+
+    </div>
+{% endblock %}

@@ -8,7 +8,7 @@ from manage import views
 urlpatterns = [
     url(r'^user_import/',
         include('user_import.manage_urls', namespace='user_import')),
-    url(r'^users/',
+    url(r'^constituents/',
         include('accounts.manage_urls', namespace='accounts')),
     url(r'^organization/',
         include('branding.manage_urls', namespace='branding')),
@@ -22,6 +22,8 @@ urlpatterns = [
         include('blocks.manage_urls', namespace='blocks')),
     url(r'^election/',
         include('election.manage_urls', namespace='election')),
+    url(r'^staff/',
+        include('staff.manage_urls', namespace='staff')),
     url(r'^login/$',
         views.LoginView.as_view(), name='manage_login'),
     url(r'^logout/$',

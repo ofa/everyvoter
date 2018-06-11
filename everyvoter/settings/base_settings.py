@@ -136,6 +136,7 @@ INSTALLED_APPS = [
     'geodataset',
     'mailer',
     'feedback',
+    'staff',
 
     'user_import',
 
