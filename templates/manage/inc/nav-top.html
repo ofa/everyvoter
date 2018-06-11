@@ -17,6 +17,7 @@
                     <li class="nav-main-item nav-item">
                         <a class="dropdown-expand-link" href="#"><span class="mdi mdi-email"></span> Email</a>
                         <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'manage:mailer:upcoming_mailings' %}">Upcoming</a>
                             <a class="dropdown-item" href="{% url 'manage:mailer:list_mailings' %}">Mailings</a>
                             <a class="dropdown-item" href="{% url 'manage:mailer:list_templates' %}">Templates</a>
                             <a class="dropdown-item" href="{% url 'manage:mailer:list_wrappers' %}">Wrappers</a>

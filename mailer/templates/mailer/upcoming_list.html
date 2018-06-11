@@ -1,0 +1,52 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags uuid_tools %}
+
+{% block title %}Upcoming {{ organization.platform_name }} Mailings{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "email" %}
+<div class="content-wrapper">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- Default card contents -->
+                    <div class="card-header">Upcoming {{ organization.platform_name }} Mailings</div>
+                    <!-- Table -->
+                    <div class="table-responsive-lg">
+                    <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Date</th>
+                              <th>Template Name</th>
+                              <th>Election</th>
+                              <th>Recipients</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                      {% for send in sends %}
+                          <tr>
+                            <td scope="row">{{ send.send_date|date:"F j" }}</td>
+                            <td scope="row">{{ send.name }}</td>
+                            <td scope="row"><a href="{% url 'manage:election:view_election' send.organizationelection_uuid|translate_uuid %}">{{ send.election_state }} Federal {{ send.election_type|capfirst }} Election</a></td>
+                            <td scope="row">{{ send.total_recipients }}</td>
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table></div>
+
+                      {% if is_paginated %}
+                          {% include "manage/inc/pagination.html" %}
+                      {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+    </div>
+{% endblock %}

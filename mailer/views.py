@@ -8,6 +8,7 @@ from django.views.generic import (
 from django.views.generic.detail import SingleObjectMixin, BaseDetailView
 from django.urls import reverse_lazy, reverse
 from django_filters.views import FilterView
+from rawpaginator.paginator import Paginator
 
 from accounts.models import User
 from manage.mixins import ManageViewMixin
@@ -21,6 +22,7 @@ from mailer.forms import (
     UnsubscribeForm, MailingTemplateForm, EmailForm, EmailPreviewForm
 )
 from mailer.filters import MailingTemplateFilter
+from mailer.send_calendar import mailing_calendar
 
 
 
@@ -156,6 +158,25 @@ class EmailPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
         form = super(EmailPreviewView, self).get_form()
         form.fields['email'].initial = self.object.id
         return form
+
+
+class UpcomingMailingsView(ManageViewMixin, ListView):
+    """Management Homepage"""
+    template_name = 'mailer/upcoming_list.html'
+    context_object_name = 'sends'
+    paginator_class = Paginator
+    model = MailingTemplate
+    paginate_by = 20
+
+    def get_queryset(self):
+        """Get the queryset"""
+        return mailing_calendar(
+            organization=self.request.organization, upcoming=True)
+
+    def get_paginator(self, queryset, per_page, orphans=0,
+                      allow_first_empty_page=True, **kwargs):
+        """Get the paginator (in our case a RawQuerySet paginator)"""
+        return Paginator(queryset, per_page)
 
 
 class WrapperListView(OrganizationViewMixin, ManageViewMixin, ListView):
