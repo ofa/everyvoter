@@ -24,6 +24,8 @@ urlpatterns = [
         include('election.manage_urls', namespace='election')),
     url(r'^staff/',
         include('staff.manage_urls', namespace='staff')),
+    url(r'^notifications/',
+        include('notifications.manage_urls', namespace='notifications')),
     url(r'^login/$',
         views.LoginView.as_view(), name='manage_login'),
     url(r'^logout/$',

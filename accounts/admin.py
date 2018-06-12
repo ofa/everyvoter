@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from accounts import models
+from notifications.admin import NotificationSettingInline
+
 
 @admin.register(models.User)
 class UserAdmin(BaseUserAdmin):
@@ -22,6 +24,7 @@ class UserAdmin(BaseUserAdmin):
     ]
     list_filter = ('organization__name', 'is_staff', 'is_superuser')
     ordering = ('id',)
+    inlines = [NotificationSettingInline]
 
     def has_add_permission(self, request):
         """No-one should be able to add users using the django admin"""

@@ -1,0 +1,1 @@
+"""App detailing notification preferences"""

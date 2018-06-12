@@ -20,7 +20,7 @@ def sample_email(to_address, user_id, email_id, election_id, district_ids):
     newrelic.agent.add_custom_parameter(
         'email_id', result['email_id'])
 
-    final_subject = u'Sample: {}'.format(result['subject'])
+    final_subject = u'[sample] {}'.format(result['subject'])
 
     deliver(
         to_address=to_address,

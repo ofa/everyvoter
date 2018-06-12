@@ -137,6 +137,7 @@ INSTALLED_APPS = [
     'mailer',
     'feedback',
     'staff',
+    'notifications',
 
     'user_import',
 

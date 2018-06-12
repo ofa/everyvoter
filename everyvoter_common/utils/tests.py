@@ -8,6 +8,7 @@ from django.utils.timezone import now
 from model_mommy import mommy
 
 from accounts.utils_user import create_user
+from accounts.models import User
 from branding.models import Organization
 from branding.utils import get_or_create_organization
 from location.utils import get_location
@@ -69,13 +70,20 @@ class EveryVoterTestMixin(object):
             patch.return_value = self.create_location()
             return create_user(organization, email, '20009', first, last)
 
-    def create_superuser(self, organization=None):
+    def create_superuser(self, *args, **kwargs):
         """Create a new superuser"""
-        user = self.create_user(organization)
-        user.is_staff = True
+        user = self.create_staff(*args, **kwargs)
         user.is_superuser = True
         user.save()
+        return user
 
+    def create_staff(self, *args, **kwargs):
+        """Create a new staff member"""
+        user = self.create_user(*args, **kwargs)
+        user.is_staff = True
+        user.save()
+        user.set_password(User.objects.make_random_password())
+        mommy.make('notifications.NotificationSetting', user=user)
         return user
 
     def create_template(self, **kwargs):

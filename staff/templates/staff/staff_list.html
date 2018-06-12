@@ -20,6 +20,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Last Login</th>
+                            <th>Notifications</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,7 @@
                         <tr>
                             <td>{{ user }}</td>
                             <td>{{ user.last_login }}</td>
+                            <td><a href="{% url 'manage:notifications:update_notificationsettings' user.notificationsetting.uuid %}">Update Notification Settings</a></td>
                         </tr>
                         {% endfor %}
 

@@ -1,0 +1,26 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ setting.user }} Notification Settings{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "settings" %}
+{% add_data "body-class" "form-page" %}
+<div class="content-wrapper">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">{{ setting.user }} Notification Settings</div><div class="card-body">
+
+        {% if setting.user == request.user %}
+            <p>Select below which notifications you wish to receive</p>
+        {% else %}
+            <p>Select below which notifications this user should receive</p>
+        {% endif %}
+
+        <form action="" method="post">{% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </form>
+    </div>
+</div></div></div>
+{% endblock content %}
