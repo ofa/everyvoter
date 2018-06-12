@@ -16,6 +16,11 @@ class NotificationSettingUpdateView(ManageViewMixin, SuccessMessageMixin,
     success_message = "Notification settings updated"
     context_object_name = 'setting'
 
+    def get_queryset(self):
+        """Only allow editing of users in the same organization"""
+        queryset = super(NotificationSettingUpdateView, self).get_queryset()
+        return queryset.filter(user__organization=self.request.organization)
+
     def get_success_url(self):
         """Get the success url"""
         return reverse(
