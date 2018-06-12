@@ -1,6 +1,9 @@
 """Models for the block functionality"""
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
+from accounts.models import User
 from everyvoter_common.utils.models import TimestampModel, UUIDModel
 
 
@@ -29,3 +32,10 @@ class NotificationSetting(TimestampModel, UUIDModel):
 
     def __unicode__(self):
         return unicode(self.user)
+
+
+@receiver(post_save, sender=User)
+def process_saved_staff(sender, instance, **kwargs):
+    """When a staff member is saved, ensure there is a NotificationSetting"""
+    if instance.is_staff:
+        NotificationSetting.objects.get_or_create(user=instance)

@@ -43,7 +43,5 @@ class Command(BaseCommand):
 
         user.save()
 
-        NotificationSetting.objects.get_or_create(user=user)
-
         self.stdout.write(self.style.SUCCESS(
             'Successfully made "%s" a staff member' % user))

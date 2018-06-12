@@ -2,7 +2,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from accounts.models import User
-from notifications.models import NotificationSetting
 
 
 class Command(BaseCommand):
@@ -45,8 +44,6 @@ class Command(BaseCommand):
         user.is_superuser = True
 
         user.save()
-
-        NotificationSetting.objects.get_or_create(user=user)
 
         self.stdout.write(self.style.SUCCESS(
             'Successfully made "%s" a superuser with all permissions' % user))

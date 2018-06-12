@@ -83,7 +83,6 @@ class EveryVoterTestMixin(object):
         user.is_staff = True
         user.save()
         user.set_password(User.objects.make_random_password())
-        mommy.make('notifications.NotificationSetting', user=user)
         return user
 
     def create_template(self, **kwargs):
