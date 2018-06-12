@@ -155,6 +155,10 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
         self.assertEquals(mailing1.election_state, 'Illinois')
 
         self.assertEquals(
+            type(mailing1.organization_id), int)
+        self.assertEquals(mailing1.organization_id, self.organization.id)
+
+        self.assertEquals(
             type(mailing1.total_recipients), long)
         self.assertEquals(mailing1.total_recipients, 2)
 

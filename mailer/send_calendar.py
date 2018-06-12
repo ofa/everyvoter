@@ -26,6 +26,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
            oe.id as organizationelection_id,
            oe.uuid as organizationelection_uuid,
            date_trunc('day', A.send_date) as send_date,
+           oe.organization_id as organization_id,
 
            (SELECT count(DISTINCT accounts_user.id) FROM "accounts_user"
             INNER JOIN "location_location" ON ("accounts_user"."location_id" = "location_location"."id")
