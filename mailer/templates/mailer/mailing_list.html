@@ -1,5 +1,5 @@
 {% extends "manage/manage_base.html" %}
-{% load sekizai_tags crispy_forms_tags %}
+{% load sekizai_tags crispy_forms_tags mailing_stats %}
 
 {% block title %}{{ organization.platform_name }} Mailings{% endblock title %}
 
@@ -22,9 +22,11 @@
                             <th>Template</th>
                             <th>Deadline</th>
                             <th>Election</th>
-                            <th>Recipients</th>
-                            <th>Sent</th>
+                            <th>Sent<br>Recipients</th>
                             <th>Status</th>
+                            <th>Clicks</th>
+                            <th>Opens</th>
+                            <th>Unsub</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,11 +35,12 @@
                             <td>{{ mailing.created_at|date:"M j" }}</td>
                             <td>{{ mailing.template.name }}</td>
                             <td>{{ mailing.template.get_deadline_type_display }}</td>
-                            <td>{{ mailing.election }}</td>
-
-                            <td>{{ mailing.count }}</td>
-                            <td>{{ mailing.sent }}</td>
+                            <td><a href="{% url 'manage:election:view_election' mailing.organization_election.uuid %}">{{ mailing.election }}</a></td>
+                            <td>{{ mailing.sent }}<br>{{ mailing.count }}</td>
                             <td>{{ mailing.get_status_display }}</td>
+                            <td>{% if mailing.stats.unique_clicks %}{{ mailing.stats.unique_clicks }}<br>{% generate_percent mailing.sent mailing.stats.unique_clicks %}{% else %}0{% endif %}</td>
+                            <td>{% if mailing.stats.unique_opens %}{{ mailing.stats.unique_opens }}<br>{% generate_percent mailing.sent mailing.stats.unique_opens %}{% else %}0{% endif %}</td>
+                            <td>{% if mailing.stats.unsubscribes %}{{ mailing.stats.unsubscribes }}<br>{% generate_percent mailing.sent mailing.stats.unsubscribes %}{% else %}0{% endif %}</td>
                         </tr>
                         {% endfor %}
 

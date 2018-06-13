@@ -8,7 +8,7 @@ import newrelic.agent
 
 from election.models import OrganizationElection
 from mailer.mailserver import deliver
-from mailer.models import Email, Mailing, EmailActivity
+from mailer.models import Email, Mailing, EmailActivity, Unsubscribe
 from mailer.send_calendar import mailing_calendar
 from rendering.render_email import compose_email
 
@@ -211,3 +211,39 @@ def send_email(email_id, recipient_id, election_id, recipient_number, final):
                 'final': final
             },
             priority=priority)
+
+
+@shared_task
+def trigger_stats():
+    """Trigger the stats counter for all mailings"""
+    mailings = Mailing.objects.all()
+    for mailing in mailings:
+        generate_stats.delay(mailing.id)
+
+
+@shared_task
+def generate_stats(mailing_id):
+    """Generate stats and attach it to a mailing"""
+    mailing = Mailing.objects.get(id=mailing_id)
+
+    newrelic.agent.add_custom_parameter('email_id', mailing.email.id)
+    newrelic.agent.add_custom_parameter(
+        'organization_id', mailing.email.organization_id)
+
+    email_activities = mailing.email.emailactivity_set.all()
+    stats = {}
+    stats['unique_clicks'] = email_activities.filter(
+        activity='click').distinct('message_id').count()
+    stats['unique_opens'] = email_activities.filter(
+        activity='open').distinct('message_id').count()
+    stats['complaints'] = email_activities.filter(
+        activity='complaint').distinct('message_id').count()
+    stats['bounces'] = email_activities.filter(
+        activity='bounce').distinct('message_id').count()
+    stats['unsubscribes'] = Unsubscribe.objects.filter(
+        email=mailing.email).distinct('user').count()
+
+    mailing.sent = email_activities.filter(
+        activity='send').count()
+    mailing.stats = stats
+    mailing.save(update_fields=['stats', 'sent'])
