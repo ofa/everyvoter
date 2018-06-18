@@ -143,6 +143,7 @@ def update_status(email_id, recipient_number, final):
     newrelic.agent.add_custom_parameter(
         'organization_id', mailing.email.organization_id)
     newrelic.agent.add_custom_parameter('final', final)
+    newrelic.agent.add_custom_parameter('recipient_number', recipient_number)
 
     logger.info(u'Mailing Status Update. Email %s Recipient # %s Final %s',
                 email_id, recipient_number, final)
@@ -175,6 +176,9 @@ def update_status(email_id, recipient_number, final):
 @shared_task
 def send_email(email_id, recipient_id, election_id, recipient_number, final):
     """Send an individual email"""
+    newrelic.agent.add_custom_parameter('recipient_number', recipient_number)
+    newrelic.agent.add_custom_parameter('recipient_id', recipient_id)
+
     result = compose_email(recipient_id, email_id, election_id)
 
     tags = {

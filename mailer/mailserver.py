@@ -5,6 +5,7 @@ import json
 
 from django.conf import settings
 import boto3
+import newrelic.agent
 
 from mailer.models import Unsubscribe
 
@@ -36,14 +37,11 @@ def deliver(to_address, from_address, subject, html, tags=None):
         string
     """
 
+    newrelic.agent.add_custom_parameter('address_to', to_address)
+    newrelic.agent.add_custom_parameter('address_from', from_address)
+
     # If `EMAIL_ACTIVE` isn't true, bail out because we're not sending emails
     if not settings.EMAIL_ACTIVE:
-        return ''
-
-    # Check to see if the user is globally unsubscribed (i.e. they hard bounced
-    # or complained at some point and SES will count sending the email against
-    # us)
-    if Unsubscribe.objects.check_global(parseaddr(to_address)[1]):
         return ''
 
     if not tags:
@@ -51,6 +49,16 @@ def deliver(to_address, from_address, subject, html, tags=None):
     else:
         # Tags could be any format that can be turned into a dictionary
         tags = dict(tags)
+
+    # Check to see if the user is globally unsubscribed (i.e. they hard bounced
+    # or complained at some point and SES will count sending the email against
+    # us)
+    if Unsubscribe.objects.check_global(parseaddr(to_address)[1]):
+        logger.info(
+            u'Email Global Unsubscribe To: %s From: %s Subject: %s | %s',
+            to_address, from_address, subject, json.dumps(tags))
+        return ''
+
 
     tags['app'] = settings.APP_NAME
 

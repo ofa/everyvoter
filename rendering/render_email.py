@@ -57,6 +57,8 @@ def get_email_context(user_id,
         'organization_id', organization.pk)
     newrelic.agent.add_custom_parameter(
         'email_id', email_id)
+    newrelic.agent.add_custom_parameter(
+        'recipient_id', user_id)
 
     if email_id:
         email = get_email(email_id)
