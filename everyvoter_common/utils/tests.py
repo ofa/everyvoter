@@ -36,7 +36,12 @@ class EveryVoterTestMixin(object):
 
         if email_active:
             organization.email_active = True
-            organization.save()
+
+        # These organizations should always send VR emails
+        organization.disable_vr_sameday = False
+        organization.disable_vr_eday = False
+
+        organization.save()
 
         return organization
 

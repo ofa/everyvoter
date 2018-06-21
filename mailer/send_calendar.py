@@ -57,10 +57,16 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
             FROM mailer_mailingtemplate mt
             JOIN mailer_email me ON mt.email_id = me.id
             LEFT JOIN election_election e ON mt.election_type = e.election_type
+            JOIN election_state s ON e.state_id = s.code
             JOIN election_organizationelection oe ON
                 me.organization_id = oe.organization_id AND e.id = oe.election_id
             JOIN branding_organization o ON o.id = oe.organization_id
             WHERE mt.deadline_type = 'vr_deadline' AND oe.vr_active = True AND mt.active = True
+            AND (
+                (o.disable_vr_sameday = false OR s.same_day_vr = false)
+                AND
+                (o.disable_vr_eday = false OR s.eday_vr = false)
+            )
         ) UNION ALL (
             -- Early Vote Start `evip_start_date` Emails
             SELECT

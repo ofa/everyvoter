@@ -25,7 +25,8 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             vr_deadline=datetime(2018, 7, 25),
             vr_deadline_online=datetime(2018, 7, 24),
             election_date=datetime(2018, 7, 30),
-            election_type='general')
+            election_type='general',
+            state_id='WI')
 
         self.election2 = self.create_election(
             evip_start_date=datetime(2018, 12, 5),
@@ -35,7 +36,8 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             vr_deadline=datetime(2018, 12, 25),
             vr_deadline_online=datetime(2018, 12, 24),
             election_date=datetime(2018, 12, 30),
-            election_type='general')
+            election_type='general',
+            state_id='TX')
 
         # Create templates for each deadline
         self.template_evip_start_date = self.create_template(
@@ -152,7 +154,7 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
 
         self.assertEquals(
             type(mailing1.election_state), unicode)
-        self.assertEquals(mailing1.election_state, 'Illinois')
+        self.assertEquals(mailing1.election_state, 'Wisconsin')
 
         self.assertEquals(
             type(mailing1.organization_id), int)
@@ -227,6 +229,120 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
         # Confirm election day email goes out on election day
         self.assertEquals(calendar_list[6].send_date, datetime(2018, 7, 30))
         self.assertEquals(calendar_list[13].send_date, datetime(2018, 12, 30))
+
+    def test_exclude_poll_vote(self):
+        """
+        Test exclude filter for states with at-poll voting
+        """
+
+        organization = self.create_organization()
+        template_vr_deadline = self.create_template(
+            email__organization=organization,
+            deadline_type='vr_deadline',
+            days_to_deadline=0,
+            election_type='general')
+
+        template_election_date = self.create_template(
+            email__organization=organization,
+            deadline_type='election_date',
+            days_to_deadline=0,
+            election_type='general')
+
+        # In Maryland you can register early, but not on Election Day
+        same_day_election = self.create_election(
+            state_id='MD', election_date=datetime(2019, 7, 1))
+        self.assertFalse(same_day_election.state.eday_vr)
+        self.assertTrue(same_day_election.state.same_day_vr)
+
+        self.assertTrue(self.election1.state.eday_vr)
+        self.assertTrue(self.election1.state.same_day_vr)
+        self.assertFalse(self.election2.state.eday_vr)
+        self.assertFalse(self.election2.state.same_day_vr)
+
+        # In Maine you can register on E Day but not at early vote sites
+        e_day_election = self.create_election(
+            state_id='ME', election_date=datetime(2019, 12, 1))
+        self.assertTrue(e_day_election.state.eday_vr)
+        self.assertFalse(e_day_election.state.same_day_vr)
+
+        full_calendar = list(mailing_calendar(organization=organization))
+        self.assertEqual(len(full_calendar), 8)
+        self.assertEqual(
+            [x.election_id for x in full_calendar],
+            [self.election1.pk, self.election1.pk,
+             self.election2.pk, self.election2.pk,
+             same_day_election.pk, same_day_election.pk,
+             e_day_election.pk, e_day_election.pk])
+        self.assertEqual(
+            [x.id for x in full_calendar],
+            [template_vr_deadline.pk, template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk])
+
+
+        organization.disable_vr_eday = True
+        organization.disable_vr_sameday = False
+        organization.save()
+
+        no_eday_calendar = list(mailing_calendar(
+            organization=organization))
+        self.assertEqual(len(no_eday_calendar), 6)
+        self.assertEqual(
+            [x.election_id for x in no_eday_calendar],
+            [self.election1.pk,
+             self.election2.pk, self.election2.pk,
+             same_day_election.pk, same_day_election.pk,
+             e_day_election.pk])
+        self.assertEqual(
+            [x.id for x in no_eday_calendar],
+            [template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk,
+             template_election_date.pk])
+
+        organization.disable_vr_eday = False
+        organization.disable_vr_sameday = True
+        organization.save()
+
+        no_sameday_calendar = list(mailing_calendar(
+            organization=organization))
+        self.assertEqual(len(no_sameday_calendar), 6)
+        self.assertEqual(
+            [x.election_id for x in no_sameday_calendar],
+            [self.election1.pk,
+             self.election2.pk, self.election2.pk,
+             same_day_election.pk,
+             e_day_election.pk, e_day_election.pk])
+        self.assertEqual(
+            [x.id for x in no_sameday_calendar],
+            [template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk,
+             template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk])
+
+
+        organization.disable_vr_eday = True
+        organization.disable_vr_sameday = True
+        organization.save()
+
+        # Test no VR in states with any register-at-a-polling-site offering
+        # There should be 2 TX and 1 of each of the remaining
+        no_poll_vr = list(mailing_calendar(
+            organization=organization))
+        self.assertEqual(len(no_poll_vr), 5)
+        self.assertEqual(
+            [x.election_id for x in no_poll_vr],
+            [self.election1.pk,
+             self.election2.pk, self.election2.pk,
+             same_day_election.pk,
+             e_day_election.pk])
+        self.assertEqual(
+            [x.id for x in no_poll_vr],
+            [template_election_date.pk,
+             template_vr_deadline.pk, template_election_date.pk,
+             template_election_date.pk,
+             template_election_date.pk])
 
     def test_online_vote(self):
         """Test an organization that is using the online VR date"""
@@ -413,7 +529,7 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
             vr_deadline_online=datetime(2019, 12, 24),
             election_date=datetime(2019, 12, 30),
             election_type='general',
-            state_id='WI')
+            state_id='MD')
 
         # Test that with no state filter everything is returned
         initial_calendar = list(mailing_calendar(
@@ -423,9 +539,9 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
         self.assertEquals(initial_calendar[7].election_id, self.election2.pk)
         self.assertEquals(initial_calendar[14].election_id, election3.pk)
 
-        # Test that only a WI election is returned when filtered
+        # Test that only a MD election is returned when filtered
         filtered_calendar = list(mailing_calendar(
-            organization=self.organization, state_id='WI'))
+            organization=self.organization, state_id='MD'))
         self.assertEquals(len(filtered_calendar), 7)
         self.assertEquals(filtered_calendar[0].election_id, election3.pk)
 

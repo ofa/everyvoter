@@ -33,9 +33,28 @@ class Organization(TimestampModel):
         on_delete=models.SET_DEFAULT, default=1)
     online_vr = models.BooleanField(
         default=False,
-        verbose_name='Online Voter Registion',
+        verbose_name='Use Online Voter Registration Deadline',
         help_text='If offered use the Online Voter Registration deadline as '
-                  'the registration deadline')
+                  'the registration deadline for Voter Registration reminders')
+    disable_vr_sameday = models.BooleanField(
+        default=True,
+        verbose_name='Disable Same Day Voter Registration Reminders',
+        help_text='In some states, you\'re able to register to vote on the '
+                  'same day as you vote (but not necessarily on Election '
+                  'Day.) These automatic reminders may overlap with other '
+                  'Election Day reminders your organization has scheduled. '
+                  'Check this box to disable Voter Registration reminders '
+                  'for all states where it\'s possible to register the same '
+                  'day you vote (for voting before Election Day)')
+    disable_vr_eday = models.BooleanField(
+        default=True,
+        verbose_name='Disable Election Day Voter Registration Reminders',
+        help_text='In some states, you\'re able to register to vote on '
+                  'Election Day. These automatic reminders may overlap with '
+                  'other Election Day reminders your organization has '
+                  'scheduled. Check this box to disable Voter Registration '
+                  'reminders for all states where it\'s possible to register '
+                  'on Election Day.')
     email_active = models.BooleanField(
         'Bulk email enabled', default=False)
 
