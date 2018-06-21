@@ -416,7 +416,7 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
         call_one = deliver_patch.call_args_list[0][1]
 
         self.assertEqual(
-            call_one['to_address'], 'Adam Cat <friends@sunset.local>')
+            call_one['to_address'], '"Adam Cat" <friends@sunset.local>')
         self.assertEqual(
             call_one['from_address'], 'Lovely People <app@everyvoter.us>')
         self.assertEqual(
@@ -445,7 +445,7 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
         call_two = deliver_patch.call_args_list[1][1]
 
         self.assertEqual(
-            call_two['to_address'], 'Nick Smith <lovely@dogs.local>')
+            call_two['to_address'], '"Nick Smith" <lovely@dogs.local>')
         self.assertEqual(
             call_one['from_address'], 'Lovely People <app@everyvoter.us>')
         self.assertEqual(

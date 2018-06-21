@@ -1,5 +1,5 @@
 """Models for the EveryVoter App"""
-from email.utils import formataddr
+from email.header import Header
 
 from django.contrib.auth import models as auth_models
 from django.core.exceptions import PermissionDenied
@@ -88,7 +88,9 @@ class User(
     @property
     def to_address(self):
         """Address to be used in the 'To' field in emails"""
-        return formataddr((unicode(self), self.email))
+        return u'"{0}" <{1}>'.format(
+            unicode(Header(unicode(self), 'utf-8')).replace(u'"', u"'"),
+            self.email)
 
     @cached_property
     def state(self):
