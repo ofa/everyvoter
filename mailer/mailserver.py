@@ -50,15 +50,6 @@ def deliver(to_address, from_address, subject, html, tags=None):
         # Tags could be any format that can be turned into a dictionary
         tags = dict(tags)
 
-    # Check to see if the user is globally unsubscribed (i.e. they hard bounced
-    # or complained at some point and SES will count sending the email against
-    # us)
-    if Unsubscribe.objects.check_global(parseaddr(to_address)[1]):
-        logger.info(
-            u'Email Global Unsubscribe To: %s From: %s Subject: %s | %s',
-            to_address, from_address, subject, json.dumps(tags))
-        return ''
-
 
     tags['app'] = settings.APP_NAME
 
