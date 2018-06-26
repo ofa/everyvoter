@@ -19,6 +19,7 @@ client = boto3.client(
     region_name=settings.AWS_DEFAULT_REGION)
 
 
+@newrelic.agent.function_trace()
 def deliver(to_address, from_address, subject, html, tags=None):
     """Deliver an email through a mailserver
 

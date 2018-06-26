@@ -14,6 +14,7 @@ from mailer.models import Email
 from mailer.utils import html_link_sourcer
 
 
+@newrelic.agent.function_trace()
 def get_email(email_id):
     """Get the email using all the relevant select_relateds"""
     key = 'get-email-key{email_id}'.format(email_id=email_id)
@@ -34,6 +35,7 @@ def get_email(email_id):
     return email
 
 
+@newrelic.agent.function_trace()
 def get_email_context(user_id,
                       email_id=None,
                       election_id=None):
@@ -99,6 +101,8 @@ def get_email_context(user_id,
         'manage_url': manage_url
     }
 
+
+@newrelic.agent.function_trace()
 def render_template(source, context):
     """Render the final HTML of an email"""
     template_obj = Template(source)
@@ -107,6 +111,7 @@ def render_template(source, context):
     return template_obj.render(context_obj)
 
 
+@newrelic.agent.function_trace()
 def compose_block_preview(user_id, block_id, election_id, district_id=None):
     """Compose a preview of a block"""
     context = get_email_context(user_id, election_id=election_id)
@@ -146,6 +151,7 @@ def compose_block_preview(user_id, block_id, election_id, district_id=None):
     return result
 
 
+@newrelic.agent.function_trace()
 def compose_pre_header(pre_header):
     """Compose the full HTML of the pre-header"""
     return mark_safe(u"""<span style="display:none !important;
@@ -154,6 +160,7 @@ def compose_pre_header(pre_header):
         overflow:hidden;">{pre_header}</span>""".format(pre_header=pre_header))
 
 
+@newrelic.agent.function_trace()
 def compose_email(user_id, email_id, election_id, district_ids=None):
     """Compose an email
 

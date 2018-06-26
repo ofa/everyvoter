@@ -1,4 +1,6 @@
 """Compose blocks"""
+import newrelic.agent
+
 from blocks.models import Block
 from geodataset.models import FieldValue
 
@@ -13,6 +15,7 @@ def get_district_blocks(districts):
     return district_blocks
 
 
+@newrelic.agent.function_trace()
 def get_data(entry_ids):
     """Get a dictionary of all the values for the email"""
     raw_values = FieldValue.objects.filter(
@@ -28,6 +31,7 @@ def get_data(entry_ids):
     return result
 
 
+@newrelic.agent.function_trace()
 def compose_blocks(districts, email=None, block=None):
     """Compose the source and context for the blocks section"""
     possible_blocks = get_district_blocks(districts)

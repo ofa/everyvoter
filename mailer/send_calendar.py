@@ -1,10 +1,12 @@
 """Utilities to get the sending calendar"""
 from django.utils.timezone import localtime
+import newrelic.agent
 
 from election.choices import STATES
 from mailer.models import MailingTemplate
 
 
+@newrelic.agent.function_trace()
 def mailing_calendar(organization=None, upcoming=False, date=None,
                      email_active=None, include_sent=False, limit=None,
                      state_id=None, election_id=None):

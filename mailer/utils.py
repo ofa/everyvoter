@@ -3,12 +3,15 @@ import re
 import urlparse
 import urllib
 
+import newrelic.agent
+
 
 # Regex for links in html
 # pylint: disable=invalid-name
 html_link_regex = re.compile(r"""href=["']([^\"\']*)["']""")
 
 
+@newrelic.agent.function_trace()
 def html_link_sourcer(html, user, source=None):
     """Source links in HTML"""
     email = user.email
