@@ -204,9 +204,9 @@ def send_email(email_id, recipient_id, election_id, recipient_number, final):
     if recipient_number == 1 or not recipient_number % 1000 or final:
 
         if recipient_number == 1 or final:
-            priority = 4
+            priority = 10
         else:
-            priority = 1
+            priority = 4
 
         update_status.apply_async(
             kwargs={

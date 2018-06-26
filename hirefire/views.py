@@ -42,8 +42,16 @@ class HireFireView(View):
 
         results.append(
             {
-                'name': 'worker',
+                'name': 'worker_general',
                 'quantity': worker
+            })
+
+        worker_import = queue_counts.get('user_import', 0)
+
+        results.append(
+            {
+                'name': 'worker_import',
+                'quantity': worker_import
             })
 
         worker_high_memory = queue_counts.get('high_memory', 0)

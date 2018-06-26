@@ -21,7 +21,7 @@ env = environ.Env(
     CELERY_TIMEZONE=(str, 'UTC'),
     CELERY_SEND_EVENTS=(bool, False),
     CELERY_RESULT_BACKEND=(str, 'django-db'),
-    CELERY_WORKER_CONCURRENCY=(int, 7)
+    CELERY_WORKER_CONCURRENCY=(int, 6)
 )
 
 
@@ -68,7 +68,8 @@ CELERY_TASK_ROUTES = ([
     ('user_import.tasks.import_user', {'queue': 'user_import', 'routing_key': 'user_import.user_import'}),
     ('user_import.tasks.*', {'queue': 'high_memory'}),
     ('mailer.tasks.send_email', {'queue': 'bulk_priority'}),
-    ('mailer.tasks.generate_stats', {'queue': 'bulk'}),
+    ('mailer.tasks.update_status', {'queue': 'default'}),
+    ('mailer.tasks.generate_stats', {'queue': 'default'}),
     ('mailer.tasks.*', {'queue': 'high_memory'}),
     ('feedback.tasks.*', {'queue': 'feedback'}),
 ],)

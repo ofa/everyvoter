@@ -313,7 +313,7 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
                 'recipient_number': 2,
                 'final': True
             },
-            priority=4)
+            priority=10)
 
     @patch('mailer.tasks.update_status')
     def test_send_email_thousand(self, update_status_patch):
@@ -355,7 +355,7 @@ class TestSendEmail(EveryVoterTestMixin, TestCase):
                 'recipient_number': 1,
                 'final': False
             },
-            priority=4)
+            priority=10)
 
     @patch('mailer.tasks.timezone')
     @patch('mailer.tasks.time')
