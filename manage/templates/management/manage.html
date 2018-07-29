@@ -1,45 +1,123 @@
 {% extends "manage/manage_base.html" %}
-{% load static sekizai_tags uuid_tools %}
+{% load sekizai_tags crispy_forms_tags mailing_stats uuid_tools %}
 
 {% block title %}{{ user.first_name }}'s Control Panel | {{ block.super }}{% endblock title %}
 
-{% block page_content %}
+{% block content %}
+<div class="content-wrapper">
+
     <div class="col-md-12">
-        <h2>{{ user.first_name }}'s Control Panel.</h2>
 
-        <div class="col-md-12">
-        <div class="card">
-          <!-- Default card contents -->
-          <div class="card-header">Upcoming Sends</div>
-          <!-- Table -->
-          <div class="table-responsive-lg">
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Template Name</th>
-                    <th>Election</th>
-                    <th>Recipients</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for send in sends %}
-                <tr>
-                    <td scope="row">{{ send.send_date|date:"F j" }}</td>
-                    <td scope="row">{{ send.name }}</td>
-                    <td scope="row"><a href="{% url 'manage:election:view_election' send.organizationelection_uuid|translate_uuid %}">{{ send.election_state }} Federal {{ send.election_type|capfirst }} Election</a></td>
-                    <td scope="row">{{ send.total_recipients }}</td>
-                </tr>
-                {% endfor %}
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Upcoming Sends <small>(<a href="{% url 'manage:mailer:upcoming_mailings' %}">All</a>)</small></div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Template Name</th>
+                            <th>Election</th>
+                            <th>Recipients</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for send in sends %}
+                        <tr>
+                            <td scope="row">{{ send.send_date|date:"F j" }}</td>
+                            <td scope="row">{{ send.name }}</td>
+                            <td scope="row"><a href="{% url 'manage:election:view_election' send.organizationelection_uuid|translate_uuid %}">{{ send.election_state }} Federal {{ send.election_type|capfirst }} Election</a></td>
+                            <td scope="row">{{ send.total_recipients }}</td>
+                        </tr>
+                        {% endfor %}
 
-            </tbody>
-          </table></div>
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Upcoming Elections <small>(<a href="{% url 'manage:election:list_elections' %}">All</a>)</small></div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for election in elections %}
+                        <tr>
+                            <td><a href="{% url 'manage:election:view_election' election.uuid %}">{{ election }}</a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
         </div>
 
-{% if is_paginated %}
-{% include "manage/inc/pagination.html" %}
-{% endif %}
+        {% if mailings %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">Mailings <small>(<a href="{% url 'manage:mailer:list_mailings' %}">All</a>)</small></div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Template</th>
+                            <th>Deadline</th>
+                            <th>Election</th>
+                            <th>Sent</th>
+                            <th>Status</th>
+                            <th>Clicks</th>
+                            <th>Opens</th>
+                            <th>Unsub</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mailing in mailings %}
+                        <tr>
+                            <td>{{ mailing.created_at|date:"M j" }}</td>
+                            <td>{{ mailing.template.name }}</td>
+                            <td>{{ mailing.template.get_deadline_type_display }}</td>
+                            <td><a href="{% url 'manage:election:view_election' mailing.organization_election.uuid %}">{{ mailing.election }}</a></td>
+                            <td>{{ mailing.sent }}</td>
+                            <td>{{ mailing.get_status_display }}</td>
+                            <td>{% if mailing.stats.unique_clicks %}{{ mailing.stats.unique_clicks }}<br>{% generate_percent mailing.sent mailing.stats.unique_clicks %}{% else %}0{% endif %}</td>
+                            <td>{% if mailing.stats.unique_opens %}{{ mailing.stats.unique_opens }}<br>{% generate_percent mailing.sent mailing.stats.unique_opens %}{% else %}0{% endif %}</td>
+                            <td>{% if mailing.stats.unsubscribes %}{{ mailing.stats.unsubscribes }}<br>{% generate_percent mailing.sent mailing.stats.unsubscribes %}{% else %}0{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if elections %}
+        <div class="row">
+
+            </div>
+        </div>
+        {% endif %}
 
     </div>
+
 </div>
-{% endblock page_content %}
+
+    </div>
+{% endblock %}

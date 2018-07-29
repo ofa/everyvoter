@@ -4,13 +4,15 @@ from django.contrib.auth.views import (
     LogoutView as DjangoLogoutView
 )
 from django.urls import reverse_lazy
-from django.views.generic import ListView
-from rawpaginator.paginator import Paginator
+from django.utils.timezone import localdate
+from django.views.generic import TemplateView
+
 
 from manage.forms import AuthenticationForm
 from manage.mixins import ManageViewMixin
 from mailer.send_calendar import mailing_calendar
-from mailer.models import MailingTemplate
+from mailer.models import Mailing
+from election.models import OrganizationElection
 
 
 class LoginView(DjangoLoginView):
@@ -31,20 +33,24 @@ class LogoutView(DjangoLogoutView):
     template_name = 'management/auth/logout.html'
 
 
-class ManageView(ManageViewMixin, ListView):
-    """Management Homepage"""
+class ManageView(ManageViewMixin, TemplateView):
+    """Handle Management View"""
     template_name = 'management/manage.html'
-    context_object_name = 'sends'
-    paginator_class = Paginator
-    model = MailingTemplate
-    paginate_by = 20
 
-    def get_queryset(self):
-        """Get the queryset"""
-        return mailing_calendar(
-            organization=self.request.organization, upcoming=True)
+    def get_context_data(self, *args, **kwargs):
+        """Get the context of the page"""
+        context = super(ManageView, self).get_context_data(*args, **kwargs)
 
-    def get_paginator(self, queryset, per_page, orphans=0,
-                      allow_first_empty_page=True, **kwargs):
-        """Get the paginator (in our case a RawQuerySet paginator)"""
-        return Paginator(queryset, per_page)
+        context['elections'] = OrganizationElection.objects.filter(
+            election__election_date__gte=localdate(),
+            organization=self.request.organization,
+            ).order_by('election__election_date')[:10]
+
+        context['sends'] = mailing_calendar(
+            organization=self.request.organization, upcoming=True, limit=10)
+
+        context['mailings'] = Mailing.objects.filter(
+            email__organization=self.request.organization,
+            ).order_by('-created_at')[:10]
+
+        return context
