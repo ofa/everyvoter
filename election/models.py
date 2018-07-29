@@ -205,7 +205,8 @@ class OrganizationElection(TimestampModel, UUIDModel, OrganizationMixin):
     def upcoming_mailings(self):
         """Mailings that are upcoming"""
         return mailing_calendar(
-            election_id=self.election_id, upcoming=True)
+            election_id=self.election_id, upcoming=True,
+            organization=self.organization)
 
 
 @receiver(post_save, sender=Election)
