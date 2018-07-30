@@ -7,6 +7,13 @@
 {% add_data "body-class" "election" %}
 <div class="content-wrapper">
     <div class="col-md-12">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">{{ geodataset }}</li>
+            </ol>
+        </nav>
+
         <div class="row">
 
             <div class="col-md-8">
@@ -45,6 +52,7 @@
                             <tr>
                                 <th>District Name</th>
                                 <th>OCD ID</th>
+                                <th>View</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,6 +60,7 @@
                             <tr>
                                 <td scope="row">{{ entry.district }}</td>
                                 <td scope="row">{{ entry.district.ocd_id }}</td>
+                                <td scope="row"><a href="{% url 'manage:dataset:view_entry' entry.uuid %}">View</a></td>
                             </tr>
                         {% endfor %}
 

@@ -1,0 +1,58 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ entry.geodataset.name }}{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "election" %}
+
+
+
+<div class="content-wrapper">
+
+
+
+    <div class="col-md-12">
+        <div class="row">
+
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'manage:dataset:view_geodataset' entry.geodataset.uuid %}">{{ entry.geodataset }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ entry.district }} ({{ entry.district.ocd_id }})</li>
+                    </ol>
+                </nav>
+
+                <div class="card">
+                    <div class="card-header">{{ entry.district }} Values</div>
+                    <div class="table-responsive-lg">
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Field Name</th>
+                                <th>Value</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for fieldvalue in entry.fieldvalue_set.all %}
+                            <tr>
+                                <td scope="row">{{ fieldvalue.field }}</td>
+                                <td scope="row">{{ fieldvalue.value }}</td>
+                                <td scope="row"><a href="{% url 'manage:dataset:update_fieldvalue' fieldvalue.uuid %}">Update</a></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

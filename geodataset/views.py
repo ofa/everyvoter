@@ -1,7 +1,7 @@
 """Views for geodataset"""
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (
     CreateView, DetailView, UpdateView, ListView, DeleteView
 )
@@ -11,7 +11,7 @@ import unicodecsv
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from manage.mixins import ManageViewMixin
 from geodataset.forms import GeoDatasetUploadForm
-from geodataset.models import GeoDataset, GeoDatasetCategory
+from geodataset.models import GeoDataset, GeoDatasetCategory, Entry, FieldValue
 from geodataset.utils import (
     process_geodataset_file, slugify_header, generate_csv_data
 )
@@ -130,6 +130,41 @@ class GeoDatasetCSVView(OrganizationViewMixin, ManageViewMixin, DetailView):
             writer.writerow(row)
 
         return response
+
+
+class EntryDetailView(ManageViewMixin, DetailView):
+    """Detail view of an entry"""
+    model = Entry
+    slug_field = 'uuid'
+    queryset = Entry.objects.select_related('district', 'geodataset')
+    context_object_name = 'entry'
+
+    def get_queryset(self):
+        """Get the queryset filtered by organization"""
+        queryset = super(EntryDetailView, self).get_queryset()
+        return queryset.filter(
+            geodataset__organization=self.request.organization)
+
+
+class FieldValueUpdateView(ManageViewMixin, UpdateView):
+    """Update a FieldValue"""
+    model = FieldValue
+    slug_field = 'uuid'
+    fields = ['value']
+    context_object_name = 'fieldvalue'
+    queryset = FieldValue.objects.select_related(
+        'entry', 'field', 'entry__geodataset', 'entry__district')
+
+    def get_queryset(self):
+        """Get the queryset filtered by organization"""
+        queryset = super(FieldValueUpdateView, self).get_queryset()
+        return queryset.filter(
+            entry__geodataset__organization=self.request.organization)
+
+    def get_success_url(self):
+        """Get the URL to redirect to on a successful update"""
+        return reverse('manage:dataset:view_entry',
+                       kwargs={'slug': self.object.entry.uuid})
 
 
 class GeoDatasetCategoryListView(OrganizationViewMixin, ManageViewMixin,

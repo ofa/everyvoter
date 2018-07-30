@@ -20,6 +20,14 @@ urlpatterns = [
         views.GeoDatasetCSVView.as_view(),
         name='download_geodataset'),
 
+    url(r'^entry/(?P<slug>[-\w]+)/$',
+        views.EntryDetailView.as_view(),
+        name='view_entry'),
+
+    url(r'^entryvalue/(?P<slug>[-\w]+)/$',
+        views.FieldValueUpdateView.as_view(),
+        name='update_fieldvalue'),
+
     url(r'^category/$',
         views.GeoDatasetCategoryListView.as_view(),
         name='list_geodatasetcategories'),
