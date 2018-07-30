@@ -10,6 +10,7 @@ from election.models import OrganizationElection
 from mailer.mailserver import deliver
 from mailer.models import Email, Mailing, EmailActivity, Unsubscribe
 from mailer.send_calendar import mailing_calendar
+from mailer.utils import generate_source
 from rendering.render_email import compose_email
 
 logger = logging.getLogger('email')
@@ -71,7 +72,7 @@ def initialize_mailing(template_email_id, organizationelection_id, priority):
         template=source_email.mailingtemplate,
         organization_election=source_org_election,
         from_email=source_org_election.organization.from_address.address,
-        source='',
+        source=generate_source(new_email),
         status='pending')
     new_mailing.save()
 

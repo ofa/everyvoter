@@ -58,3 +58,10 @@ def html_link_sourcer(html, user, source=None):
         return replacement
 
     return html_link_regex.sub(process_link, html)
+
+
+def generate_source(email):
+    """Generate a source code to be used in links inside an email"""
+    return u"ev_{date}_{uuid}".format(
+        date=email.created_at.strftime('%Y%m%d'),
+        uuid=email.uuid)

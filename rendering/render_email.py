@@ -11,7 +11,7 @@ from blocks.compose_blocks import compose_blocks
 from blocks.models import Block
 from election.models import OrganizationElection, LegislativeDistrict
 from mailer.models import Email
-from mailer.utils import html_link_sourcer
+from mailer.utils import html_link_sourcer, generate_source
 
 
 @newrelic.agent.function_trace()
@@ -82,7 +82,11 @@ def get_email_context(user_id,
             'election__state',
             'email_wrapper').get(
                 election_id=election_id, organization=organization)
-        source = ''
+
+        if email:
+            source = generate_source(email)
+        else:
+            source = ''
 
 
     election = organization_election.election
