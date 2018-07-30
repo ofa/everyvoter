@@ -4,13 +4,16 @@ from django.utils.functional import cached_property
 
 from branding.mixins import OrganizationMixin
 from everyvoter_common.utils.models import TimestampModel, UUIDModel
+from everyvoter_common.utils.soft_delete import SoftDeleteModel, ActiveManager
 
 
-class GeoDataset(TimestampModel, UUIDModel, OrganizationMixin):
+class GeoDataset(SoftDeleteModel, TimestampModel, UUIDModel, OrganizationMixin):
     """Dataset that contains blocks, targets, and data"""
     name = models.CharField('Name', max_length=50)
     categories = models.ManyToManyField(
         'geodataset.GeoDatasetCategory', blank=True)
+
+    objects = ActiveManager()
 
     class Meta(object):
         """Meta options for Geodataset model"""

@@ -9,6 +9,7 @@ from django_filters.views import FilterView
 import unicodecsv
 
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
+from everyvoter_common.utils.soft_delete import SoftDeleteView
 from manage.mixins import ManageViewMixin
 from geodataset.forms import GeoDatasetUploadForm
 from geodataset.models import GeoDataset, GeoDatasetCategory, Entry, FieldValue
@@ -108,6 +109,15 @@ class GeoDatasetDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
             ).order_by('district__ocd_id')
 
         return context
+
+
+class GeoDatasetDeleteView(OrganizationViewMixin, ManageViewMixin,
+                           SoftDeleteView):
+    """Delete a geodataset"""
+    model = GeoDataset
+    slug_field = 'uuid'
+    context_object_name = 'geodataset'
+    success_url = reverse_lazy('manage:dataset:list_geodatasets')
 
 
 class GeoDatasetCSVView(OrganizationViewMixin, ManageViewMixin, DetailView):

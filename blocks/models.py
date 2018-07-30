@@ -4,9 +4,19 @@ from django.db import models
 from branding.mixins import OrganizationMixin
 from rendering.validators import validate_template
 from everyvoter_common.utils.models import TimestampModel, UUIDModel
+from everyvoter_common.utils.soft_delete import SoftDeleteModel, ActiveManager
 
 
-class Block(TimestampModel, UUIDModel, OrganizationMixin):
+class BlockManager(ActiveManager):
+    """Manager for blocks"""
+    def get_queryset(self):
+        queryset = super(BlockManager, self).get_queryset()
+        queryset = queryset.exclude(geodataset__deleted=True)
+        return queryset
+
+
+
+class Block(SoftDeleteModel, TimestampModel, UUIDModel, OrganizationMixin):
     """Block of content"""
     name = models.CharField('Block Name', max_length=50)
     code = models.TextField('HTML Code', validators=[validate_template])
@@ -14,6 +24,8 @@ class Block(TimestampModel, UUIDModel, OrganizationMixin):
         'blocks.BlockCategory', blank=True)
     weight = models.IntegerField('Weight', default=50)
     geodataset = models.ForeignKey('geodataset.GeoDataset')
+
+    objects = BlockManager()
 
     class Meta(object):
         """Meta options for BLock"""

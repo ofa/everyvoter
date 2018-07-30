@@ -1,7 +1,7 @@
 """Views for blocks"""
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import (
-    CreateView, UpdateView, ListView, DeleteView, FormView, DetailView
+    CreateView, UpdateView, ListView, FormView, DetailView, DeleteView
 )
 from django.views.generic.detail import BaseDetailView
 from django.urls import reverse_lazy, reverse
@@ -12,6 +12,7 @@ from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from blocks.models import Block, BlockCategory
 from blocks.forms import BlockModelForm, BlockPreviewForm
 from blocks.filters import BlockFilter
+from everyvoter_common.utils.soft_delete import SoftDeleteView
 
 
 class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
@@ -96,12 +97,12 @@ class BlockPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
 
 
 class BlockDeleteView(ManageViewMixin, SuccessMessageMixin,
-                      OrganizationViewMixin, DeleteView):
+                      OrganizationViewMixin, SoftDeleteView):
     """Delete a block"""
     model = Block
     slug_field = 'uuid'
     context_object_name = 'content_block'
-    success_url = reverse_lazy('manage:blocks:list_blocktags')
+    success_url = reverse_lazy('manage:blocks:list_blocks')
     success_message = "Block %(name)s was deleted"
 
 
