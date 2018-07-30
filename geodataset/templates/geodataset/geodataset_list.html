@@ -27,9 +27,9 @@
             <tbody>
                 {% for geodataset in geodatasets %}
                 <tr>
-                    <th scope="row">{{ geodataset.name }}</th>
-                    <th scope="row"><a href="{% url 'manage:dataset:update_geodataset' geodataset.uuid %}">Update</a></th>
-                    <th scope="row"><a href="{% url 'manage:dataset:download_geodataset' geodataset.uuid %}">Download</a></th>
+                    <td scope="row"><a href="{% url 'manage:dataset:view_geodataset' geodataset.uuid %}">{{ geodataset.name }}</a></td>
+                    <td scope="row"><a href="{% url 'manage:dataset:update_geodataset' geodataset.uuid %}">Update</a></td>
+                    <td scope="row"><a href="{% url 'manage:dataset:download_geodataset' geodataset.uuid %}">Download</a></td>
                 </tr>
                 {% endfor %}
 

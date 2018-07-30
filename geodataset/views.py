@@ -91,6 +91,25 @@ class GeoDatasetUpdateView(CommonGeoDatasetEditView, UpdateView):
 
         return form
 
+
+class GeoDatasetDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
+    """Detail view for an individual GeoDataset"""
+    model = GeoDataset
+    slug_field = 'uuid'
+    context_object_name = 'geodataset'
+
+
+    def get_context_data(self, *args, **kwargs):
+        """Get the context for the view"""
+        context = super(GeoDatasetDetailView, self).get_context_data(
+            *args, **kwargs)
+
+        context['entries'] = self.object.entry_set.select_related(
+            ).order_by('district__ocd_id')
+
+        return context
+
+
 class GeoDatasetCSVView(OrganizationViewMixin, ManageViewMixin, DetailView):
     """Download a CSV of an individual GeoDataset"""
     model = GeoDataset

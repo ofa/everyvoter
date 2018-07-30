@@ -1,0 +1,97 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}{{ geodataset.name }}{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "election" %}
+<div class="content-wrapper">
+    <div class="col-md-12">
+        <div class="row">
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ geodataset.name }} Blocks</div>
+                    <div class="table-responsive-lg">
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Preview</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for content_block in geodataset.block_set.all %}
+                            <tr>
+                                <td scope="row">{{ content_block.name }}</td>
+                                <td scope="row"><a href="{% url 'manage:blocks:preview_block' content_block.uuid %}">Preview</a></td>
+                                <td scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></td>
+                                <td scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Districts</div>
+                    <div class="table-responsive-lg">
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>District Name</th>
+                                <th>OCD ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for entry in entries %}
+                            <tr>
+                                <td scope="row">{{ entry.district }}</td>
+                                <td scope="row">{{ entry.district.ocd_id }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'manage:dataset:update_geodataset' geodataset.uuid %}" class="btn btn-block btn-primary btn-lg btn-card">Update</a>
+
+                <a href="{% url 'manage:dataset:download_geodataset' geodataset.uuid %}" class="btn btn-block btn-primary btn-lg btn-card">Download</a>
+
+                <div class="card">
+                    <div class="card-header">Fields</div>
+                    <div class="table-responsive-lg">
+                      <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for field in geodataset.field_set.all %}
+                            <tr>
+                                <td scope="row">{{ field.name }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
