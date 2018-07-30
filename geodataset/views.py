@@ -26,6 +26,17 @@ class GeoDatasetListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     filterset_class = GeoDatasetFilter
     template_name_suffix = '_list'
 
+    def get_context_data(self, *args, **kwargs):
+        """Get the context for the page"""
+        response = super(GeoDatasetListView, self).get_context_data(*args, **kwargs)
+
+        # Only allow filtering of categories contained in its own organization
+        response['filter'].filters['categories'].queryset = response[
+            'filter'].filters['categories'].queryset.filter(
+                organization=self.request.organization)
+
+        return response
+
 
 class CommonGeoDatasetEditView(OrganizationViewMixin, ManageViewMixin,
                                OrganizationCreateViewMixin, CreateView):

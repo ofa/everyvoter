@@ -23,6 +23,17 @@ class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     filterset_class = BlockFilter
     template_name_suffix = '_list'
 
+    def get_context_data(self, *args, **kwargs):
+        """Get the context for the page"""
+        response = super(BlockListView, self).get_context_data(*args, **kwargs)
+
+        # Only allow filtering of categories contained in its own organization
+        response['filter'].filters['categories'].queryset = response[
+            'filter'].filters['categories'].queryset.filter(
+                organization=self.request.organization)
+
+        return response
+
 
 class BlockCreateModifyObjectViewMixin(object):
     """Mixin for views that crea modify blocks"""
