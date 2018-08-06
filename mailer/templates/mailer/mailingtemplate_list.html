@@ -23,6 +23,7 @@
                             <th>Deadline</th>
                             <th>Days to Deadline</th>
                             <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +34,7 @@
                             <td>{{ mailing_template.get_deadline_type_display }}</td>
                             <td>{{ mailing_template.days_to_deadline }}</td>
                             <td><a href="{% url 'manage:mailer:update_template' mailing_template.email.uuid %}">Update</a></td>
+                            <td><a href="{% url 'manage:mailer:delete_template' mailing_template.email.uuid %}">Delete</a></td>
                         </tr>
                         {% endfor %}
 

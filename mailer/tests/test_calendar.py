@@ -457,6 +457,23 @@ class TestCalendar(EveryVoterTestMixin, TestCase):
 
         self.assertEqual(len(active_calendar_list), 0)
 
+    def test_deleted(self):
+        """Test that a deleted template is not included"""
+        initial_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(initial_calendar), 14)
+
+        self.template_election_day.deleted = True
+        self.template_election_day.save()
+
+        new_calendar = list(mailing_calendar(
+            organization=self.organization))
+        self.assertEquals(len(new_calendar), 12)
+
+        with_deleted_calendar = list(mailing_calendar(
+            organization=self.organization, include_deleted=True))
+        self.assertEquals(len(with_deleted_calendar), 14)
+
     def test_limit(self):
         """Test that you can limit the number of results in a calendar"""
         initial_calendar = list(mailing_calendar(

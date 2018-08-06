@@ -15,6 +15,7 @@ from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from blocks.models import Block
 from everyvoter_common.utils.multi_form_view import MultipleFormsView
+from everyvoter_common.utils.soft_delete import SoftDeleteView
 from mailer.models import (
     EmailWrapper, Unsubscribe, Mailing, MailingTemplate, Email
 )
@@ -142,6 +143,14 @@ class MailingTemplateUpdateView(EmailOrganizationViewMixin,
         elif form_class_name == 'mailing_template_form':
             kwargs['instance'] = self.object
         return kwargs
+
+
+class MailingTemplateDeleteView(EmailOrganizationViewMixin, SoftDeleteView):
+    """Allow deletion of email"""
+    model = MailingTemplate
+    context_object_name = 'mailing_template'
+    slug_field = 'email__uuid'
+    success_url = reverse_lazy('manage:mailer:list_templates')
 
 
 class EmailPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,

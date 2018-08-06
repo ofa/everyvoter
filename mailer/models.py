@@ -9,6 +9,7 @@ from branding.mixins import OrganizationMixin
 from rendering.validators import validate_template
 from everyvoter_common.utils.models import TimestampModel, UUIDModel
 from election.choices import DEADLINES, ELECTION_TYPES
+from everyvoter_common.utils.soft_delete import SoftDeleteModel, ActiveManager
 
 
 POSSIBLE_ACTIVITIES = (
@@ -95,6 +96,17 @@ class EmailCategory(TimestampModel, OrganizationMixin):
     name = models.CharField('Name', max_length=50)
 
 
+class EmailManager(models.Manager):
+    """Manager for email"""
+    def get_queryset(self):
+        """Get the queryset of an email"""
+        queryset = super(EmailManager, self).get_queryset()
+
+        queryset = queryset.exclude(mailingtemplate__deleted=True)
+
+        return queryset
+
+
 class Email(TimestampModel, UUIDModel, OrganizationMixin):
     """Email
 
@@ -116,7 +128,10 @@ class Email(TimestampModel, UUIDModel, OrganizationMixin):
         'blocks.Block', blank=True)
 
 
-class MailingTemplate(TimestampModel):
+    objects = EmailManager()
+
+
+class MailingTemplate(SoftDeleteModel, TimestampModel):
     """Email template to be sent"""
     name = models.CharField('Name', max_length=50)
     deadline_type = models.CharField(
@@ -128,6 +143,8 @@ class MailingTemplate(TimestampModel):
     active = models.BooleanField('Active Template', default=True, db_index=True,
                                  editable=False)
 
+
+    objects = ActiveManager()
 
     class Meta(object):
         """Meta options for template"""

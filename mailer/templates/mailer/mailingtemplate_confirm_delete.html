@@ -1,0 +1,25 @@
+{% extends "manage/manage_base.html" %}
+{% load sekizai_tags crispy_forms_tags %}
+
+{% block title %}Delete {{ mailing_template.name }}{% endblock title %}
+
+{% block content %}
+{% add_data "body-class" "mailer" %}
+
+<div class="content-wrapper">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">Delete {{ mailing_template.name }}</div>
+            <div class="card-body">
+                <form role="form" method="POST" action="">
+                    <p>Are you sure you want to delete <strong>{{ mailing_template.name }}</strong>? You cannot undo this.</p>
+                <button type="submit" class="btn btn-danger">Delete</button>
+                {% csrf_token %}
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

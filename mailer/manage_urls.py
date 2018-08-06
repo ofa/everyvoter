@@ -23,6 +23,9 @@ urlpatterns = [
     url(r'^templates/(?P<slug>[-\w]+)/edit/$',
         views.MailingTemplateUpdateView.as_view(),
         name='update_template'),
+    url(r'^templates/(?P<slug>[-\w]+)/delete/$',
+        views.MailingTemplateDeleteView.as_view(),
+        name='delete_template'),
 
     url(r'^email/(?P<slug>[-\w]+)/preview/$',
         views.EmailPreviewView.as_view(),

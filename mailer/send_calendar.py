@@ -9,7 +9,7 @@ from mailer.models import MailingTemplate
 @newrelic.agent.function_trace()
 def mailing_calendar(organization=None, upcoming=False, date=None,
                      email_active=None, include_sent=False, limit=None,
-                     state_id=None, election_id=None):
+                     state_id=None, election_id=None, include_deleted=False):
     """Gets the election calendar and returns an enhanced raw MailingTemplate"""
 
     query = """
@@ -150,6 +150,7 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         {unsent_filter}
         {state_filter}
         {election_filter}
+        {deleted_filter}
 
 
         -- Set a default so we get a "WHERE"
@@ -204,6 +205,11 @@ def mailing_calendar(organization=None, upcoming=False, date=None,
         attrs['election_filter'] = 'e.id = {} AND'.format(int(election_id))
     else:
         attrs['election_filter'] = ''
+
+    if include_deleted:
+        attrs['deleted_filter'] = ''
+    else:
+        attrs['deleted_filter'] = 'mt.deleted = false AND'
 
     if limit:
         attrs['limit'] = 'LIMIT {}'.format(int(limit))
