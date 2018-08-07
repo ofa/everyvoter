@@ -22,6 +22,7 @@
                             <th>Election</th>
                             <th>Deadline</th>
                             <th>Days to Deadline</th>
+                            <th>Preview</th>
                             <th>Update</th>
                             <th>Delete</th>
                         </tr>
@@ -29,10 +30,11 @@
                     <tbody>
                         {% for mailing_template in mailing_templates %}
                         <tr>
-                            <td><a href="{% url 'manage:mailer:preview_email' mailing_template.email.uuid %}">{{ mailing_template.name }}</a></td>
+                            <td>{{ mailing_template.name }}</td>
                             <td>{{ mailing_template.get_election_type_display }}</td>
                             <td>{{ mailing_template.get_deadline_type_display }}</td>
                             <td>{{ mailing_template.days_to_deadline }}</td>
+                            <td><a href="{% url 'manage:mailer:preview_email' mailing_template.email.uuid %}">Preview</a></td>
                             <td><a href="{% url 'manage:mailer:update_template' mailing_template.email.uuid %}">Update</a></td>
                             <td><a href="{% url 'manage:mailer:delete_template' mailing_template.email.uuid %}">Delete</a></td>
                         </tr>

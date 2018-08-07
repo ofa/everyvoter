@@ -3,28 +3,54 @@
 
 {% block title %}Preview Email {{ email.name }}{% endblock title %}
 
-{% block page_content %}
-{% add_data "body-class" "email" %}
+
+
+
+{% block content %}
+<div class="content-wrapper">
     <div class="col-md-12">
-        <h2>Preview Email {{ email.mailingtemplate.name }}</h2>
 
-            <form role="form" method="GET" action="{% url 'manage:rendering:preview_email' %}" id="preview_form">
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-block btn-primary">Preview</button>
-            </form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Preview</div>
+                    <div class="card-body">
+                        <div style="display: none;" id="email_meta">
+                        Subject: <span id="subject"></span><br>
+                        Pre-Header Text: <span id="pre_header"></span><br>
+                        From: <span id="from_address"></span>
 
-            <div style="display: none;" id="email_meta">
-            Subject: <span id="subject"></span><br>
-            Pre-Header Text: <span id="pre_header"></span><br>
-            From: <span id="from_address"></span>
+                        <hr>
+                        </div>
+
+                        <div class="embed-responsive embed-responsive-4by3"><iframe src="" class="embed-responsive-item" id="preview"></iframe></div>
+                    </div>
+                </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Details</div>
+                    <div class="card-body">
+                        <form role="form" method="GET" action="{% url 'manage:rendering:preview_email' %}" id="preview_form">
+                            {{ form|crispy }}
+                            <input class="btn btn-primary btn-block" type="submit" value="Preview" />
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-            <div class="embed-responsive embed-responsive-4by3"><iframe src="" class="embed-responsive-item" id="preview"></iframe></div>
+        </div>
+
+
 
 
     </div>
-{% endblock %}
+</div>
+
+
+{% endblock content %}
+
 
 {% block footer_js %}
     {{ block.super }}

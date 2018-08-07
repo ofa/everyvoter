@@ -18,13 +18,15 @@
                 <tr>
                     <th>Name</th>
                     <th>Default</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody>
                 {% for wrapper in wrappers %}
                 <tr>
-                    <th scope="row"><a href="{% url 'manage:mailer:update_wrapper' wrapper.uuid %}">{{ wrapper.name}}</a></th>
+                    <td>{{ wrapper.name}}</td>
                     <td>{{ wrapper.default }}</td>
+                    <td><a href="{% url 'manage:mailer:update_wrapper' wrapper.uuid %}">Update</a></td>
                 </tr>
                 {% endfor %}
 

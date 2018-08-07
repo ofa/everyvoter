@@ -21,6 +21,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Geodataset</th>
+                    <th>Preview</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -28,8 +29,9 @@
             <tbody>
                 {% for content_block in blocks %}
                 <tr>
-                    <td scope="row"><a href="{% url 'manage:blocks:preview_block' content_block.uuid %}">{{ content_block.name }}</a></th>
-                    <td scope="row">{{ content_block.geodataset }}</th>
+                    <td scope="row">{{ content_block.name }}</td>
+                    <td scope="row"><a href="{% url 'manage:dataset:view_geodataset' content_block.geodataset.uuid %}">{{ content_block.geodataset.name }}</a></td>
+                    <td scope="row"><a href="{% url 'manage:blocks:preview_block' content_block.uuid %}">Preview</a></td>
                     <td scope="row"><a href="{% url 'manage:blocks:update_block' content_block.uuid %}">Update</a></td>
                     <td scope="row"><a href="{% url 'manage:blocks:delete_block' content_block.uuid %}">Delete</a></td>
                 </tr>

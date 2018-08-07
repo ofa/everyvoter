@@ -24,9 +24,9 @@
             <tbody>
                 {% for blockcategory in blockcategories %}
                 <tr>
-                    <th scope="row">{{ blockcategory.name }}</th>
-                    <th scope="row"><a href="{% url 'manage:blocks:update_blockcategory' blockcategory.uuid %}">Update</a></th>
-                    <th scope="row"><a href="{% url 'manage:blocks:delete_blockcategory' blockcategory.uuid %}">Delete</a></th>
+                    <td scope="row">{{ blockcategory.name }}</td>
+                    <td scope="row"><a href="{% url 'manage:blocks:update_blockcategory' blockcategory.uuid %}">Update</a></td>
+                    <td scope="row"><a href="{% url 'manage:blocks:delete_blockcategory' blockcategory.uuid %}">Delete</a></td>
                 </tr>
                 {% endfor %}
 

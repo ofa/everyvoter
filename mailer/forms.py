@@ -40,7 +40,8 @@ class EmailPreviewForm(forms.Form):
     """Preview form"""
     election = forms.ModelChoiceField(queryset=Election.objects.all())
     ocd_ids = forms.CharField(
-        help_text='Comma separated list of OCD IDs', required=False)
+        help_text='Comma separated list of OCD IDs', required=False,
+        widget=forms.Textarea())
     sample_address = forms.EmailField(
         label='Sample Email',
         help_text='Optional address to send email sample to',
