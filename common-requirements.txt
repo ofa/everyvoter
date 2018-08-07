@@ -1,5 +1,5 @@
 # Basic Packages
-Django==1.11.12
+Django==1.11.15
 psycopg2-binary==2.7.4
 six==1.11.0
 pytz==2018.4
@@ -7,7 +7,7 @@ django-localflavor==1.4.1
 
 
 # Task packages
-celery==4.1.0
+celery==4.1.1
 django-celery-results==1.0.1
 -e git+https://github.com/celery/django-celery-beat.git@27f73a565734a2538765723767ed1c96276566e9#egg=django-celery-beat
 
