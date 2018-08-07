@@ -1,15 +1,10 @@
 """Utilities for Geodataset"""
 from collections import OrderedDict
-from slugify import slugify
 import unicodecsv
 
 from election.models import LegislativeDistrict
+from everyvoter_common.utils.slug import slugify_header
 from geodataset.models import Entry, Field, FieldValue
-
-
-def slugify_header(header_field):
-    """Take a header field and return the clean ASCII slugified field"""
-    return slugify(header_field, separator='_', max_length=250)
 
 
 def empty_existing_geodataset(geodataset):

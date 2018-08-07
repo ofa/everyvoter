@@ -5,7 +5,7 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 
 from branding.mixins import OrganizationMixin
-from everyvoter_common.utils.models import TimestampModel
+from everyvoter_common.utils.models import TimestampModel, UUIDModel
 from everyvoter_common.utils.storages import HighValueStorage
 
 
@@ -28,7 +28,7 @@ IMPORT_ERROR_TYPES = (
 )
 
 
-class UserImport(TimestampModel, OrganizationMixin):
+class UserImport(UUIDModel, TimestampModel, OrganizationMixin):
     """Import of Users"""
     name = models.CharField('Import Name', max_length=50)
     total_succeeded = models.IntegerField(

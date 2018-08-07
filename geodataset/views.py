@@ -10,11 +10,12 @@ import unicodecsv
 
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from everyvoter_common.utils.soft_delete import SoftDeleteView
+from everyvoter_common.utils.slug import slugify_header
 from manage.mixins import ManageViewMixin
 from geodataset.forms import GeoDatasetUploadForm
 from geodataset.models import GeoDataset, GeoDatasetCategory, Entry, FieldValue
 from geodataset.utils import (
-    process_geodataset_file, slugify_header, generate_csv_data
+    process_geodataset_file, generate_csv_data
 )
 from geodataset.filters import GeoDatasetFilter
 
