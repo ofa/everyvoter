@@ -3,64 +3,61 @@
 
 {% block title %}{{ organization.platform_name }} Users{% endblock title %}
 
-{% block page_content %}
+{% block content %}
 {% add_data "body-class" "people" %}
+<div class="content-wrapper">
+
     <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <!-- Default card contents -->
+                    <div class="card-header">{{ organization.platform_name }} Users</div>
+                    <!-- Table -->
+                    <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Join Date</th>
+                                    <th>Location</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for account in accounts %}
+                                <tr>
+                                    <td scope="row"><a href="{% url 'manage:accounts:view_user' account.username %}">{{ account }}</a></td>
+                                    <td>{{ account.email }}</td>
+                                    <td>{{ account.created_at }}</td>
+                                    <td>{{ account.location }}</td>
+                                    <td>{{ account.location.state.name }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
-      <div class="row">
+                    </div>
+                    {% if is_paginated %}
+                        {% include "manage/inc/pagination.html" %}
+                    {% endif %}
+                </div>
+            </div>
 
-        <div class="col-md-9">
-          <h2>{{ organization.platform_name }} Users</h2>
-        <div class="card card-default">
-          <!-- Default panel contents -->
-          <div class="card-header">Users</div>
-          <!-- Table -->
-          <div class="table-responsive-lg">
-          <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Join Date</th>
-                    <th>Location</th>
-                    <th>State</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for account in accounts %}
-                <tr>
-                    <th scope="row"><a href="{% url 'manage:accounts:view_user' account.username %}">{{ account }}</a></th>
-                    <td>{{ account.email }}</td>
-                    <td>{{ account.created_at }}</td>
-                    <td>{{ account.location }}</td>
-                    <td>{{ account.location.state.name }}</td>
-                </tr>
-                {% endfor %}
-
-            </tbody>
-          </table>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">Filter</div>
+                    <div class="card-body">
+                        <form action="" method="get">
+                            {{ filter.form|crispy }}
+                            <input class="btn btn-primary btn-block" type="submit" value="Search" />
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        </div>
-        </div>
-
-        <div class="col-md-3">
-            <form action="" method="get">
-                {{ filter.form|crispy }}
-                <input class="btn btn-primary btn-block" type="submit" value="Search" />
-            </form>
-        </div>
-      </div>
-
-
-
-
-
-
-
-{% if is_paginated %}
-{% include "manage/inc/pagination.html" %}
-{% endif %}
-
     </div>
-{% endblock page_content %}
+</div>
+
+{% endblock content %}

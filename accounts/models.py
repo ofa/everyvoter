@@ -72,6 +72,7 @@ class User(
             models.Index(fields=['organization', 'email'],
                          name="org_email_idx")
         ]
+        ordering = ['pk']
 
     def __unicode__(self):
         """Unicode representation of the user"""

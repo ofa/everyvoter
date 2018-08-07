@@ -76,7 +76,7 @@ class UserManageListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     model = User
     queryset = User.objects.select_related()
     template_name = "accounts/manage/list_users.html"
-    paginate_by = 10
+    paginate_by = 20
     context_object_name = 'accounts'
     filterset_class = AccountManageFilter
 
@@ -87,3 +87,15 @@ class UserManageDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
     template_name = "accounts/manage/view_user.html"
     context_object_name = 'account'
     slug_field = 'username'
+
+    def get_context_data(self, object):
+        """Get context for view"""
+        context = super(UserManageDetailView, self).get_context_data()
+
+        context['email_activity'] = object.emailactivity_set.select_related(
+            'email', 'email__mailing', 'email__mailing__template',
+            'email__mailing__organization_election',
+            'email__mailing__organization_election__election',
+            'email__mailing__organization_election__election__state')
+
+        return context

@@ -13,7 +13,7 @@ from everyvoter_common.utils.soft_delete import SoftDeleteModel, ActiveManager
 
 
 POSSIBLE_ACTIVITIES = (
-    ('send', 'Sent'),
+    ('send', 'Email Send'),
     ('bounce', 'Bounce'),
     ('soft_bounce', 'Soft Bounce'),
     ('complaint', 'Complaint'),

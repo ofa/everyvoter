@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('message_id', models.CharField(max_length=100, verbose_name=b'Message ID from ESP')),
-                ('activity', models.CharField(choices=[(b'send', b'Sent'), (b'bounce', b'Bounce'), (b'soft_bounce', b'Soft Bounce'), (b'complaint', b'Complaint'), (b'open', b'Open'), (b'click', b'Click')], max_length=50, verbose_name=b'Action Type')),
+                ('activity', models.CharField(choices=[(b'send', b'Emal Send'), (b'bounce', b'Bounce'), (b'soft_bounce', b'Soft Bounce'), (b'complaint', b'Complaint'), (b'open', b'Open'), (b'click', b'Click')], max_length=50, verbose_name=b'Action Type')),
                 ('link', models.CharField(default=None, max_length=500, null=True, verbose_name=b'Click URL')),
             ],
             options={

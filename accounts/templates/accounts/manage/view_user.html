@@ -3,15 +3,83 @@
 
 {% block title %}{{ account }}{% endblock title %}
 
-{% block page_content %}
-{% add_data "body-class" "people" %}
+
+{% block content %}
+<div class="content-wrapper">
+
     <div class="col-md-12">
-        <h2>{{ account }}</h2>
-        <p>{{ account.email }}</p>
-        <p>{{ account.location }}</p>
-        <h3>Districts</h3>
-        {% for district in account.location.districts.all %}
-            <p>{{ district.name }}</p>
-        {% endfor %}
+
+        <div class="card">
+            <div class="card-header">User Details</div>
+            <div class="card-body">
+                <h2>{{ account }}</h2>
+                <p>{{ account.email }}</p>
+                <p>{{ account.location }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Districts</div>
+            <div class="table-responsive-lg">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>District Name</th>
+                            <th>OCD ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for district in account.location.districts.all %}
+                            <tr>
+                                <td>{{ district.name }}</td>
+                                <td>{{ district.ocd_id }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if email_activity.exists %}
+            <div class="card">
+                <div class="card-header">Email Activity</div>
+                <div class="table-responsive-lg">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Template</th>
+                                <th>Deadline</th>
+                                <th>Election</th>
+                                <th>Activity</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in email_activity %}
+                                <tr>
+                                    <td>{{ activity.created_at }}</td>
+                                    <td>{{ activity.email.mailing.template.name }}</td>
+                                    <td>{{ activity.email.mailing.template.get_deadline_type_display }}</td>
+                                    <td><a href="{% url 'manage:election:view_election' activity.email.mailing.organization_election.uuid %}">{{ activity.email.mailing.election }}</a></td>
+                                    <td>{{ activity.get_activity_display }}</td>
+                                    <td>{% if activity.link %}
+                                        <a href="{{ activity.link }}">{{ activity.link }}</a>
+                                    {% else %}
+                                        N/A
+                                    {% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+
+
     </div>
-{% endblock page_content %}
+</div>
+
+
+{% endblock content %}
+
