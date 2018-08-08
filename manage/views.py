@@ -51,6 +51,10 @@ class ManageView(ManageViewMixin, TemplateView):
 
         context['mailings'] = Mailing.objects.filter(
             email__organization=self.request.organization,
-            ).order_by('-created_at')[:10]
+            ).select_related(
+                'organization_election',
+                'organization_election__election',
+                'organization_election__election__state',
+                'template').order_by('-created_at')[:10]
 
         return context
