@@ -17,7 +17,8 @@ from everyvoter_common.utils.soft_delete import SoftDeleteView
 
 class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     """List all blocks"""
-    queryset = Block.objects.select_related('geodataset', 'organization')
+    queryset = Block.objects.select_related(
+        'geodataset', 'organization').order_by('pk')
     model = Block
     paginate_by = 10
     context_object_name = 'blocks'
