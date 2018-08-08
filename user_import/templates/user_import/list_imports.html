@@ -42,11 +42,11 @@
             </tbody>
           </table></div>
 
+                    {% if is_paginated %}
+                        {% include "manage/inc/pagination.html" %}
+                    {% endif %}
         </div>
 
-{% if is_paginated %}
-{% include "inc/pagination.html" %}
-{% endif %}
 
     </div>
 {% endblock page_content %}

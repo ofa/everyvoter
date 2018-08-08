@@ -30,6 +30,10 @@
 
                     </tbody>
                   </table></div>
+
+                    {% if is_paginated %}
+                        {% include "manage/inc/pagination.html" %}
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-3">
@@ -48,10 +52,6 @@
     </div>
 
 </div>
-
-{% if is_paginated %}
-{% include "inc/pagination.html" %}
-{% endif %}
 
     </div>
 {% endblock %}
