@@ -1,52 +1,73 @@
 {% extends "manage/manage_base.html" %}
-{% load sekizai_tags %}
+{% load sekizai_tags crispy_forms_tags %}
 
 {% block title %}{{ organization.platform_name }} User Imports{% endblock title %}
 
-{% block page_content %}
-{% add_data "body-class" "people" %}
-    <div class="col-md-12">
-        <h2>{{ organization.platform_name }} User Imports</h2>
-        <p><a href="{% url 'manage:user_import:create_import' %}" class="btn btn-primary">New Import</a></p>
-        <div class="card">
-          <!-- Default card contents -->
-          <div class="card-header">Existing User Imports</div>
-          <!-- Table -->
-          <div class="table-responsive-lg">
-          <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Succeded</th>
-                    <th>Failures</th>
-                    <th>Download</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for import in imports %}
-                <tr>
-                    <td scope="row">{{ import.name }}</td>
-                    <td>{{ import.modified_at }}</td>
-                    <td>{{ import.status }}</td>
-                    <td>{{ import.total_succeeded }}</td>
-                    <td><a href="{% url 'manage:user_import:download_import_errors' import.uuid %}">{{ import.total_failed }}</a></td>
-                    <td>
-                        {% if import.file %}
-                        <a href="{{ import.file.url }}">Download</a>
-                        {% else %}Not Available{% endif %}</td>
-                </tr>
-                {% endfor %}
 
-            </tbody>
-          </table></div>
+{% block content %}
+{% add_data "body-class" "people" %}
+<div class="content-wrapper">
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                  <!-- Default card contents -->
+                  <div class="card-header">{{ organization.platform_name }} User Imports</div>
+                  <!-- Table -->
+                  <div class="table-responsive-lg">
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Succeded</th>
+                            <th>Failures</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for import in imports %}
+                        <tr>
+                            <td scope="row">{{ import.name }}</td>
+                            <td>{{ import.modified_at }}</td>
+                            <td>{{ import.status }}</td>
+                            <td>{{ import.total_succeeded }}</td>
+                            <td><a href="{% url 'manage:user_import:download_import_errors' import.uuid %}">{{ import.total_failed }}</a></td>
+                            <td>
+                                {% if import.file %}
+                                <a href="{{ import.file.url }}">Download</a>
+                                {% else %}Not Available{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table></div>
 
                     {% if is_paginated %}
                         {% include "manage/inc/pagination.html" %}
                     {% endif %}
-        </div>
+                </div>
+            </div>
+            <div class="col-md-3">
 
+                <a href="{% url 'manage:user_import:create_import' %}" class="btn btn-block btn-primary btn-lg btn-card">New Import</a>
+                <div class="card">
+                    <div class="card-header">Filter</div>
+                    <div class="card-body">
+                        <form action="" method="get">
+                            {{ filter.form|crispy }}
+                            <input class="btn btn-primary btn-block" type="submit" value="Search" />
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
     </div>
-{% endblock page_content %}
+{% endblock %}

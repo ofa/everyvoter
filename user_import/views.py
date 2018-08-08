@@ -1,8 +1,9 @@
 """Views for Import App"""
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView
 from django.urls import reverse_lazy
+from django_filters.views import FilterView
 import unicodecsv
 
 from manage.mixins import ManageViewMixin
@@ -11,14 +12,16 @@ from everyvoter_common.utils.slug import slugify_header
 from user_import.models import UserImport
 from user_import.tasks import ingest_import
 from user_import.forms import UserImportForm
+from user_import.filters import UserImportFilter
 
 
-class ImportListView(OrganizationViewMixin, ManageViewMixin, ListView):
+class ImportListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     """List all imports"""
     model = UserImport
     template_name = "user_import/list_imports.html"
-    paginate_by = 10
+    paginate_by = 15
     context_object_name = 'imports'
+    filterset_class = UserImportFilter
 
 
 class ImportCreateView(OrganizationViewMixin, ManageViewMixin,
