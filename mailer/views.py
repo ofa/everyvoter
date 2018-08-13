@@ -121,18 +121,18 @@ class MailingTemplateFormView(ManageViewMixin, MultipleFormsView):
 
 
 class MailingTemplateUpdateView(EmailOrganizationViewMixin,
-                                SingleObjectMixin,
+                                UUIDSlugMixin, SingleObjectMixin,
                                 MailingTemplateFormView):
     """View to update a mailing template"""
     model = MailingTemplate
     queryset = MailingTemplate.objects.select_related('email').order_by('pk')
     context_object_name = 'mailing_template'
+    slug_field = 'email__uuid'
 
     def dispatch(self, request, *args, **kwargs):
         """Dispatch the MailingTemplateUpdateView View"""
         # pylint: disable=attribute-defined-outside-init
-        self.object = get_object_or_404(self.get_queryset(),
-                                        email__uuid=kwargs['slug'])
+        self.object = self.get_object()
 
         return super(MailingTemplateUpdateView, self).dispatch(
             request, *args, **kwargs)
@@ -156,8 +156,8 @@ class MailingTemplateDeleteView(EmailOrganizationViewMixin, SoftDeleteView):
     success_url = reverse_lazy('manage:mailer:list_templates')
 
 
-class EmailPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
-                       FormView):
+class EmailPreviewView(ManageViewMixin, OrganizationViewMixin, UUIDSlugMixin,
+                       BaseDetailView, FormView):
     """Preview an email"""
     model = Email
     slug_field = 'uuid'
