@@ -9,6 +9,7 @@ import unicodecsv
 from manage.mixins import ManageViewMixin
 from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from everyvoter_common.utils.slug import slugify_header
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 from user_import.models import UserImport
 from user_import.tasks import ingest_import
 from user_import.forms import UserImportForm
@@ -46,7 +47,8 @@ class ImportCreateView(OrganizationViewMixin, ManageViewMixin,
         return response
 
 
-class ImportErrorCSVView(OrganizationViewMixin, ManageViewMixin, DetailView):
+class ImportErrorCSVView(OrganizationViewMixin, ManageViewMixin,
+                         UUIDSlugMixin, DetailView):
     """Download errors from a specific import"""
     model = UserImport
     slug_field = 'uuid'

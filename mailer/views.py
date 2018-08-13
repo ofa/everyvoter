@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView, UpdateView, ListView, TemplateView, FormView
 )
@@ -16,6 +17,7 @@ from branding.mixins import OrganizationViewMixin, OrganizationCreateViewMixin
 from blocks.models import Block
 from everyvoter_common.utils.multi_form_view import MultipleFormsView
 from everyvoter_common.utils.soft_delete import SoftDeleteView
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 from mailer.models import (
     EmailWrapper, Unsubscribe, Mailing, MailingTemplate, Email
 )
@@ -129,7 +131,8 @@ class MailingTemplateUpdateView(EmailOrganizationViewMixin,
     def dispatch(self, request, *args, **kwargs):
         """Dispatch the MailingTemplateUpdateView View"""
         # pylint: disable=attribute-defined-outside-init
-        self.object = self.get_queryset().get(email__uuid=kwargs['slug'])
+        self.object = get_object_or_404(self.get_queryset(),
+                                        email__uuid=kwargs['slug'])
 
         return super(MailingTemplateUpdateView, self).dispatch(
             request, *args, **kwargs)
@@ -205,7 +208,7 @@ class WrapperCreateView(ManageViewMixin, SuccessMessageMixin,
 
 
 class WrapperUpdateView(OrganizationViewMixin, ManageViewMixin,
-                        SuccessMessageMixin, UpdateView):
+                        SuccessMessageMixin, UUIDSlugMixin, UpdateView):
     """Create a wrapper"""
     model = EmailWrapper
     slug_field = 'uuid'

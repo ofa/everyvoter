@@ -6,9 +6,11 @@ from django.urls import reverse_lazy
 
 from manage.mixins import ManageViewMixin
 from branding.models import Organization
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 
 
-class OrgUpdateView(ManageViewMixin, SuccessMessageMixin, UpdateView):
+class OrgUpdateView(ManageViewMixin, SuccessMessageMixin, UUIDSlugMixin,
+                    UpdateView):
     """Create a new import"""
     model = Organization
     fields = ['name', 'platform_name', 'homepage', 'privacy_url', 'terms_url',

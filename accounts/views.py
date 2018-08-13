@@ -11,6 +11,7 @@ from accounts.forms import UserForm, UserEditForm
 from accounts.models import User
 from accounts.utils_user import create_user, update_user_location
 from branding.mixins import OrganizationViewMixin
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 from manage.mixins import ManageViewMixin
 
 
@@ -37,7 +38,7 @@ class CreateUserView(FormView):
         return super(CreateUserView, self).form_valid(form)
 
 
-class SelfUpdateUserView(OrganizationViewMixin, UpdateView):
+class SelfUpdateUserView(OrganizationViewMixin, UUIDSlugMixin, UpdateView):
     """Allow a user to update their record"""
     model = User
     form_class = UserEditForm
@@ -81,7 +82,8 @@ class UserManageListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     filterset_class = AccountManageFilter
 
 
-class UserManageDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
+class UserManageDetailView(OrganizationViewMixin, UUIDSlugMixin,
+                           ManageViewMixin, DetailView):
     """View a single user"""
     model = User
     template_name = "accounts/manage/view_user.html"

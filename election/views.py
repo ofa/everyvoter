@@ -8,6 +8,7 @@ from branding.mixins import OrganizationViewMixin
 from election.models import OrganizationElection
 from election.filters import OrganizationElectionFilter
 from election.forms import OrgElectionNotificationForm
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 from manage.mixins import ManageViewMixin
 from mailer.send_calendar import mailing_calendar
 
@@ -25,7 +26,8 @@ class OrgElectionListView(OrganizationViewMixin, ManageViewMixin, FilterView):
     template_name_suffix = '_list'
 
 
-class OrgElectionDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
+class OrgElectionDetailView(OrganizationViewMixin, ManageViewMixin,
+                            UUIDSlugMixin, DetailView):
     """View details about an Organization Election"""
     model = OrganizationElection
     slug_field = 'uuid'
@@ -42,7 +44,8 @@ class OrgElectionDetailView(OrganizationViewMixin, ManageViewMixin, DetailView):
 
 
 class OrgElectionNotificationUpdateView(ManageViewMixin, OrganizationViewMixin,
-                                        SuccessMessageMixin, UpdateView):
+                                        SuccessMessageMixin, UUIDSlugMixin,
+                                        UpdateView):
     """Edit an Organization Election notification options"""
     model = OrganizationElection
     slug_field = 'uuid'

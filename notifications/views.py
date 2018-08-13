@@ -3,12 +3,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import UpdateView
 from django.urls import reverse
 
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 from manage.mixins import ManageViewMixin
 from notifications.models import NotificationSetting
 
 
 class NotificationSettingUpdateView(ManageViewMixin, SuccessMessageMixin,
-                                    UpdateView):
+                                    UUIDSlugMixin, UpdateView):
     """Create a new import"""
     model = NotificationSetting
     fields = ['daily_batch_sample']

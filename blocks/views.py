@@ -13,6 +13,7 @@ from blocks.models import Block, BlockCategory
 from blocks.forms import BlockModelForm, BlockPreviewForm
 from blocks.filters import BlockFilter
 from everyvoter_common.utils.soft_delete import SoftDeleteView
+from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 
 
 class BlockListView(OrganizationViewMixin, ManageViewMixin, FilterView):
@@ -66,7 +67,7 @@ class BlockCreateView(ManageViewMixin, SuccessMessageMixin,
     success_message = "Block %(name)s was created"
 
 
-class BlockUpdateView(ManageViewMixin, SuccessMessageMixin,
+class BlockUpdateView(ManageViewMixin, SuccessMessageMixin, UUIDSlugMixin,
                       BlockCreateModifyObjectViewMixin, OrganizationViewMixin,
                       UpdateView):
     """Edit a block"""
@@ -78,8 +79,8 @@ class BlockUpdateView(ManageViewMixin, SuccessMessageMixin,
     success_message = "Block %(name)s was edited"
 
 
-class BlockPreviewView(ManageViewMixin, OrganizationViewMixin, BaseDetailView,
-                       FormView):
+class BlockPreviewView(ManageViewMixin, OrganizationViewMixin, UUIDSlugMixin,
+                       BaseDetailView, FormView):
     """Preview a block"""
     model = Block
     slug_field = 'uuid'
