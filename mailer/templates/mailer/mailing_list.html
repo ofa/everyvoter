@@ -1,7 +1,7 @@
 {% extends "manage/manage_base.html" %}
 {% load sekizai_tags crispy_forms_tags mailing_stats %}
 
-{% block title %}{{ organization.platform_name }} Mailings{% endblock title %}
+{% block title %}{{ organization.platform_name }} Sent Mailings{% endblock title %}
 
 {% block content %}
 {% add_data "body-class" "targets" %}
@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card">
                   <!-- Default card contents -->
-                  <div class="card-header">Mailings</div>
+                  <div class="card-header">Sent Mailings</div>
                   <!-- Table -->
                   <div class="table-responsive-lg">
                   <table class="table">
