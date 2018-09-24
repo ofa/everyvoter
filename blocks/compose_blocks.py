@@ -49,7 +49,7 @@ def compose_blocks(districts, email=None, block=None):
     final_source = []
     for block in final_blocks_list:
         final_source.append("{{% with dataset=entry{entry_id} %}}{block}"
-                            "{{% endwith %}}".format(
+                            "{{% endwith %}}<br><br>".format(
                                 entry_id=block.entry_id, block=block.code))
 
     return (context_data, '\n'.join(final_source))
