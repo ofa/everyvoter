@@ -52,7 +52,7 @@ def html_link_sourcer(html, user, source=None):
                 query_data['utm_campaign'] = [source]
 
         # Vote.org needs 'campaign' in the querystring for campaign tracking
-        if parsed_link.hostname.endswith(u'vote.org'):
+        if parsed_link.hostname and parsed_link.hostname.endswith(u'vote.org'):
             if 'campaign' not in query_data and source:
                 query_data['campaign'] = [source]
 
