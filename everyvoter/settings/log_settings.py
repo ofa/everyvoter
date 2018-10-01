@@ -24,6 +24,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
+        },
+        'democracy_sync': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
         }
     },
 }

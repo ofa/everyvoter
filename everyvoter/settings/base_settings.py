@@ -28,6 +28,8 @@ env = environ.Env(
     HIREFIRE_TOKEN=(str, ''),
     HIREFIRE_QUEUES=(list, ['default', 'bulk', 'bulk_priority', 'user_import',
                             'high_memory', 'feedback']),
+    DEMOCRACY_WORKS_API_KEY=(str, ''),
+    DEMOCRACY_WORKS_API_URL=(str, 'http://127.0.0.1:8000/'),
     DEBUG_TOOLBAR_IPS=(list, ['127.0.0.1']),
     CORS_ORIGIN_REGEX_WHITELIST=(tuple, (
         r'^(https?://)?(.+)\.ofa\.us$', r'^(https?://)?(.+)\.ofa\.us:8000$')),
@@ -140,6 +142,8 @@ INSTALLED_APPS = [
     'notifications',
 
     'user_import',
+
+    'democracy_consumer',
 
     'everyvoter_common',
 
@@ -305,6 +309,12 @@ GEOCODIO_KEY = env('GEOCODIO_KEY')
 # HireFire Settings
 HIREFIRE_TOKEN = env('HIREFIRE_TOKEN')
 HIREFIRE_QUEUES = env('HIREFIRE_QUEUES')
+
+
+####
+# DemocracyWorks API Settings
+DEMOCRACY_WORKS_API_KEY = env('DEMOCRACY_WORKS_API_KEY')
+DEMOCRACY_WORKS_API_URL = env('DEMOCRACY_WORKS_API_URL')
 
 
 ####
