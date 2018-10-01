@@ -5,6 +5,7 @@ from django.test import TestCase
 import pytz
 from mock import patch, call
 
+from election.models import LegislativeDistrict
 from everyvoter_common.utils.tests import EveryVoterTestMixin
 from notifications.tasks import daily_sample_batch
 
@@ -15,7 +16,10 @@ class TestBatchSample(EveryVoterTestMixin, TestCase):
         """Setup the test"""
         self.election = self.create_election(
             election_date=datetime(2018, 7, 30),
-            election_type='general')
+            election_type='general',
+            state_id='WI')
+        self.wi_district_ids = list(LegislativeDistrict.objects.filter(
+            state_id='WI').order_by('-pk').values_list(flat=True))
 
         # Generate a timezone-aware datetime to be returned by a patched
         # localtime()
@@ -55,7 +59,7 @@ class TestBatchSample(EveryVoterTestMixin, TestCase):
             user_id=recipient.id,
             email_id=template_election_day.email_id,
             election_id=self.election.id,
-            district_ids=None)
+            district_ids=self.wi_district_ids)
 
     @patch('notifications.tasks.timezone')
     @patch('notifications.tasks.sample_email')
@@ -109,13 +113,13 @@ class TestBatchSample(EveryVoterTestMixin, TestCase):
                 user_id=recipient_org1.id,
                 email_id=template_election_day_org1.email_id,
                 election_id=self.election.id,
-                district_ids=None),
+                district_ids=self.wi_district_ids),
             call(
                 to_address='org2_email@org2.localhost',
                 user_id=recipient_org2.id,
                 email_id=template_election_day_org2.email_id,
                 election_id=self.election.id,
-                district_ids=None),
+                district_ids=self.wi_district_ids),
         ]
 
         sample_patch.delay.assert_has_calls(expected_calls)
