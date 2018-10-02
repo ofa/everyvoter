@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'^(?P<slug>[-\w]+)/update_notification/$',
         views.OrgElectionNotificationUpdateView.as_view(),
         name='update_election_notification'),
+    url(r'^(?P<slug>[-\w]+)/update_wrapper/$',
+        views.OrgElectionWrapperUpdateView.as_view(),
+        name='update_election_wrapper'),
 ]

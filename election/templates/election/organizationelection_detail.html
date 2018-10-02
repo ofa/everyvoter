@@ -110,6 +110,17 @@
                 </div>
 
                 <div class="card">
+                    <div class="card-header">Email Wrapper</div>
+                    <div class="card-body">
+                        <form action="{% url 'manage:election:update_election_wrapper' orgelection.uuid %}" method="post">
+                            {{ wrapper_form|crispy }}
+                            <input class="btn btn-primary btn-block" type="submit" value="Update" />
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
                     <div class="card-header">Target Audience</div>
                   <div class="table-responsive-lg">
                   <table class="table">
