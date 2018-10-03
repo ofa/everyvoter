@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>{{ recipient.organization.name }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .content {
+                width: 600px;
+                margin: 0 auto;
+                padding-top: 20px;
+                line-height:1.4;
+                font-family:arial, helvetica, sans-serif;
+                font-size:16px;
+            }
+            .small-font {
+                font-size: 12px;
+            }
+            .header {
+                padding-top: 10px;
+            }
+            @media screen and (max-width: 650px) {
+                .content {
+                    padding: 0 1% !important;
+                    width:98% !important;
+                    margin-top: 20px;
+                }
+            }
+            body {
+                font-family:arial, helvetica, sans-serif;
+                font-size:16px;
+            }
+        </style>
+        <style>
+        /* Gmail & Inbox iOS Fix */
+        @media only screen and (max-width: 569px) {
+            .body {
+                min-width: 100vw;
+            }
+        }
+        </style>
+    </head>
+    <body>
+
+<!--[if lte mso 16]>
+    <table width="600" height="auto" border="0" cellpadding="0" cellspacing="0" align="center" style="width: 600px !important; margin: 0 auto !important;"><tr><td border="0" style="border: 0; padding-top: 20px;">
+<![endif]-->
+
+<div class="content">
+
+{% block content %}
+{% endblock %}
+
+</div>
+
+<div class="content small-font">
+This notification was sent to {{ recipient.email }}. To chance your notification preferences, contact an {{ recipient.organization.platform_name }} administrator.
+</div>
+
+<!--[if lte mso 16]>
+    </td></tr></table>
+<![endif]-->
+
+    </body>
+</html>

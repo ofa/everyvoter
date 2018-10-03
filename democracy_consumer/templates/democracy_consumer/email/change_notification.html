@@ -1,0 +1,17 @@
+{% extends "notifications/email/base.html" %}
+{% block content %}
+
+<h1>Recent DemocracyWorks Date Changes</h1>
+<br>
+{% for change in recent_changes %}
+Election: {{ change.election }}<br>
+Deadline Type: {{ change.get_field_display }}<br>
+Old Date: {{ change.old_date|date:"DATE_FORMAT"|default:"None" }}<br>
+New Date: {{ change.new_date|date:"DATE_FORMAT"|default:"None" }}<br>
+Date of Change: {{ change.response.created_at|date:"DATE_FORMAT" }}
+<br><br>
+{% endfor %}
+<a href="https://{{ recipient.organization.primary_domain }}{% url 'manage:election:list_elections' %}">Manage Elections</a>
+<br><br>
+
+{% endblock content %}
