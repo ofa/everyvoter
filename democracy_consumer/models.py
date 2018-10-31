@@ -53,4 +53,3 @@ class DateChange(TimestampModel):
         """Unicode representation of the change"""
         return u"{} Change from {} to {}".format(
             self.field, self.old_date, self.new_date)
-

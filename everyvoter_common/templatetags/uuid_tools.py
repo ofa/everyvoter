@@ -1,5 +1,4 @@
 """Turn a UUID into SmallUUID"""
-from urllib import urlencode
 from django import template
 from django.template.defaultfilters import stringfilter
 import smalluuid

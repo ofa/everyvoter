@@ -2,7 +2,6 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView, UpdateView, ListView, TemplateView, FormView
 )

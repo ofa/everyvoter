@@ -138,10 +138,7 @@ def trigger_import(user_import_id):
 
     current_record = 1
     for record in import_records:
-        if current_record == total_records:
-            final = True
-        else:
-            final = False
+        final = bool(current_record == total_records)
 
         import_user.delay(record.pk, current_record, final)
 

@@ -2,7 +2,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from accounts.models import User
-from notifications.models import NotificationSetting
 
 
 class Command(BaseCommand):

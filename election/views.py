@@ -10,7 +10,6 @@ from election.filters import OrganizationElectionFilter
 from election.forms import OrgElectionNotificationForm, OrgElectionWrapperForm
 from everyvoter_common.utils.uuid_slug_mixin import UUIDSlugMixin
 from manage.mixins import ManageViewMixin
-from mailer.send_calendar import mailing_calendar
 
 
 class OrgElectionListView(OrganizationViewMixin, ManageViewMixin, FilterView):

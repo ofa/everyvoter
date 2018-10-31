@@ -90,11 +90,11 @@ class UserManageDetailView(OrganizationViewMixin, UUIDSlugMixin,
     context_object_name = 'account'
     slug_field = 'username'
 
-    def get_context_data(self, object):
+    def get_context_data(self, user):
         """Get context for view"""
         context = super(UserManageDetailView, self).get_context_data()
 
-        context['email_activity'] = object.emailactivity_set.select_related(
+        context['email_activity'] = user.emailactivity_set.select_related(
             'email', 'email__mailing', 'email__mailing__template',
             'email__mailing__organization_election',
             'email__mailing__organization_election__election',
