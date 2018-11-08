@@ -45,7 +45,6 @@ class BlockWidget {
                 <div class="alert ${element.selected ? 'alert-success' : ''} block-option" data-optionindex="${index}">
                 ${element.block_name}
                 <small>${element.geodataset_name}</small>
-                <input type="hidden" name="blocks" value="${element.block_key}" />
                 </div>`;
         });
 
