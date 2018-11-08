@@ -98,6 +98,7 @@ class UserManageDetailView(OrganizationViewMixin, UUIDSlugMixin,
             'email', 'email__mailing', 'email__mailing__template',
             'email__mailing__organization_election',
             'email__mailing__organization_election__election',
-            'email__mailing__organization_election__election__state')
+            'email__mailing__organization_election__election__state').exclude(
+                email__isnull=True)
 
         return context
