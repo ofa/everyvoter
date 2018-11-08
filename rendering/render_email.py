@@ -23,6 +23,7 @@ def get_email(email_id):
         email = Email.objects.select_related(
             'mailing',
             'mailingtemplate',
+            'mailing__template',
             'mailing__organization_election',
             'mailing__organization_election__election',
             'mailing__organization_election__election__state',
@@ -76,6 +77,7 @@ def get_email_context(user_id,
     if email_id and hasattr(email, 'mailing'):
         organization_election = email.mailing.organization_election
         source = email.mailing.source
+        template = email.mailing.template
     else:
         organization_election = OrganizationElection.objects.select_related(
             'election',
@@ -85,8 +87,10 @@ def get_email_context(user_id,
 
         if email:
             source = generate_source(email)
+            template = email.mailingtemplate
         else:
             source = ''
+            template = None
 
 
     election = organization_election.election
@@ -102,7 +106,8 @@ def get_email_context(user_id,
         'election': election,
         'source': source,
         'unsubscribe_url': unsubscribe_url,
-        'manage_url': manage_url
+        'manage_url': manage_url,
+        'template': template
     }
 
 
