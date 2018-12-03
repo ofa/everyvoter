@@ -49,11 +49,11 @@ Contributors to the OFA repository must sign the Contributor License Agreement (
 Credits
 -------
 
-EveryVoter was originally written by `Nick Catalano`_ at `Organizing for Action`_. The code for EveryVoter can be viewed at the official `Github repository`_, where pull requests can also be submitted.
+EveryVoter was originally written by `Nick Catalano`_ at `Organizing for Action`_. The code for EveryVoter can be viewed at the official `GitHub repository`_, where pull requests can also be submitted.
 
 .. _Individual: https://ofa.github.io/cla-individual.html
 .. _Organization: https://ofa.github.io/cla-entity.html
 .. _Organizing for Action CLA FAQ: https://ofa.github.io/cla-faq.html
 .. _Nick Catalano: https://www.nickcatalano.com/
 .. _Organizing for Action: https://www.ofa.us/
-.. _Github repository: https://www.github.com/ofa/everyvoter
+.. _GitHub repository: https://www.github.com/ofa/everyvoter
